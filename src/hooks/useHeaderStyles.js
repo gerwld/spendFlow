@@ -106,7 +106,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
       color: isWhite ? themeColors.textColorHighlight : "#ffffff",
     },
     logo: {
-      marginBottom: 1
+      marginBottom: -1,
     }
   });
 

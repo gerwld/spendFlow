@@ -51,9 +51,11 @@ function HomeScreen({ navigation }) {
     image={{ uri: Constants.expoConfig.splash.image }}>
     <BaseView>
       <HomeHeader navigation={navigation} />
-      <LatestTasks />
+
       <StatusBar translucent barStyle={statusBarStyle} />
     </BaseView>
+
+
     </AnimatedAppLoader>
   );
 }

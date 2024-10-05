@@ -15,8 +15,8 @@ const THEMES_MASKS = {
 const THEMEV = {
     "st_theme__light": {
         label: "light",
-        headerGradientStart: "#95cef4",
-        headerGradientEnd: "#3c95d0",
+        headerGradientStart: "#95f4b6",
+        headerGradientEnd: "#3cd0a1",
         background: "#f0f2f7",
         bgHighlight: "#ffffff",
         bgHighlightSec: "#f7f8fc",
@@ -40,8 +40,8 @@ const THEMEV = {
     "st_theme__dark": {
 
         label: "dark",
-        headerGradientStart: "#80b5d8",
-        headerGradientEnd: "#3181b6",
+        headerGradientStart: "#8ae4aa",
+        headerGradientEnd: "#35be93",
         background: "#000000",
         bgHighlight: "#1c1c21",
         bgHighlightSec: "#222228",
