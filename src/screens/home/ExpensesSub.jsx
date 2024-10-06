@@ -1,4 +1,6 @@
 import {
+  FlatList,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -10,21 +12,42 @@ import { useCurrentTheme } from "hooks";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import React from "react";
 import { ButtonInline, DonutChart } from "@components";
+import LineItemExpenses from "src/components/LineItemExpenses";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ExpensesSub = () => {
   return (
     <ScrollView>
       <ExpensesBlockScrollable />
+      <LastExpenses />
     </ScrollView>
   );
+};
+
+const LastExpenses = () => {
+  const insets = useSafeAreaInsets();
+  return <View style={{marginBottom: insets.bottom + 10}}>
+    {[
+    { l: 1 },
+    { l: 1 },
+    { l: 1 },
+    { l: 1 },
+    { l: 1 },
+    { l: 1 },
+    { l: 1 },
+    { l: 1 },
+    { l: 1 },
+  ].map(({ item }) => <LineItemExpenses />)}
+  </View>;
 };
 
 const ExpensesBlockScrollable = () => {
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
-      margin: 10,
+      marginHorizontal: 10,
       marginTop: 5,
+      marginBottom: 2,
       minHeight: 294,
       paddingTop: 0,
       paddingBottom: 0,
@@ -98,7 +121,7 @@ const RenderTabs = () => {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 8
+        marginBottom: 8,
       },
       headerCenterBlock: {
         borderBottomColor: themeColors.chevron,
@@ -109,7 +132,7 @@ const RenderTabs = () => {
       headerText: {
         textAlign: "center",
         fontSize: 17,
-        color: themeColors.textColor
+        color: themeColors.textColor,
       },
       hb: {
         justifyContent: "flex-start",
@@ -120,7 +143,7 @@ const RenderTabs = () => {
       { color: "#e3e3e3", percentage: 20 },
       { color: "blue", percentage: 10 },
       { color: "green", percentage: 30 },
-      { color: "red", percentage: 40 }
+      { color: "red", percentage: 40 },
     ];
     return (
       <View>
@@ -138,17 +161,15 @@ const RenderTabs = () => {
           )}
         </View>
 
-
-        <View style={{justifyContent: 'center', alignItems: 'center' }}>
-          <DonutChart 
-          {...{
-            segments,
-            centerText: "$1242",
-            centerTextColor: themeColors.textColor
-          }}
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <DonutChart
+            {...{
+              segments,
+              centerText: "$1242",
+              centerTextColor: themeColors.textColor,
+            }}
           />
         </View>
-
       </View>
     );
   };
@@ -157,23 +178,20 @@ const RenderTabs = () => {
     return (
       <View>
         <Text>week</Text>
-        <Text>week</Text>
-        <Text>week</Text>
-        <Text>week</Text>
       </View>
     );
   };
   const Month = () => {
     return (
       <View>
-        <Text>week</Text>
+        <Text>month</Text>
       </View>
     );
   };
   const Year = () => {
     return (
       <View>
-        <Text>week</Text>
+        <Text>year</Text>
       </View>
     );
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, Text, useWindowDimensions } from "react-native";
+import { StatusBar, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import Constants from "expo-constants";
@@ -40,6 +40,20 @@ function HomeScreen({ navigation }) {
 
 const renderTabBar = (props) => {
   const [themeColors] = useCurrentTheme();
+  const styles = StyleSheet.create({
+    t: {
+      textWrap: "no-wrap",
+    },
+    tab: {
+      fontSize: 16,
+      fontWeight: 500,
+      color: themeColors.textColor,
+      color: "rgba(255, 255, 255, 0.8)",
+    },
+    tabFocused: {
+      color: "#ffffff",
+    },
+  });
   return (
     <LinearGradient
       colors={[
@@ -61,6 +75,15 @@ const renderTabBar = (props) => {
           marginBottom: 5,
           borderRadius: 5,
         }}
+        renderLabel={({ route, focused }) => (
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[styles.tab, focused && styles.tabFocused]}
+          >
+            {route.title}
+          </Text>
+        )}
         style={{ backgroundColor: "transparent" }}
       />
     </LinearGradient>
