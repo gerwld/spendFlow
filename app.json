@@ -78,7 +78,8 @@
     },
     "plugins": [
       "expo-localization",
-      "expo-router"
+      "expo-router",
+      "expo-asset"
     ]
   }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, useWindowDimensions } from "react-native";
+import { StatusBar, Text, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import Constants from "expo-constants";
@@ -10,7 +10,9 @@ import { getThemeStatusBar } from "@constants";
 import { appSelectors } from "@redux";
 
 import AnimatedAppLoader from "./AnimatedAppLoaderScreen";
-import { Week, Month, Overview } from "./home";
+import { ExpensesSub, OutcomeSub } from "./home";
+import { LinearGradient } from "expo-linear-gradient";
+import { useCurrentTheme } from "hooks";
 
 function HomeScreen({ navigation }) {
   const theme = useSelector(appSelectors.selectAppTheme);
@@ -36,35 +38,47 @@ function HomeScreen({ navigation }) {
   );
 }
 
-const renderTabBar = (props) => (
-  <TabBar
-    {...props}
-    indicatorStyle={{
-      backgroundColor: "white",
-      width: 5,
-      height: 5,
-      marginLeft: "16%",
-      marginBottom: 5,
-      borderRadius: 5,
-    }}
-    style={{ backgroundColor: "#34b787", marginBottom: 10 }}
-  />
-);
+const renderTabBar = (props) => {
+  const [themeColors] = useCurrentTheme();
+  return (
+    <LinearGradient
+      colors={[
+        themeColors.tabsGradientStart || "#9ad7ff",
+        themeColors.tabsGradientEnd || "#3c95d0",
+      ]}
+      start={{ x: 0.2, y: 0.5 }}
+      end={{ x: 1, y: 0.5 }}
+      style={{ marginTop: 0 }}
+    >
+      <TabBar
+        {...props}
+        indicatorStyle={{
+          backgroundColor: "#ffffff",
+          width: 15,
+          height: 4,
+          marginLeft: "23%",
+          margin: 0,
+          marginBottom: 5,
+          borderRadius: 5,
+        }}
+        style={{ backgroundColor: "transparent" }}
+      />
+    </LinearGradient>
+  );
+};
 
 const RenderTabs = () => {
   const renderScene = SceneMap({
-    ov: Overview,
-    we: Week,
-    mo: Month,
+    ov: ExpensesSub,
+    we: OutcomeSub,
   });
 
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "ov", title: "Overwiew" },
-    { key: "we", title: "Week" },
-    { key: "mo", title: "Month" },
+    { key: "ov", title: "Expenses" },
+    { key: "we", title: "Outcome" },
   ]);
 
   return (

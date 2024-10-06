@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const Overview = () => {
+const OutcomeSub = () => {
   return (
     <View>
-      <Text>Overview</Text>
+      <Text>OutcomeSub</Text>
     </View>
   );
 };
 
-export default Overview;
+export default OutcomeSub;

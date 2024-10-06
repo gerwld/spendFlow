@@ -13,14 +13,17 @@
     "android:prod": "eas build --platform android --local --profile production"
   },
   "dependencies": {
+    "@babel/runtime": "^7.25.7",
     "@expo/metro-runtime": "3.2.3",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
+    "@react-native/assets-registry": "^0.75.4",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@reduxjs/toolkit": "^2.2.7",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "51.0.35",
+    "expo-asset": "^10.0.10",
     "expo-constants": "~16.0.2",
     "expo-haptics": "13.0.1",
     "expo-linear-gradient": "13.0.2",
