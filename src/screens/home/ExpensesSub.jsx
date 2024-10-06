@@ -1,16 +1,13 @@
 import {
-  FlatList,
-  Platform,
-  Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
   View,
 } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler";
 import { useCurrentTheme } from "hooks";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
-import React from "react";
+import React, { useState } from "react";
 import { ButtonInline, DonutChart } from "@components";
 import LineItemExpenses from "src/components/LineItemExpenses";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -26,29 +23,29 @@ const ExpensesSub = () => {
 
 const LastExpenses = () => {
   const insets = useSafeAreaInsets();
+  const segments = [
+    { color: "#f24848", percentage: 20 },
+    { color: "#f2a348", percentage: 10 },
+    { color: "#a3f248", percentage: 20 },
+    { color: "#48c8f2", percentage: 30 },
+    { color: "#f248bf", percentage: 10 },
+    { color: "#48f2e1", percentage: 10 },
+  ];
+
   return <View style={{marginBottom: insets.bottom + 10}}>
-    {[
-    { l: 1 },
-    { l: 1 },
-    { l: 1 },
-    { l: 1 },
-    { l: 1 },
-    { l: 1 },
-    { l: 1 },
-    { l: 1 },
-    { l: 1 },
-  ].map(({ item }) => <LineItemExpenses />)}
+    {[...segments, ...segments].map(( item ) => <LineItemExpenses {...item} />)}
   </View>;
 };
 
 const ExpensesBlockScrollable = () => {
+  const [tabViewHeight, setTabViewHeight] = useState(300);
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
       marginHorizontal: 10,
       marginTop: 5,
       marginBottom: 2,
-      minHeight: 294,
+      minHeight: tabViewHeight,
       paddingTop: 0,
       paddingBottom: 0,
       paddingHorizontal: 10,
@@ -64,12 +61,12 @@ const ExpensesBlockScrollable = () => {
   });
   return (
     <View style={styles.block}>
-      <RenderTabs />
+      <RenderTabs setTabViewHeight={setTabViewHeight} />
     </View>
   );
 };
 
-const RenderTabs = () => {
+const RenderTabs = ({setTabViewHeight}) => {
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     t: {
@@ -140,10 +137,12 @@ const RenderTabs = () => {
       },
     });
     const segments = [
-      { color: "#e3e3e3", percentage: 20 },
-      { color: "blue", percentage: 10 },
-      { color: "green", percentage: 30 },
-      { color: "red", percentage: 40 },
+      { color: "#f24848", percentage: 20 },
+      { color: "#f2a348", percentage: 10 },
+      { color: "#a3f248", percentage: 20 },
+      { color: "#48c8f2", percentage: 30 },
+      { color: "#f248bf", percentage: 10 },
+      { color: "#48f2e1", percentage: 10 },
     ];
     return (
       <View>
@@ -222,12 +221,23 @@ const RenderTabs = () => {
     { key: "period", title: "Period" },
   ]);
 
+
+   const handleIndexChange = (newIndex) => {
+    setIndex(newIndex);
+    if (routes[newIndex].key === 'week') {
+      setTabViewHeight(500);
+    } else {
+      setTabViewHeight(300);
+    }
+  };
+
+
   return (
     <TabView
       renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
       renderScene={renderScene}
-      onIndexChange={setIndex}
+      onIndexChange={handleIndexChange}
       initialLayout={{ width: layout.width }}
     />
   );

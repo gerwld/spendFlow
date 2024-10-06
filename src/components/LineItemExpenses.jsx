@@ -2,8 +2,9 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useCurrentTheme } from 'hooks';
 
-const LineItemExpenses = () => {
+const LineItemExpenses = ({color}) => {
     const [themeColors] = useCurrentTheme();
+
 
     const styles = StyleSheet.create({
         block: {
@@ -27,10 +28,11 @@ const LineItemExpenses = () => {
             shadowRadius: 1
         },
         icon: {
-            backgroundColor: "#eee",
+            backgroundColor: color,
             width: 40,
             height: 40,
-            borderRadius: 40
+            borderRadius: 40,
+            opacity: 0.8,
         },
         percentage: {
             flexBasis: "10%",
