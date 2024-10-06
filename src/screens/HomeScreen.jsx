@@ -55,7 +55,7 @@ const renderTabBar = (props) => {
         indicatorStyle={{
           backgroundColor: "#ffffff",
           width: 15,
-          height: 4,
+          height: 3.5,
           marginLeft: "23%",
           margin: 0,
           marginBottom: 5,
