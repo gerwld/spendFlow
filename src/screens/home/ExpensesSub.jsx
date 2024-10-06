@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { ButtonInline, DonutChart } from "@components";
 import LineItemExpenses from "src/components/LineItemExpenses";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SvgBack, SvgFront } from "@icons";
 
 const ExpensesSub = () => {
   return (
@@ -38,7 +39,7 @@ const LastExpenses = () => {
 };
 
 const ExpensesBlockScrollable = () => {
-  const [tabViewHeight, setTabViewHeight] = useState(300);
+  const [tabViewHeight, setTabViewHeight] = useState(310);
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
@@ -135,6 +136,9 @@ const RenderTabs = ({setTabViewHeight}) => {
         justifyContent: "flex-start",
         flex: 1,
       },
+      ic: {
+        color: themeColors.textColor,
+      }
     });
     const segments = [
       { color: "#f24848", percentage: 20 },
@@ -147,14 +151,18 @@ const RenderTabs = ({setTabViewHeight}) => {
     return (
       <View>
         <View style={styles.header}>
-          <ButtonInline text="back" />
+          <ButtonInline>
+            <SvgBack style={styles.ic}/>
+          </ButtonInline>
 
           <View style={styles.headerCenterBlock}>
             <Text style={styles.headerText}>Today, October 6</Text>
           </View>
 
           {true ? (
-            <ButtonInline text="front" alignEnd />
+            <ButtonInline alignEnd>
+              <SvgFront style={styles.ic}/>
+            </ButtonInline>
           ) : (
             <View style={styles.hb} />
           )}
@@ -227,7 +235,7 @@ const RenderTabs = ({setTabViewHeight}) => {
     if (routes[newIndex].key === 'week') {
       setTabViewHeight(500);
     } else {
-      setTabViewHeight(300);
+      setTabViewHeight(310);
     }
   };
 
