@@ -40,7 +40,6 @@ function AnimatedAppLoader({ children, image, isInit }) {
     if (!isSplashReady) {
       return <View style={{backgroundColor: getPlatformBgColor(), height: "100%"}}/>;
     }
-    console.log(getPlatformBgColor());
     
   
     return <AnimatedSplashScreen isInit={isInit} image={image}>{children}</AnimatedSplashScreen>;

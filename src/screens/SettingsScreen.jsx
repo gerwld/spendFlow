@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { LineItemView, GapView, LineItemOptions, Segment, STHeader } from '@components'
 import { LANG_MASKS, getThemeStatusBar } from '@constants';
 import { appSelectors } from '@redux';
-import { Feature, Lang, Rateapp, Support, Theme, Tutorial } from '@icons';
+import { Feature, Lang, Rateapp, Support, SvgLogoInline, Theme, Tutorial } from '@icons';
 import { useCurrentTheme } from 'hooks';
 import * as WebBrowser from 'expo-web-browser';
 
@@ -29,6 +29,12 @@ const SettingsScreen = ({ navigation }) => {
       fontSize: 17,
       color: themeColors.textColorHighlight,
     },
+    logo: {
+      color: themeColors.textColorHighlight,
+      marginLeft: 20,
+      marginBottom: -10,
+      marginTop: -2,
+    },
     copyright: {
       width: "100%",
       position: "absolute",
@@ -36,7 +42,7 @@ const SettingsScreen = ({ navigation }) => {
       bottom: 0,
       alignItems: "center",
       flexDirection: "column",
-      marginBottom: 30,
+      marginBottom: 40,
       paddingVertical: 10,
       zIndex: -1
     },
@@ -60,11 +66,15 @@ const SettingsScreen = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: themeColors.background }}>
       <STHeader
         navigation={navigation}
-        title={t("st_screen")}
+        // title={t("st_screen")}
       />
+
 
       <ScrollView overScrollMode='always' contentContainerStyle={styles.scrollViewContent}>
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
+
+          <SvgLogoInline size={40} style={styles.logo}/>
+
           <GapView />
           <Segment>
             <Pressable onPress={() => navigation.replace("tutorial")}>
@@ -86,6 +96,7 @@ const SettingsScreen = ({ navigation }) => {
               value={t(theme.theme + "")} />
 
             <LineItemOptions
+              isLastItem
               leftIcon={<Lang />}
               onPress={() => navigateToPage("settings/language")}
               title={t("st_lang")}
@@ -101,7 +112,7 @@ const SettingsScreen = ({ navigation }) => {
               </LineItemView>
             </Pressable>
 
-            <LineItemView leftIcon={<Rateapp />} pl1 rightArrow>
+            <LineItemView leftIcon={<Rateapp />} pl1 isLastItem rightArrow>
               <Text style={styles.t}>{t("st_rate")}</Text>
             </LineItemView>
           </Segment>
@@ -111,7 +122,7 @@ const SettingsScreen = ({ navigation }) => {
 
       <View style={styles.copyright} >
         <Text style={styles.copyrightText}>© weblxapplications.com</Text>
-        <Text style={styles.copyrightText}>{new Date().getFullYear()}</Text>
+        {/* <Text style={styles.copyrightText}>{new Date().getFullYear()}</Text> */}
       </View>
       <StatusBar translucent barStyle={getThemeStatusBar(theme, true)} />
     </View >

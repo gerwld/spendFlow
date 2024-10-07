@@ -35,7 +35,7 @@ const THEMEV = {
     tabsGradientStart: "#4eaa90",
     tabsGradientEnd: "#4eaa90",
     tabsActiveColor: "#418e78",
-    background: "#f0f2f7",
+    background: "#f7fafe",
     bgHighlight: "#ffffff",
     bgHighlightSec: "#f7f8fc",
     borderColor: "#ebeef4",

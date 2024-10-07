@@ -39,7 +39,6 @@ const STTheme = (({ navigation }) => {
                 <SelectList
                     showFetch
                     theme={theme}
-                    style={{ flex: 1 }}
                     currentValue={theme.theme}
                     setValue={(v) => onChangeInput('theme', v)}
                     data={Object.keys(THEMES_MASKS).map(e => ({ name: THEMES_MASKS[e], value: e }))}

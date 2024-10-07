@@ -53,7 +53,7 @@ const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, ye
             borderWidth: 1,
 
             overflow: "hidden",
-            fontWeight: 500,
+            fontWeight: '500',
             color: activeColor ? activeColor : "#3c95d0",
         },
         to: {

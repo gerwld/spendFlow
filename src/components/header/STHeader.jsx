@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, Pressable, SafeAreaView } from 'react-native'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { useTranslation } from 'react-i18next';
+import { SvgBack } from '@icons';
 
 
 const STHeader = React.memo(({
@@ -25,7 +26,7 @@ const STHeader = React.memo(({
     // from headerStyles hook preset, otherways - white text and color bg
     const s = {
         textColor: { color: bgColor ? "#ffffff" : themeColors.textColorHighlight },
-        backgroundColor: bgColor ? bgColor : themeColors.bgHighlight
+        backgroundColor: bgColor ? bgColor : themeColors.bac
     }
 
     return (<>
@@ -40,9 +41,11 @@ const STHeader = React.memo(({
                             if (onGoBack) onGoBack()
                             else navigation.goBack()
                         }}>
-                        <Text 
-                        numberOfLines={1} ellipsizeMode='tail'
-                        style={[headerStyles.headerButton, s.textColor]}>{leftText ? leftText : t("act_back")}</Text>
+                            {leftText 
+                            ? <Text 
+                                numberOfLines={1} ellipsizeMode='tail'
+                                style={[headerStyles.headerButton, s.textColor]}>{leftText}</Text>
+                            : <SvgBack style={{color: themeColors.textColorHighlight, pointerEvents: "none", marginLeft: -3}} size={28}/>}
                     </Pressable>
                 </View>}
 

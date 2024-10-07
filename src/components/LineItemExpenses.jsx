@@ -31,7 +31,7 @@ const LineItemExpenses = ({color}) => {
             backgroundColor: color,
             width: 40,
             height: 40,
-            borderRadius: 40,
+            borderRadius: 10,
             opacity: 0.8,
         },
         percentage: {

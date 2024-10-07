@@ -13,7 +13,7 @@ const LineItemOptions = React.memo(({ navTo, title, value, onPress, ...rest }) =
     const content = (
         <LineItemView pl1 rightArrow {...rest}>
             <Text style={{ flex: 1, fontSize: 17, color: themeColors.textColorHighlight || "#000" }}>{title}</Text>
-            <Text style={{ marginRight: 5, fontSize: 17, marginLeft: 2, color: themeColors.chevronText || "#949dad" }}>{value}</Text>
+            <Text style={{ marginRight: 5, marginLeft: 2, paddingTop: 0.5, fontSize: 17, fontWeight:"400", color: themeColors.chevronText || "#949dad" }}>{value}</Text>
         </LineItemView>
     )
 

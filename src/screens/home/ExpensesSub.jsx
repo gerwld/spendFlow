@@ -16,13 +16,13 @@ import { SvgBack, SvgFront } from "@icons";
 const ExpensesSub = () => {
   return (
     <ScrollView>
-      <ExpensesBlockScrollable />
-      <LastExpenses />
+      <LastExpensesHeaderBlock />
+      <LastExpensesList />
     </ScrollView>
   );
 };
 
-const LastExpenses = () => {
+const LastExpensesList = () => {
   const insets = useSafeAreaInsets();
   const segments = [
     { color: "#f24848", percentage: 20 },
@@ -38,7 +38,7 @@ const LastExpenses = () => {
   </View>;
 };
 
-const ExpensesBlockScrollable = () => {
+const LastExpensesHeaderBlock = () => {
   const [tabViewHeight, setTabViewHeight] = useState(310);
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
@@ -62,12 +62,12 @@ const ExpensesBlockScrollable = () => {
   });
   return (
     <View style={styles.block}>
-      <RenderTabs setTabViewHeight={setTabViewHeight} />
+      <RenderHeaderTabs setTabViewHeight={setTabViewHeight} />
     </View>
   );
 };
 
-const RenderTabs = ({setTabViewHeight}) => {
+const RenderHeaderTabs = ({setTabViewHeight}) => {
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     t: {
@@ -113,41 +113,8 @@ const RenderTabs = ({setTabViewHeight}) => {
     );
   };
 
-  const Day = () => {
-    const styles = StyleSheet.create({
-      header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 8,
-      },
-      headerCenterBlock: {
-        borderBottomColor: themeColors.chevron,
-        borderBottomWidth: 1.2,
-        paddingVertical: 1,
-        padding: 0,
-      },
-      headerText: {
-        textAlign: "center",
-        fontSize: 17,
-        color: themeColors.textColor,
-      },
-      hb: {
-        justifyContent: "flex-start",
-        flex: 1,
-      },
-      ic: {
-        color: themeColors.textColor,
-      }
-    });
-    const segments = [
-      { color: "#f24848", percentage: 20 },
-      { color: "#f2a348", percentage: 10 },
-      { color: "#a3f248", percentage: 20 },
-      { color: "#48c8f2", percentage: 30 },
-      { color: "#f248bf", percentage: 10 },
-      { color: "#48f2e1", percentage: 10 },
-    ];
+  const Day = withStylesAndData(({segments, styles}) => {
+
     return (
       <View>
         <View style={styles.header}>
@@ -179,15 +146,37 @@ const RenderTabs = ({setTabViewHeight}) => {
         </View>
       </View>
     );
-  };
+  });
 
-  const Week = () => {
+  const Week = withStylesAndData(({styles}) => {
+  
     return (
       <View>
-        <Text>week</Text>
+      <View style={styles.header}>
+        <ButtonInline>
+          <SvgBack style={styles.ic}/>
+        </ButtonInline>
+
+        <View style={styles.headerCenterBlock}>
+          <Text style={styles.headerText}>Oct 1 - Oct 6</Text>
+        </View>
+
+        {true ? (
+          <ButtonInline alignEnd>
+            <SvgFront style={styles.ic}/>
+          </ButtonInline>
+        ) : (
+          <View style={styles.hb} />
+        )}
       </View>
+
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+    
+      </View>
+    </View>
     );
-  };
+  });
+
   const Month = () => {
     return (
       <View>
@@ -250,5 +239,49 @@ const RenderTabs = ({setTabViewHeight}) => {
     />
   );
 };
+
+const withStylesAndData = (WrappedComponent) => {
+  const [themeColors] = useCurrentTheme();
+  const segments = [
+    { color: "#f24848", percentage: 20 },
+    { color: "#f2a348", percentage: 10 },
+    { color: "#a3f248", percentage: 20 },
+    { color: "#48c8f2", percentage: 30 },
+    { color: "#f248bf", percentage: 10 },
+    { color: "#48f2e1", percentage: 10 },
+  ];
+
+  const styles = StyleSheet.create({
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 8,
+    },
+    headerCenterBlock: {
+      borderBottomColor: themeColors.chevron,
+      borderBottomWidth: 1.2,
+      paddingVertical: 1,
+      padding: 0,
+    },
+    headerText: {
+      textAlign: "center",
+      fontSize: 17,
+      color: themeColors.textColor,
+    },
+    hb: {
+      justifyContent: "flex-start",
+      flex: 1,
+    },
+    ic: {
+      color: themeColors.textColor,
+    }
+  });
+
+  return function TranslatedComponent(props) {
+    return <WrappedComponent {...{...props, styles, segments}}/>
+  }
+
+}
 
 export default ExpensesSub;

@@ -24,7 +24,7 @@ export const BasePressButton = ({ onPress, title = 'Save', backgroundColor, colo
         text: {
             fontSize: 16,
             lineHeight: 21,
-            fontWeight: 'bold',
+            fontWeight: '600',
             letterSpacing: 0.25,
             color: color ? color : 'white',
         },

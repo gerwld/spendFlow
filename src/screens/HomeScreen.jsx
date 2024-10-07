@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import Constants from "expo-constants";
@@ -13,6 +13,7 @@ import AnimatedAppLoader from "./AnimatedAppLoaderScreen";
 import { ExpensesSub, OutcomeSub } from "./home";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCurrentTheme } from "hooks";
+import { StatusBar } from "expo-status-bar";
 
 function HomeScreen({ navigation }) {
   const theme = useSelector(appSelectors.selectAppTheme);
@@ -21,8 +22,11 @@ function HomeScreen({ navigation }) {
 
   if (!isInit) return null;
 
-  const statusBarStyle = getThemeStatusBar(theme);
+  const statusBarStyle = getThemeStatusBar(theme, true);
 
+  
+
+  
   return (
     <AnimatedAppLoader
       isInit={[isInit, !isNaN(insets.top)]}
@@ -30,8 +34,8 @@ function HomeScreen({ navigation }) {
     >
       <BaseView>
         <HomeHeader navigation={navigation} />
-
-        <RenderTabs />
+{/* 
+        <RenderTabs /> */}
         <StatusBar translucent barStyle={statusBarStyle} />
       </BaseView>
     </AnimatedAppLoader>
@@ -46,7 +50,7 @@ const renderTabBar = (props) => {
     },
     tab: {
       fontSize: 16,
-      fontWeight: 500,
+      fontWeight: '500',
       color: themeColors.textColor,
       color: "rgba(255, 255, 255, 0.8)",
     },

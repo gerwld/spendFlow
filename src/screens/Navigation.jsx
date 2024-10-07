@@ -1,4 +1,5 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import HomeScreen from "./HomeScreen";
 import { useTranslation } from "react-i18next";
@@ -47,9 +48,48 @@ export const Navigation = () => {
         </>
     )
 
+    const config = {
+        animation: "spring",  // A smooth spring-like animation
+        config: {
+          stiffness: 800,     // Higher value = more resistance
+          damping: 450,       // How bouncy the animation is
+          mass: 2,            // Adjust the weight of the component
+          overshootClamping: true, // Prevent the spring from overshooting
+          restDisplacementThreshold: 0.001,  // When to stop moving
+          restSpeedThreshold: 0.001,         // When to stop oscillating
+        },
+      };
+      
+ 
+
     const settingsSubdirectories = (
         <>
-            <Stack.Screen name="settings" component={SettingsScreen} options={{ headerShown: false, title: t("st_screen"),  }} />
+<Stack.Screen
+  name="settings"
+  component={SettingsScreen}
+  options={{
+    headerShown: false,
+    title: t("st_screen"),
+    animation: "fade_from_bottom",  // Custom animation when opening the screen (enters from the left)
+    gestureDirection: "horizontal-inverted",  // Swipe from right-to-left to close
+    // gestureResponseDistance: {
+    //   horizontal: 150, // Adjust the swipe sensitivity (how far you need to swipe to close)
+    // },
+  
+        // gestureDirection: 'horizontal',
+        headerShown: false,
+    //   gestureEnabled: false,
+
+        // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+    // transitionSpec: {
+    //   open: config,   // Animation config when opening
+    //   close: config,  // Animation config when closing
+    // },
+    animationDuration: 150, // Duration for the transition
+  }}
+/>
+
+
             <Stack.Screen name="settings/language" component={STLanguage} options={{ headerShown: false, title: t("st_screen"), }} />
             <Stack.Screen name="settings/theme" component={STTheme} options={{ headerShown: false, title: t("st_screen") }} />
         </>

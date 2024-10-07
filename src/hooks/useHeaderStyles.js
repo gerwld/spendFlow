@@ -14,7 +14,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
   const [themeColors ] = useCurrentTheme();
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
-  const HEADER_HEIGHT_SAFE = PLATFORM === "web" ? 55 : 60;
+  const HEADER_HEIGHT_SAFE = PLATFORM === "web" ? 55 : 54;
   const HEADER_HEIGHT_EXTRAS = Math.max(width, height) > 1100 ? 10 : Math.min(height * getRatioExtras(), 20);
   const INSET_SAFE = PLATFORM === "ios" && insets.top < 21 ? insets.top - 1 : insets.top;
   const BUTTON_DIMENSIONS = Math.floor(Math.min(width * 0.24, 120));
@@ -58,7 +58,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
     headerTitle: {
       color: 'white',
       fontSize: TITLE_SIZE,
-      fontWeight: 'bold',
+      fontWeight: '600',
     },
     centerComponent: {
       height: HEADER_HEIGHT_SAFE,
@@ -100,6 +100,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
     headerButton: {
       fontSize: 19,
       maxWidth: BUTTON_DIMENSIONS,
+      minWidth: 55,
       lineHeight: HEADER_HEIGHT_SAFE,
       userSelect: "none",
       textAlign: "left",
