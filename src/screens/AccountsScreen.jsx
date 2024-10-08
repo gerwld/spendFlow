@@ -29,7 +29,7 @@ const AccountsSubscreen = ({balance = -200, balanceSavings = 0}) => {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 0,
     marginHorizontal: 16
     
@@ -84,7 +84,7 @@ const TotalSubscreen = ({balance = -200, balanceSavings = 0}) => {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 0,
     marginHorizontal: 16
     

@@ -59,7 +59,7 @@ const CategoryBlock = ({
     text_operationPrice: {
       flex: 1,
       fontSize: 15,
-      opacity: 0.7,
+      opacity: 0.8,
       textAlign: "right",
       color: getGreenRedOrGray(value, themeColors).color,
     },

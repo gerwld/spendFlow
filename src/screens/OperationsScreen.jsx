@@ -39,7 +39,7 @@ const DaySection = ({ children, timestamp }) => {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      marginHorizontal: 10,
+      marginHorizontal: 15,
       paddingHorizontal: 2,
       paddingVertical: 5,
       borderBottomWidth: 2,
@@ -47,7 +47,7 @@ const DaySection = ({ children, timestamp }) => {
     },
     t: {
       color: themeColors.textColor,
-      fontSize: 18,
+      fontSize: 16,
     },
     tb: {
       color: themeColors.textColor,
@@ -59,8 +59,9 @@ const DaySection = ({ children, timestamp }) => {
       opacity: 0.5
     },
     child: {
-      marginLeft: 7,
-      marginRight: 6,
+      marginHorizontal: 15,
+      marginTop: 5,
+      marginBottom: 18,
     }
   });
 
