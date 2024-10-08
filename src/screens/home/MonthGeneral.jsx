@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import { useCurrentTheme } from 'hooks';
+import CategoryBlock from 'src/components/CategoryBlock';
 
 const MonthGeneral = () => {
 const [page, setPageIndex] = React.useState(0);
@@ -77,7 +78,31 @@ const setActive = (pg) => setPageIndex(pg);
 const PageExpenses = () => {
     return (
         <View>
-            <Text>PageExpenses</Text>
+            <PageExpensesContent/>
+
+        </View>
+    )
+}
+
+const PageExpensesContent = () => {
+    
+    const styles = StyleSheet.create({
+    block: {
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: "wrap",
+        gap: 10,
+        
+    },
+    });
+    
+    return (
+        <View style={styles.block}>
+            <CategoryBlock/>
+            <CategoryBlock/>
+            <CategoryBlock/>
+            <CategoryBlock/>
         </View>
     )
 }

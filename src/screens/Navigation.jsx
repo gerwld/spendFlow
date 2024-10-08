@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import HomeScreen from "./HomeScreen";
+import Overview from "./Overview";
 import { useTranslation } from "react-i18next";
 import TutorialScreen from "./TutorialScreen";
 import DetailsHabitScreen from "./DetailsHabitScreen";
@@ -16,16 +16,18 @@ import * as SystemUI from 'expo-system-ui';
 import { Platform, StyleSheet, View} from "react-native";
 import DetailsHabitScreenAndroid from "./DetailsHabitScreenAndroid";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { BlurView } from 'expo-blur';
-import { Binoculars } from 'lucide-react-native';
+
+import OperationsScreen from './OperationsScreen';
+import AccountsScreen from './AccountsScreen';
+import MoreScreen from './MoreScreen';
+
 import { Wallet } from 'lucide-react-native';
 import { Grip } from 'lucide-react-native';
 import { ChartPie } from 'lucide-react-native';
 import { HandCoins } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import OperationsScreen from './OperationsScreen';
-import AccountsScreen from './AccountsScreen';
-import MoreScreen from './MoreScreen';
 
 
 
@@ -110,7 +112,7 @@ function MyTabs() {
             stroke={focused ? themeColors.tabsActiveColor : themeColors.tabsColor}/>
         }
     })}>
-        <Tab.Screen name="overview_tab" component={HomeScreen} options={{ headerShown: false, title: "Overview" }} />
+        <Tab.Screen name="overview_tab" component={Overview} options={{ headerShown: false, title: "Overview" }} />
         <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
         <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ headerShown: false, title: "Accounts" }} />
         <Tab.Screen name="more_tab" component={MoreScreen} options={{ headerShown: false, title: "More" }} />
