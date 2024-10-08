@@ -34,7 +34,8 @@ const THEMEV = {
     headerGradientEnd: "#3cd0a4",
     tabsGradientStart: "#4eaa90",
     tabsGradientEnd: "#4eaa90",
-    tabsActiveColor: "#418e78",
+    tabsColor: "#4e4e4f",
+    tabsActiveColor: "#37addf",
     background: "#f7fafe",
     bgHighlight: "#ffffff",
     bgHighlightSec: "#f7f8fc",
@@ -53,6 +54,9 @@ const THEMEV = {
     borderLinesColor: "#ebedf1",
     dayGraphColor: "#dee8f6",
     calendarBorderColor: "#d6dde6",
+    monthGeneral: "#e4edf8",
+    monthGeneralActive: "#ffffff",
+    navigationBarColor: "#ffffff"
   },
   st_theme__dark: {
     label: "dark",
@@ -60,7 +64,8 @@ const THEMEV = {
     headerGradientEnd: "#35bea3",
     tabsGradientStart: "#418e78",
     tabsGradientEnd: "#418e78",
-    tabsActiveColor: "#418e78",
+    tabsColor: "#585858",
+    tabsActiveColor: "#37addf",
     background: "#000000",
     bgHighlight: "#1c1c21",
     bgHighlightSec: "#222228",
@@ -78,6 +83,9 @@ const THEMEV = {
     borderLinesColor: "#363739",
     dayGraphColor: "#484c50",
     calendarBorderColor: "#313337",
+    monthGeneral: "#1e2022",
+    monthGeneralActive: "#2c2d2f",
+    navigationBarColor: "#1c1c21"
   },
 };
 

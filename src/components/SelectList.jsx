@@ -63,13 +63,10 @@ const SelectList = React.memo(({ style, showFetch, data, title, currentValue, se
             }
         }
 
-        console.log(isFirst);
-        
-
 
         return (
             <Pressable onPress={showFetch ? onPressWithFetch : onPress}>
-                <View style={[select.item, isFirst && {borderTopColor: "transparent"}]}>
+                <View style={[select.item, isFirst && {borderTopWidth: 0}]}>
                     <View style={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "center" }}>
                         <Text style={select.text}>{withoutTranslate ? name : t(value + "")}</Text>
                         {mask ? <Text style={select.maskText}>{mask}</Text> : null}

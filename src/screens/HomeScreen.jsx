@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { Platform, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import Constants from "expo-constants";
@@ -14,18 +14,28 @@ import { ExpensesSub, OutcomeSub } from "./home";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCurrentTheme } from "hooks";
 import { StatusBar } from "expo-status-bar";
+import MonthGeneral from "./home/MonthGeneral";
+
+// import {useIsFocused} from '@react-navigation/native';
+import { setTransfluentBar } from "@tools";
+
+
+setTransfluentBar();
 
 function HomeScreen({ navigation }) {
   const theme = useSelector(appSelectors.selectAppTheme);
   const isInit = useSelector(appSelectors.isHabitsInit);
   const insets = useSafeAreaInsets();
 
-  if (!isInit) return null;
+  // const isFocused = useIsFocused();
 
-  const statusBarStyle = getThemeStatusBar(theme, true);
 
   
-
+  const statusBarStyle = getThemeStatusBar(theme, true);
+  
+  
+  
+  if (!isInit) return null;
   
   return (
     <AnimatedAppLoader
@@ -34,10 +44,10 @@ function HomeScreen({ navigation }) {
     >
       <BaseView>
         <HomeHeader navigation={navigation} />
-{/* 
-        <RenderTabs /> */}
-        <StatusBar translucent barStyle={statusBarStyle} />
+        <MonthGeneral/>
+        {/* <ExpensesSub/> */}
       </BaseView>
+        <StatusBar translucent style={statusBarStyle.split("-")[0]} />
     </AnimatedAppLoader>
   );
 }

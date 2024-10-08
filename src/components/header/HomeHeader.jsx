@@ -26,12 +26,15 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
         headerBalance: {
             color: themeColors.textColorHighlight,
             fontSize: 24,
+            lineHeight: 24,
             fontWeight: '600',
         },
         headerBalanceSup: {
             color: themeColors.textColor,
             fontSize: 15,
             fontWeight: '400',
+            lineHeight: 15,
+            marginBottom: 3
         }
     });
     
