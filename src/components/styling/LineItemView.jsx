@@ -16,7 +16,7 @@ const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, ch
         align-items:center;
         justify-content:space-between;
         flex-direction: row;
-        background-color: ${pl1 ? themeColors.bgHighlight : "transparent"};
+        /* background-color: ${pl1 ? themeColors.bgHighlight : "transparent"}; */
     `;
 
  //themeColors.borderColor
@@ -46,7 +46,7 @@ const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, ch
             !pl1 && {borderTopWidth: 0, borderTopWidth: 0}]}>
             {leftIcon ? <View style={{ height: 30, width: 30, marginRight: 12 }}>{leftIcon}</View> : null}
 
-            <View style={[styles.group, isLastItem && {borderBottomWidth: 0}]}>
+            <View style={[styles.group, isLastItem && {borderBottomWidth: 0, marginTop: -1, borderTopWidth: 0}]}>
                 {leftIcon ? <View style={{ flex: 1, flexDirection: "row" }}>{children}</View> : children}
                 {rightArrow ? <SvgFront style={{ marginLeft: 2, marginRight: 10, marginTop: 1}} size={17} color={themeColors.chevron} /> : null}
             </View>

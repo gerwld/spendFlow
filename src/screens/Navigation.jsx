@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import Overview from "./Overview";
+import OverviewScreen from "./OverviewScreen";
 import { useTranslation } from "react-i18next";
 import TutorialScreen from "./TutorialScreen";
 import DetailsHabitScreen from "./DetailsHabitScreen";
@@ -112,7 +112,7 @@ function MyTabs() {
             stroke={focused ? themeColors.tabsActiveColor : themeColors.tabsColor}/>
         }
     })}>
-        <Tab.Screen name="overview_tab" component={Overview} options={{ headerShown: false, title: "Overview" }} />
+        <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Overview" }} />
         <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
         <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ headerShown: false, title: "Accounts" }} />
         <Tab.Screen name="more_tab" component={MoreScreen} options={{ headerShown: false, title: "More" }} />
@@ -170,9 +170,9 @@ export const Navigation = () => {
     return (
         <GestureHandlerRootView style={{flex: 1, backgroundColor: themeColors.background || "white"}}>
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ 
+            <Stack.Navigator screenOptions={({ route }) => ({ 
                 gestureEnabled: true, 
-                navigationBarColor: themeColors.bgHighlight || "black" }}>
+                navigationBarColor: route.name === "settings" ? themeColors.background : themeColors.bgHighlight || "black" })}>
                 <Stack.Screen name="home" component={MyTabs} options={{ headerShown: false, title: t("home_screen") }} />
               
               {Platform.OS === "android"  || Platform.OS === "web" 

@@ -10,7 +10,8 @@ const Segment = ({children}) => {
             marginRight: 10,
             borderRadius: 12,
             borderColor: themeColors.borderColor,
-            borderWidth: 1.1,
+            backgroundColor: themeColors.bgHighlight,
+            borderWidth: 1,
             overflow: "hidden",
         }
     })

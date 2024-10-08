@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { View, Text, ScrollView, StyleSheet, Pressable, StatusBar, Linking } from 'react-native'
 import { useTranslation } from 'react-i18next';
@@ -10,12 +10,17 @@ import { Feature, Lang, Rateapp, Support, SvgLogoInline, Theme, Tutorial } from 
 import { useCurrentTheme } from 'hooks';
 import * as WebBrowser from 'expo-web-browser';
 
-
+// import {useIsFocused} from '@react-navigation/native';
 
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
   const { theme, lang } = useSelector(appSelectors.selectAppThemeAndLang)
   const [themeColors] = useCurrentTheme();
+
+  
+// const isFocused = useIsFocused();
+
+
 
   const styles = StyleSheet.create({
     scrollView: {
@@ -100,7 +105,9 @@ const SettingsScreen = ({ navigation }) => {
               leftIcon={<Lang />}
               onPress={() => navigateToPage("settings/language")}
               title={t("st_lang")}
-              value={LANG_MASKS[lang]?.mask} />
+              value={LANG_MASKS[lang]?.mask}
+               />
+               
           </Segment>
 
           <GapView />

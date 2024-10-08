@@ -11,14 +11,11 @@ import AnimatedAppLoader from "./AnimatedAppLoaderScreen";
 import { StatusBar } from "expo-status-bar";
 import MonthGeneral from "./home/MonthGeneral";
 
+
 // import {useIsFocused} from '@react-navigation/native';
 // const isFocused = useIsFocused();
-import { setTransfluentBar } from "@tools";
 
-
-setTransfluentBar();
-
-function Overview({ navigation }) {
+function OverviewScreen({ navigation }) {
   const theme = useSelector(appSelectors.selectAppTheme);
   const isInit = useSelector(appSelectors.isHabitsInit);
   const insets = useSafeAreaInsets();
@@ -34,9 +31,6 @@ function Overview({ navigation }) {
       <BaseView>
         <HomeHeader navigation={navigation} />
         <MonthGeneral/>
-        {/* <ExpensesSub/> */}
-
-
       </BaseView>
         <StatusBar translucent style={statusBarStyle.split("-")[0]} />
     </AnimatedAppLoader>
@@ -44,4 +38,4 @@ function Overview({ navigation }) {
 }
 
 
-export default React.memo(Overview);
+export default React.memo(OverviewScreen);

@@ -99,10 +99,10 @@ const PageExpensesContent = () => {
     
     return (
         <View style={styles.block}>
-            <CategoryBlock/>
-            <CategoryBlock/>
-            <CategoryBlock/>
-            <CategoryBlock/>
+            <CategoryBlock isRow/>
+            <CategoryBlock isRow/>
+            <CategoryBlock isRow/>
+            <CategoryBlock isRow/>
         </View>
     )
 }

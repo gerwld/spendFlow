@@ -35,11 +35,13 @@ const THEMEV = {
     tabsGradientStart: "#4eaa90",
     tabsGradientEnd: "#4eaa90",
     tabsColor: "#4e4e4f",
-    tabsActiveColor: "#37addf",
+    tabsActiveColor: "#338fe4",
     background: "#f7fafe",
     bgHighlight: "#ffffff",
-    bgHighlightSec: "#f7f8fc",
+    bgHighlightSec: "#e3e7f3",
+    bgHighlightTh: "#eef6ff",
     borderColor: "#ebeef4",
+    borderColorSec: "#e6ebf4",
     textColor: "#44677a",
     textColorHighlight: "#000",
     textColorRevert: "#fff",
@@ -56,7 +58,13 @@ const THEMEV = {
     calendarBorderColor: "#d6dde6",
     monthGeneral: "#e4edf8",
     monthGeneralActive: "#ffffff",
-    navigationBarColor: "#ffffff"
+    navigationBarColor: "#ffffff",
+    green: "#5eee5e",
+    red: "#ee5e65",
+    gray: "#515455",
+    green_dimmed: "rgba(94, 238, 94, 0.1)",
+    red_dimmed: "rgba(238, 94, 101, 0.1)",
+    gray_dimmed: "rgb(81, 84, 85, 0.1)",
   },
   st_theme__dark: {
     label: "dark",
@@ -65,11 +73,13 @@ const THEMEV = {
     tabsGradientStart: "#418e78",
     tabsGradientEnd: "#418e78",
     tabsColor: "#585858",
-    tabsActiveColor: "#37addf",
+    tabsActiveColor: "#2897cf",
     background: "#000000",
-    bgHighlight: "#1c1c21",
+    bgHighlight: "#16161a",
     bgHighlightSec: "#222228",
-    borderColor: "#000",
+    bgHighlightTh: "#222228",
+    borderColor: "#000000",
+    borderColorSec: "#1f2022",
     textColor: "#c0cdd9",
     textColorHighlight: "#fff",
     textColorRevert: "#fff",
@@ -85,7 +95,13 @@ const THEMEV = {
     calendarBorderColor: "#313337",
     monthGeneral: "#1e2022",
     monthGeneralActive: "#2c2d2f",
-    navigationBarColor: "#1c1c21"
+    navigationBarColor: "#1c1c21",
+    green: "#5eee5e",
+    red: "#ee5e65",
+    gray: "#515455",
+    green_dimmed: "rgba(94, 238, 94, 0.1)",
+    red_dimmed: "rgba(238, 94, 101, 0.1)",
+    gray_dimmed: "rgb(81, 84, 85, 0.1)",
   },
 };
 
@@ -260,6 +276,10 @@ function getWeekdays() {
   return isFirstDayOfWeekMonday() ? WEEKDAYS_EU : WEEKDAYS;
 }
 
+const getGreenRedOrGray =(val, styles) => {
+  return {color: val > 0 ? styles.green : val == 0 ? styles.gray : styles.red}
+ }
+
 module.exports = {
   PLATFORM,
   WEEKDAYS,
@@ -282,4 +302,5 @@ module.exports = {
   convertTo24Hour,
   convertTo12HourFormat,
   isFirstDayOfWeekMonday,
+  getGreenRedOrGray
 };
