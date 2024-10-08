@@ -22,6 +22,10 @@ import { Wallet } from 'lucide-react-native';
 import { Grip } from 'lucide-react-native';
 import { ChartPie } from 'lucide-react-native';
 import { HandCoins } from 'lucide-react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import OperationsScreen from './OperationsScreen';
+import AccountsScreen from './AccountsScreen';
+import MoreScreen from './MoreScreen';
 
 
 
@@ -34,6 +38,7 @@ function MyTabs() {
 
     const { t } = useTranslation();
     const [themeColors] = useCurrentTheme();
+    const insets = useSafeAreaInsets()
 
     const navTheme = DefaultTheme;
     navTheme.colors = {
@@ -47,18 +52,36 @@ function MyTabs() {
 
     SystemUI.setBackgroundColorAsync(themeColors.background || "white");
 
-    const OverviewIcon = () => {
-        return <Binoculars />
+    const RenderTabBarParent = (props) => {
+        return  <BottomTabBar
+        {...props}
+        style={{ backgroundColor: 'red', elevation: 0, height: 100 }} // Additional styling
+      />
     }
+
+    
   return (
-    <Tab.Navigator screenOptions={({route}) => ({
+    <Tab.Navigator
+    screenOptions={({route}) => ({
+        tabBar: (props) => <RenderTabBarParent {...props} />,
         navigationBarColor: themeColors.navigationBarColor || "black",
         tabBarActiveTintColor: themeColors.tabsActiveColor,
         tabBarInactiveTintColor: themeColors.tabsColor,
         tabBarLabelStyle: {fontSize: 12.5},
-        tabBarStyle: [{ position: 'absolute', minHeight: 70, bottom: 0 }, Platform.OS === "android" && {paddingBottom: 10, borderTopColor: themeColors.background, borderTopWidth: 1}],
+        tabBarOptions: {
+            style: {
+              height: 90,
+            },
+            tabStyle: {
+              height: 60,
+            },
+          },
+        tabBarItemStyle: {
+            "height": 54
+        },
+        tabBarStyle: [{display: "flex", height: insets.bottom + 60, position: "absolute",  bottom: 0 }, Platform.OS === "android" && {paddingBottom: 10, borderTopColor: themeColors.background, borderTopWidth: 1}],
         tabBarBackground: () => (
-        Platform.OS === "beba"
+        Platform.OS === "fgn"
          ? <BlurView tint={themeColors.label} intensity={100} style={[StyleSheet.absoluteFill]} />
          : <View style={[StyleSheet.absoluteFill, {backgroundColor: themeColors.bgHighlight}]}/>
         ),
@@ -88,9 +111,9 @@ function MyTabs() {
         }
     })}>
         <Tab.Screen name="overview_tab" component={HomeScreen} options={{ headerShown: false, title: "Overview" }} />
-        <Tab.Screen name="operations_tab" component={SettingsScreen} options={{ headerShown: false, title: "Operations" }} />
-        <Tab.Screen name="accounts_tab" component={SettingsScreen} options={{ headerShown: false, title: "Accounts" }} />
-        <Tab.Screen name="more_tab" component={SettingsScreen} options={{ headerShown: false, title: "More" }} />
+        <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
+        <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ headerShown: false, title: "Accounts" }} />
+        <Tab.Screen name="more_tab" component={MoreScreen} options={{ headerShown: false, title: "More" }} />
       
     </Tab.Navigator>
   );
