@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, FlatList, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { useCurrentTheme } from 'hooks';
+import { LucideChevronLeft } from 'lucide-react-native';
+import { LucideChevronRight } from 'lucide-react-native';
+import { HEADER_SHADOW } from '@constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -89,21 +92,28 @@ const InfiniteCalendar = ({ children }) => {
       flex: 1,
       justifyContent: 'center',
     },
-    buttons: {
+    header: {
+      backgroundColor: themeColors.background,
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: 10,
       marginBottom: 0,
       borderBottomWidth: 1,
       borderTopWidth: 1,
-      borderTopColor: themeColors.borderColorSec,
-      borderBottomColor: themeColors.borderColorSec,
+      borderTopColor: themeColors.borderColorTh,
+      borderBottomColor: themeColors.borderColorTh,
     },
     headerText: {
       fontSize: 17,
       fontWeight: '600',
+      color: themeColors.textColorHighlight
+    },
+    headerButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 16,
+      height: 50,
     },
     slide: {
       width: width,
@@ -123,13 +133,13 @@ const InfiniteCalendar = ({ children }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <Pressable onPress={handlePrevPress}>
-          <Text style={styles.buttonText}>Previous</Text>
+      <View style={styles.header}>
+        <Pressable style={styles.headerButton} onPress={handlePrevPress}>
+          <LucideChevronLeft width={28} height={30} stroke={themeColors.textColorHighlight}/>
         </Pressable>
         <Text style={styles.headerText}>{formatDate(currentDate)}</Text>
-        <Pressable onPress={handleNextPress}>
-          <Text style={styles.buttonText}>Next</Text>
+        <Pressable style={styles.headerButton} onPress={handleNextPress}>
+          <LucideChevronRight width={28} height={30} stroke={themeColors.textColorHighlight}/>
         </Pressable>
       </View>
       <FlatList

@@ -42,6 +42,7 @@ const THEMEV = {
     bgHighlightTh: "#eef6ff",
     borderColor: "#ebeef4",
     borderColorSec: "#e6ebf4",
+    borderColorTh: "#e0e5ee",
     textColor: "#44677a",
     textColorHighlight: "#000",
     textColorRevert: "#fff",
@@ -80,6 +81,7 @@ const THEMEV = {
     bgHighlightTh: "#222228",
     borderColor: "#000000",
     borderColorSec: "#1f2022",
+    borderColorTh: "#2e3033",
     textColor: "#c0cdd9",
     textColorHighlight: "#fff",
     textColorRevert: "#fff",
@@ -205,6 +207,14 @@ const getThemeStatusBar = (th, isReversed) => {
     }
 };
 
+const HEADER_SHADOW = Object.create({
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 10 },
+  shadowOpacity: 1,
+  shadowRadius: 3,
+  elevation: 3,
+})
+
 function getTimeFromTimestamp(timestamp) {
   const date = new Date(timestamp);
 
@@ -286,6 +296,7 @@ module.exports = {
   WEEKDAYS_EU,
   LANG_MASKS,
   THEMES_MASKS,
+  HEADER_SHADOW,
 
   REPEAT_MASKS,
   REPEAT_GAP_VALUES,

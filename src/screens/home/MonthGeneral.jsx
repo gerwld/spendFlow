@@ -1,17 +1,21 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native'
 import React from 'react'
 import { useCurrentTheme } from 'hooks';
 import CategoryBlock from 'src/components/CategoryBlock';
+
+const width = Dimensions.get("screen").width
 
 const MonthGeneral = ({calendarDate, calendarIndex}) => {
 const [page, setPageIndex] = React.useState(0);
 const [themeColors] = useCurrentTheme();
 const styles = StyleSheet.create({
 block: {
+    width: Math.min(width - 30, 400),
     flexDirection: "row",
     gap: 2,
     minHeight: 80,
-    margin: 15,
+    marginVertical: 15,
+    alignSelf: "center",
     padding: 7,
     borderRadius: 16,
     backgroundColor: themeColors.monthGeneral,

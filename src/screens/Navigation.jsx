@@ -15,6 +15,7 @@ import { useCurrentTheme } from "hooks";
 import * as SystemUI from 'expo-system-ui';
 import { Platform, StyleSheet, View} from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Constants from "expo-constants";
 
 import { BlurView } from 'expo-blur';
 
@@ -27,6 +28,9 @@ import { Grip } from 'lucide-react-native';
 import { ChartPie } from 'lucide-react-native';
 import { HandCoins } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AnimatedAppLoader from './AnimatedAppLoaderScreen';
+import { useSelector } from 'react-redux';
+import { appSelectors } from '@redux';
 
 
 
@@ -35,7 +39,6 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
-
 
     const { t } = useTranslation();
     const [themeColors] = useCurrentTheme();
@@ -62,6 +65,10 @@ function MyTabs() {
 
     
   return (
+    <AnimatedAppLoader
+    isInit={[!isNaN(insets.top)]}
+    image={{ uri: Constants.expoConfig.splash.image }}
+  >
     <Tab.Navigator
     screenOptions={({route}) => ({
         tabBar: (props) => <RenderTabBarParent {...props} />,
@@ -117,6 +124,7 @@ function MyTabs() {
         <Tab.Screen name="more_tab" component={MoreScreen} options={{ headerShown: false, title: "More" }} />
       
     </Tab.Navigator>
+    </AnimatedAppLoader>
   );
 }
 
@@ -138,6 +146,15 @@ export const Navigation = () => {
 
 
     const EditHabitScreen = (props) => <SetHabitScreen isEdit {...props}/>
+
+    const getNavigationBarColor = (route) => {
+        let color = "black";
+
+        if(route.name === "settings") color = themeColors.background;
+        else color = themeColors.bgHighlight
+
+        return color;
+    }
 
     const addEditSubdirectories = (
         <>
@@ -171,7 +188,7 @@ export const Navigation = () => {
         <NavigationContainer>
             <Stack.Navigator screenOptions={({ route }) => ({ 
                 gestureEnabled: true, 
-                navigationBarColor: route.name === "settings" ? themeColors.background : themeColors.bgHighlight || "black" })}>
+                navigationBarColor: getNavigationBarColor(route) })}>
                 <Stack.Screen name="home" component={MyTabs} options={{ headerShown: false, title: t("home_screen") }} />
               
               {/* {Platform.OS === "android"  || Platform.OS === "web" 

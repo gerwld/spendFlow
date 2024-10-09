@@ -2,10 +2,11 @@ import React from "react";
 import { BaseView, HomeHeader } from "@components";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { useCurrentTheme } from "hooks";
-import { ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import CategoryBlock from "src/components/CategoryBlock";
 import StatBlock from "src/components/StatBlock";
+import { HEADER_SHADOW } from "@constants";
 
 const AccountsScreen = ({ navigation }) => {
   return (
@@ -167,15 +168,22 @@ const renderTabBar = (props) => {
 
   const styles = StyleSheet.create({
     tabBarStyle: {
+      ...HEADER_SHADOW,
       backgroundColor: themeColors.background, 
       height: 52,
-      marginTop: -5, 
+      marginBottom: Platform.OS === "android" ? 10 : 0, 
       borderBottomWidth: 0,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      elevation: 0,
+      borderTopColor: themeColors.borderColorTh,
+      borderBottomColor: themeColors.borderColorTh,
     },
     tab: {
-      fontSize: 15,
+      fontSize: 17,
       fontWeight: '500',
-      color: themeColors.textColor,
+      color: themeColors.textColorHighlight,
+      marginBottom: 2
     },
     tabFocused: {
       color: themeColors.tabsActiveColor,
@@ -185,14 +193,16 @@ const renderTabBar = (props) => {
       alignSelf: "center",
       width: 10,
       marginLeft: "24.5%",
-      height: 5,
+      height: 4,
       borderRadius: 10,
-      marginBottom: 4,
+      marginBottom: 8,
+      opacity: 0.5
     }
   });
 
   return (
     <TabBar
+    pressColor={'transparent'}
       {...props}
       renderLabel={({ route, focused }) => (
         <TouchableOpacity activeOpacity={1}>

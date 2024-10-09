@@ -5,19 +5,30 @@ import { useCurrentTheme } from "hooks";
 import { getGreenRedOrGray } from "@constants";
 import { ScrollView } from "react-native-gesture-handler";
 import CategoryBlock from "src/components/CategoryBlock";
+import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
 
 const OperationsScreen = ({ navigation }) => {
   return (
     <BaseView>
       <HomeHeader navigation={navigation} />
+      <InfiniteCalendar>
       <LastOperations />
+      </InfiniteCalendar>
     </BaseView>
   );
 };
 
 const LastOperations = () => {
+  
+  const styles = StyleSheet.create({
+    block: {
+      width: "100%",
+      marginTop: 10
+    },
+  });
+  
   return (
-    <ScrollView>
+    <ScrollView style={styles.block}>
       <DaySection>
         <DaySectionItem />
         <DaySectionItem />
@@ -46,7 +57,7 @@ const DaySection = ({ children, timestamp }) => {
       borderBottomColor: themeColors.borderColorSec,
     },
     t: {
-      color: themeColors.textColor,
+      color: themeColors.textColorHighlight,
       fontSize: 16,
     },
     tb: {
@@ -56,7 +67,6 @@ const DaySection = ({ children, timestamp }) => {
     th: {
       color: themeColors.textColor,
       fontSize: 14,
-      opacity: 0.5
     },
     child: {
       marginHorizontal: 15,
