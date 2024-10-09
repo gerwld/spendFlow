@@ -14,7 +14,8 @@ block: {
     flexDirection: "row",
     gap: 2,
     minHeight: 80,
-    marginVertical: 15,
+    marginTop: 5,
+    marginBottom: 14,
     alignSelf: "center",
     padding: 7,
     borderRadius: 16,
@@ -70,8 +71,8 @@ const setActive = (pg) => setPageIndex(pg);
             <Text style={[styles.subText, styles.child_active_inc]}>400 PLN</Text>
         </Pressable>
         </View>
-        <Text>date: {calendarDate}</Text>
-        <Text>index: {calendarIndex}</Text>
+        {/* <Text>date: {calendarDate}</Text>
+        <Text>index: {calendarIndex}</Text> */}
 
         {isActive(0) && <PageExpenses/>}
         {isActive(1) && <PageIncomes/>}

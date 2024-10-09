@@ -41,7 +41,7 @@ const THEMEV = {
     bgHighlightSec: "#e3e7f3",
     bgHighlightTh: "#eef6ff",
     borderColor: "#ebeef4",
-    borderColorSec: "#e6ebf4",
+    borderColorSec: "#dee4f0",
     borderColorTh: "#e0e5ee",
     textColor: "#44677a",
     textColorHighlight: "#000",
