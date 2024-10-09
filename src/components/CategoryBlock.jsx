@@ -49,7 +49,7 @@ const CategoryBlock = ({
       color: themeColors.gray,
     },
     text_title: {
-      fontSize: 14,
+      fontSize: isDaySection ? 17 : 14,
       color: themeColors.textColorHighlight,
     },
     text_value: {
@@ -58,14 +58,17 @@ const CategoryBlock = ({
     },
     text_operationPrice: {
       flex: 1,
-      fontSize: 15,
-      opacity: 0.8,
+      fontSize: 17,
+      opacity: 0.88,
       textAlign: "right",
       color: getGreenRedOrGray(value, themeColors).color,
     },
     text_account: {
-      fontSize: 15,
+      fontSize: 14,
+      lineHeight: 14,
+      marginTop: 2,
       color: themeColors.textColor,
+      textTransform: "capitalize"
     }
   });
 
@@ -84,7 +87,7 @@ const CategoryBlock = ({
           <>
             <Text style={styles.text_title}>{title ? title : "no data"}</Text>
             {isDaySection 
-            ? <Text style={styles.text_account}>Card</Text>
+            ? <Text style={styles.text_account}>card</Text>
             : <Text style={styles.text_value}>{value ? value : "0"} PLN</Text>}
           </>
         )}

@@ -14,7 +14,6 @@ import React from "react";
 import { useCurrentTheme } from "hooks";
 import * as SystemUI from 'expo-system-ui';
 import { Platform, StyleSheet, View} from "react-native";
-import DetailsHabitScreenAndroid from "./DetailsHabitScreenAndroid";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { BlurView } from 'expo-blur';
@@ -175,10 +174,10 @@ export const Navigation = () => {
                 navigationBarColor: route.name === "settings" ? themeColors.background : themeColors.bgHighlight || "black" })}>
                 <Stack.Screen name="home" component={MyTabs} options={{ headerShown: false, title: t("home_screen") }} />
               
-              {Platform.OS === "android"  || Platform.OS === "web" 
+              {/* {Platform.OS === "android"  || Platform.OS === "web" 
               ? <Stack.Screen name="habitdetails" component={DetailsHabitScreenAndroid} options={{ headerShown: false, title: "Habit Details", animation:"fade" }} />
               : <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
-            }
+            } */}
                 
                 {settingsSubdirectories}
                 {addEditSubdirectories}

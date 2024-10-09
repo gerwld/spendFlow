@@ -47,6 +47,9 @@ importers:
       babel-plugin-module-resolver:
         specifier: ^5.0.2
         version: 5.0.2
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       expo:
         specifier: 51.0.35
         version: 51.0.35(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))

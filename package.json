@@ -26,6 +26,7 @@
     "@react-navigation/stack": "^6.4.1",
     "@reduxjs/toolkit": "^2.2.7",
     "babel-plugin-module-resolver": "^5.0.2",
+    "dayjs": "^1.11.13",
     "expo": "51.0.35",
     "expo-asset": "^10.0.10",
     "expo-blur": "^13.0.2",
