@@ -1,49 +1,45 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, FlatList, Dimensions, StyleSheet, Pressable, Platform } from 'react-native';
-import dayjs from 'dayjs';
+import { View, Text, FlatList, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { useCurrentTheme } from 'hooks';
-import MonthGeneral from 'src/screens/home/MonthGeneral';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
 
-const InfiniteCalendar = () => {
-  const [themeColors] = useCurrentTheme();
-  const [isInit, setIsInit] = useState(true);
+const getCurrentDate = () => new Date();
+const currentYear = getCurrentDate().getFullYear();
+const currentMonth = getCurrentDate().getMonth();
+const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 0).setHours(0,0,0,0);
+const firstDayOfTheMonth = getFirstDayOfTheMonth(getCurrentDate());
+
+const InfiniteCalendar = ({ children }) => {
   const flatListRef = useRef(null);
-  const [months, setMonths] = useState(() => generateMonths(dayjs()));   // Generate 100 months
-  const [currentIndex, setCurrentIndex] = useState(50);                  // Center item is the current month
-  const [currentDate, setDate] = useState(months[currentIndex]);         // initial current date
+  const [themeColors] = useCurrentTheme();
+
+  const [isInit, setIsInit] = useState(true);
+  const [months, setMonths] = useState(() => generateMonths(new Date(firstDayOfTheMonth))); // Generate 100 months
+  const [currentIndex, setCurrentIndex] = useState(50); // Center item is the current month
+  const [currentDate, setDate] = useState(months[currentIndex]); // initial current date
 
   // Generate an array of 100 months around the base month
   function generateMonths(baseMonth) {
     const generatedMonths = [];
     for (let i = -50; i <= 50; i++) {
-      generatedMonths.push(baseMonth.add(i, 'month'));
+      const newMonth = new Date(baseMonth.getFullYear(), baseMonth.getMonth() + i, 1); // Always set day to 1
+      generatedMonths.push(newMonth);
     }
     return generatedMonths;
   }
 
   const handleNextPress = () => {
-    if(currentIndex < 99)
-    flatListRef.current.scrollToIndex({ index: currentIndex + 1, animated:  false });
+    if (currentIndex < 99) {
+      flatListRef.current.scrollToIndex({ index: currentIndex + 1, animated: false });
+    }
   };
 
   const handlePrevPress = () => {
-    if(currentIndex > 0)
-    flatListRef.current.scrollToIndex({ index: currentIndex - 1, animated: false });
+    if (currentIndex > 0) {
+      flatListRef.current.scrollToIndex({ index: currentIndex - 1, animated: false });
+    }
   };
-
-  const renderItem = ({ item, index }) => (
-    <View style={styles.slide}>
-      {/* <Text style={styles.text}>{item.format('MMMM YYYY')}</Text> */}
-      {(isInit 
-        && index === currentIndex
-        || index === currentIndex - 1
-        || index === currentIndex + 1) && <MonthGeneral />}
-
-    </View>
-  );
 
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
@@ -56,6 +52,37 @@ const InfiniteCalendar = () => {
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50, // threshold %
   };
+
+  const formatDate = (date) => {
+    return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(date);
+  };
+
+  // --------- APPEND CHILD PART ---------//
+
+  const ChildrenItem = ({ item, index }) => {
+    const childrenWithProps = React.Children.map(children, (child) => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child, {
+          calendarDate: item.toString(),
+          calendarIndex: index,
+        });
+      }
+      return child;
+    });
+    return (
+      <View style={styles.slide}>
+        {(isInit && children && index === currentIndex) ||
+        index === currentIndex - 1 ||
+        index === currentIndex + 1
+          ? childrenWithProps
+          : null}
+      </View>
+    );
+  };
+
+  const renderItem = ({ item, index }) => <ChildrenItem {...{ item, index }} />;
+
+  // ------- APPEND CHILD PART END ---------//
 
   const styles = StyleSheet.create({
     container: {
@@ -88,6 +115,10 @@ const InfiniteCalendar = () => {
       fontSize: 32,
       fontWeight: 'bold',
     },
+    buttonText: {
+      height: 30,
+      lineHeight: 30
+    }
   });
 
   return (
@@ -96,7 +127,7 @@ const InfiniteCalendar = () => {
         <Pressable onPress={handlePrevPress}>
           <Text style={styles.buttonText}>Previous</Text>
         </Pressable>
-        <Text style={styles.headerText}>{currentDate.format('MMMM YYYY')}</Text>
+        <Text style={styles.headerText}>{formatDate(currentDate)}</Text>
         <Pressable onPress={handleNextPress}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
@@ -121,7 +152,5 @@ const InfiniteCalendar = () => {
     </View>
   );
 };
-
-
 
 export default InfiniteCalendar;

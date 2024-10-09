@@ -10,6 +10,7 @@ import { appSelectors } from "@redux";
 import AnimatedAppLoader from "./AnimatedAppLoaderScreen";
 import { StatusBar } from "expo-status-bar";
 import MonthGeneral from "./home/MonthGeneral";
+import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
 
 
 // import {useIsFocused} from '@react-navigation/native';
@@ -30,7 +31,10 @@ function OverviewScreen({ navigation }) {
     >
       <BaseView>
         <HomeHeader navigation={navigation} />
+        <InfiniteCalendar>
         <MonthGeneral/>
+        </InfiniteCalendar>
+        
       </BaseView>
         <StatusBar translucent style={statusBarStyle.split("-")[0]} />
     </AnimatedAppLoader>

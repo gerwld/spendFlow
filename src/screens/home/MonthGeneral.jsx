@@ -3,7 +3,7 @@ import React from 'react'
 import { useCurrentTheme } from 'hooks';
 import CategoryBlock from 'src/components/CategoryBlock';
 
-const MonthGeneral = () => {
+const MonthGeneral = ({calendarDate, calendarIndex}) => {
 const [page, setPageIndex] = React.useState(0);
 const [themeColors] = useCurrentTheme();
 const styles = StyleSheet.create({
@@ -65,8 +65,9 @@ const setActive = (pg) => setPageIndex(pg);
             <Text style={[styles.headerText, isActive(1, 'child_active_h')]}>Incomes</Text>
             <Text style={[styles.subText, styles.child_active_inc]}>400 PLN</Text>
         </Pressable>
-
         </View>
+        <Text>date: {calendarDate}</Text>
+        <Text>index: {calendarIndex}</Text>
 
         {isActive(0) && <PageExpenses/>}
         {isActive(1) && <PageIncomes/>}
