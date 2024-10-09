@@ -12,6 +12,7 @@ const CategoryBlock = ({
   account,
   isRow,
   isDaySection,
+  isAddNew,
   addNewPressable,
 }) => {
   const [themeColors] = useCurrentTheme();
@@ -19,12 +20,13 @@ const CategoryBlock = ({
     block: {
       flexDirection: "row",
       alignItems: "center",
-      flexBasis: isRow && "45%",
+      flexBasis: isRow && "48.5%",
       padding: isRow ? 7 : 10,
       borderColor: themeColors.borderColorSec,
       borderWidth: isDaySection ? 0 : 1,
       borderRadius: isRow ? 12 : 10,
       maxHeight: 100,
+      marginRight: "auto"
     },
     icon: {
       display: "flex",
@@ -42,7 +44,7 @@ const CategoryBlock = ({
       ...StyleSheet.absoluteFill,
       backgroundColor: iconColor ? iconColor : themeColors.bgHighlightSec,
       zIndex: -1,
-      opacity: 0.5,
+      opacity: themeColors.label === "dark" ? 0.2 : 0.1,
     },
     text_new: {
       fontSize: 16,
@@ -85,10 +87,10 @@ const CategoryBlock = ({
           <Text style={styles.text_new}>{title ? title : "no data"}</Text>
         ) : (
           <>
-            <Text style={styles.text_title}>{title ? title : "no data"}</Text>
-            {isDaySection 
+           <Text style={styles.text_title}>{title ? title : "no data"}</Text>
+            {isDaySection
             ? <Text style={styles.text_account}>card</Text>
-            : <Text style={styles.text_value}>{value ? value : "0"} PLN</Text>}
+            : !isAddNew && <Text style={styles.text_value}>{value ? value : "0"} PLN</Text>}
           </>
         )}
       </View>
