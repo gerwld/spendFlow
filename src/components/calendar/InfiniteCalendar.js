@@ -1,65 +1,105 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, FlatList, Dimensions, StyleSheet, Button } from 'react-native';
+import { View, Text, FlatList, Dimensions, StyleSheet, Pressable, Platform } from 'react-native';
 import dayjs from 'dayjs';
+import { useCurrentTheme } from 'hooks';
+import MonthGeneral from 'src/screens/home/MonthGeneral';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
 
 const InfiniteCalendar = () => {
+  const [themeColors] = useCurrentTheme();
+  const [isInit, setIsInit] = useState(true);
   const flatListRef = useRef(null);
-  const [months, setMonths] = useState(() => generateMonths(dayjs(), 0)); // Start with previous, current, next
-  const [currentIndex, setCurrentIndex] = useState(1); // Center item is the current month
+  const [months, setMonths] = useState(() => generateMonths(dayjs()));   // Generate 100 months
+  const [currentIndex, setCurrentIndex] = useState(50);                  // Center item is the current month
+  const [currentDate, setDate] = useState(months[currentIndex]);         // initial current date
 
-  // Generate an array of months around the base month with an offset
-  function generateMonths(baseMonth, offset) {
-    return [
-      baseMonth.add(offset - 1, 'month'), // Previous month
-      baseMonth.add(offset, 'month'),     // Current month
-      baseMonth.add(offset + 1, 'month')  // Next month
-    ];
+  // Generate an array of 100 months around the base month
+  function generateMonths(baseMonth) {
+    const generatedMonths = [];
+    for (let i = -50; i <= 50; i++) {
+      generatedMonths.push(baseMonth.add(i, 'month'));
+    }
+    return generatedMonths;
   }
 
-  const updateMonths = (direction) => {
-    setMonths((prev) => {
-      const baseMonth = prev[1]; // Use the current middle month as the base
-      const offset = direction === 'next' ? 1 : -1;
-      return generateMonths(baseMonth, offset);
-    });
-  };
-
-  const handleEndReached = () => {
-    // If user scrolls to the next month
-    updateMonths('next');
-    flatListRef.current.scrollToIndex({ index: 1, animated: false }); // Reset to center
-  };
-
-  const handleStartReached = () => {
-    // If user scrolls to the previous month
-    updateMonths('prev');
-    flatListRef.current.scrollToIndex({ index: 1, animated: false }); // Reset to center
-  };
-
   const handleNextPress = () => {
-    updateMonths('next');
-    flatListRef.current.scrollToIndex({ index: 1, animated: false });
+    if(currentIndex < 99)
+    flatListRef.current.scrollToIndex({ index: currentIndex + 1, animated:  false });
   };
 
   const handlePrevPress = () => {
-    updateMonths('prev');
-    flatListRef.current.scrollToIndex({ index: 1, animated: false });
+    if(currentIndex > 0)
+    flatListRef.current.scrollToIndex({ index: currentIndex - 1, animated: false });
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item, index }) => (
     <View style={styles.slide}>
-      <Text style={styles.text}>{item.format('MMMM YYYY')}</Text>
+      {/* <Text style={styles.text}>{item.format('MMMM YYYY')}</Text> */}
+      {(isInit 
+        && index === currentIndex
+        || index === currentIndex - 1
+        || index === currentIndex + 1) && <MonthGeneral />}
+
     </View>
   );
+
+  const onViewableItemsChanged = useRef(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      const newIndex = viewableItems[0].index;
+      setCurrentIndex(newIndex);
+      setDate(months[newIndex]); // updates current date when viewable item changes
+    }
+  });
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50, // threshold %
+  };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    buttons: {
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: 10,
+      marginBottom: 0,
+      borderBottomWidth: 1,
+      borderTopWidth: 1,
+      borderTopColor: themeColors.borderColorSec,
+      borderBottomColor: themeColors.borderColorSec,
+    },
+    headerText: {
+      fontSize: 17,
+      fontWeight: '600',
+    },
+    slide: {
+      width: width,
+      height: height - 50,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    text: {
+      fontSize: 32,
+      fontWeight: 'bold',
+    },
+  });
 
   return (
     <View style={styles.container}>
       <View style={styles.buttons}>
-        <Button title="Previous" onPress={handlePrevPress} />
-        <Text style={styles.buttonText}>{months[1].format('MMMM YYYY')}</Text>
-        <Button title="Next" onPress={handleNextPress} />
+        <Pressable onPress={handlePrevPress}>
+          <Text style={styles.buttonText}>Previous</Text>
+        </Pressable>
+        <Text style={styles.headerText}>{currentDate.format('MMMM YYYY')}</Text>
+        <Pressable onPress={handleNextPress}>
+          <Text style={styles.buttonText}>Next</Text>
+        </Pressable>
       </View>
       <FlatList
         ref={flatListRef}
@@ -74,45 +114,14 @@ const InfiniteCalendar = () => {
           offset: width * index,
           index,
         })}
-        decelerationRate="fast"
-        initialScrollIndex={1} // Start at the center (current month)
-        onEndReached={handleEndReached} // Triggered when user scrolls to the end
-        onEndReachedThreshold={0.1} // Trigger near the end
-        onStartReached={handleStartReached} // Triggered when user scrolls to the beginning
-        onStartReachedThreshold={0.1} // Trigger near the start
+        initialScrollIndex={50} // start at the center (current month)
+        onViewableItemsChanged={onViewableItemsChanged.current}
+        viewabilityConfig={viewabilityConfig}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  buttons: {
-    width: "100%",
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    marginBottom: 20,
-    // position: "absolute",
-    top: 0,
-    zIndex: -1,
-  },
-  slide: {
-    width: width,
-    height: height - 50,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    // marginTop: 50,
-    borderTopColor: "red",
-    borderTopWidth: 1,
-  },
-  text: {
-    fontSize: 32,
-    fontWeight: 'bold',
-  },
-});
+
 
 export default InfiniteCalendar;
