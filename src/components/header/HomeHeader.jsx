@@ -61,7 +61,7 @@ export const HomeHeader = React.memo(
           </View>
           <View style={headerStyles.rightComponent}>
             {rightChild ? (
-              rightChild
+           rightChild(headerStyles.headerButton, themeColors.textColorHighlight)
             ) : (
               <Pressable
                 style={headerStyles.headerButton}

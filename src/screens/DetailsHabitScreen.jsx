@@ -18,8 +18,8 @@ import * as Haptics from 'expo-haptics';
 
 import { habitSelectors } from '@redux';
 
-import HeatmapYear from "./details_lazy/LazyHeatmapYear";
-import ChartYear from "./details_lazy/LazyChartYear";
+import HeatmapYear from "./details/LazyHeatmapYear";
+import ChartYear from "./details/LazyChartYear";
 import Animated, { FadeIn } from 'react-native-reanimated';
 
 const DetailsHabitScreen = React.memo(({ route, navigation }) => {

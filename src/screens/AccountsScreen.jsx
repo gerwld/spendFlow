@@ -4,7 +4,7 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { useCurrentTheme } from "hooks";
 import { Platform, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { TouchableOpacity } from "react-native";
-import CategoryBlock from "src/components/CategoryBlock";
+import CategoryItem from "src/components/items/CategoryItem";
 import StatBlock from "src/components/StatBlock";
 import { HEADER_SHADOW } from "@constants";
 
@@ -60,9 +60,9 @@ const AccountsSubscreen = ({balance = -200, balanceSavings = 0}) => {
       </View>
 
       <View style={styles.subitems}>
-      <CategoryBlock title="Card"/>
-      <CategoryBlock title="Cash"/>
-      <CategoryBlock addNewPressable title="Add financial account"/>
+      <CategoryItem title="Card"/>
+      <CategoryItem title="Cash"/>
+      <CategoryItem addNewPressable title="Add financial account"/>
       </View>
 
       <View style={styles.header}>
@@ -71,8 +71,8 @@ const AccountsSubscreen = ({balance = -200, balanceSavings = 0}) => {
       </View>
 
       <View style={styles.subitems}>
-      <CategoryBlock title="New car"/>
-      <CategoryBlock addNewPressable title="Add new saving"/>
+      <CategoryItem title="New car"/>
+      <CategoryItem addNewPressable title="Add new saving"/>
       </View>
     </ScrollView>
   )

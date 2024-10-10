@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native'
 import React from 'react'
 import { useCurrentTheme } from 'hooks';
-import CategoryBlock from 'src/components/CategoryBlock';
+import CategoryItem from 'src/components/items/CategoryItem';
 import { LucideApple } from 'lucide-react-native';
 import { LucidePopcorn } from 'lucide-react-native';
 import { LucidePlus } from 'lucide-react-native';
@@ -11,6 +11,8 @@ import { LucideCat } from 'lucide-react-native';
 import { Landmark } from 'lucide-react-native';
 import { ShieldCheck } from 'lucide-react-native';
 import { ArrowBigDownDash } from 'lucide-react-native';
+import { LucideRepeat2 } from 'lucide-react-native';
+import { EthernetPort } from 'lucide-react-native';
 
 const width = Dimensions.get("screen").width
 
@@ -115,55 +117,61 @@ const PageExpensesContent = () => {
     
     return (
         <View style={styles.block}>
-            <CategoryBlock
+            <CategoryItem
             iconColor="#ff3939"
             icon={<LucidePopcorn stroke="#ff3939"/>}
             title="Entertainment"
             isRow />
-            <CategoryBlock
+            <CategoryItem
             iconColor="#3988ff"
             icon={<LucideApple stroke="#3988ff"/>}
             title="Groceries"
             isRow />
-            <CategoryBlock
+            <CategoryItem
             iconColor="#ff8c39"
             icon={<LucideBookHeart stroke="#ff8c39"/>}
             title="Education"
             isRow />
-            <CategoryBlock
+            <CategoryItem
             iconColor="#39ff6e"
             icon={<LucideTrain stroke="#32dc60"/>}
             title="Transport"
             isRow />
-              <CategoryBlock
+              <CategoryItem
             iconColor="#3999ff"
             icon={<Landmark stroke="#3999ff"/>}
             title="Savings"
             isRow />
             
-            <CategoryBlock
+            <CategoryItem
             iconColor="#ffe816"
             icon={<LucideCat stroke="#decd36"/>}
             title="Pets"
             isRow />
           
-             <CategoryBlock
+             <CategoryItem
             iconColor="#ff39ff"
             icon={<ArrowBigDownDash stroke="#ff39ff"/>}
             title="Debt Payments"
             isRow />
-            <CategoryBlock
+            <CategoryItem
             iconColor="#36f4dd"
             icon={<ShieldCheck stroke="#31e2cd"/>}
             title="Insurance"
             isRow />
+
+            <CategoryItem
+            iconColor="#5236f4"
+            icon={<EthernetPort stroke="#5236f4"/>}
+            title="Subscriptions"
+            isRow />
            
-            <CategoryBlock
-            // iconColor="#535353"
+            <CategoryItem
+            isAddNew
             icon={<LucidePlus stroke="#b3b9bf"/>}
             title="Add new"
             isRow
-            isAddNew />
+             />
         </View>
     )
 }

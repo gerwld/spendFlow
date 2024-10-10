@@ -1,32 +1,46 @@
 import React from "react";
 import { BaseView, HomeHeader } from "@components";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useCurrentTheme } from "hooks";
 import { getGreenRedOrGray } from "@constants";
 import { ScrollView } from "react-native-gesture-handler";
-import CategoryBlock from "src/components/CategoryBlock";
+import CategoryItem from "src/components/items/CategoryItem";
 import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
+import { LucidePlus } from "lucide-react-native";
+import SearchAndFilter from "src/components/SearchAndFilter";
+import OperationsItem from "src/components/items/OperationsItem";
 
 const OperationsScreen = ({ navigation }) => {
+  
+  
+  const RightPress = (styles, stroke) => {
+    return (
+        <Pressable style={styles}>
+          <LucidePlus style={{ alignSelf: "center" }} stroke={stroke} height={34} width={34} />
+        </Pressable>
+    )
+  }
   return (
     <BaseView>
-      <HomeHeader navigation={navigation} />
+      <HomeHeader navigation={navigation} rightChild={RightPress} />
       <InfiniteCalendar>
-      <LastOperations />
+        <SearchAndFilter/>
+        <LastOperations />
       </InfiniteCalendar>
     </BaseView>
   );
 };
 
 const LastOperations = () => {
-  
+
   const styles = StyleSheet.create({
     block: {
       width: "100%",
-      marginTop: 10
+      flex: 1,
+      paddingTop: 10,
     },
   });
-  
+
   return (
     <ScrollView style={styles.block}>
       <DaySection>
@@ -38,6 +52,16 @@ const LastOperations = () => {
         <DaySectionItem />
         <DaySectionItem />
       </DaySection>
+      <DaySection>
+        <DaySectionItem />
+        <DaySectionItem />
+        <DaySectionItem />
+      </DaySection>
+      <DaySection>
+        <DaySectionItem />
+        <DaySectionItem />
+        <DaySectionItem />
+      </DaySection>
     </ScrollView>
   );
 };
@@ -45,20 +69,20 @@ const LastOperations = () => {
 const DaySection = ({ children, timestamp }) => {
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
-
+    block: {
+      marginHorizontal: 19,
+      marginBottom: 10
+    },
     header: {
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-between",
-      marginHorizontal: 15,
-      paddingHorizontal: 2,
       paddingVertical: 5,
-      borderBottomWidth: 2,
+      // borderBottomWidth: 1,
       borderBottomColor: themeColors.borderColorSec,
     },
     t: {
       color: themeColors.textColorHighlight,
-      fontSize: 16,
+      fontSize: 15,
     },
     tb: {
       color: themeColors.textColor,
@@ -66,34 +90,26 @@ const DaySection = ({ children, timestamp }) => {
     },
     th: {
       color: themeColors.textColor,
-      fontSize: 14,
+      fontSize: 15,
+      marginLeft: 5
     },
-    child: {
-      marginHorizontal: 15,
-      marginTop: 5,
-      marginBottom: 18,
-    }
+
   });
 
   return (
     <View style={styles.block}>
-      <View style={styles.header}>
-        <View>
+        <View style={styles.header}>
           <Text style={styles.t}>7 October 2024</Text>
           <Text style={styles.th}>(Monday)</Text>
         </View>
-        <Text style={[styles.tb, getGreenRedOrGray(-500, themeColors)]}>
-          -500 PLN
-        </Text>
-      </View>
 
-      <View style={styles.child}>{children}</View>
+      <View>{children}</View>
     </View>
   );
 };
 
 const DaySectionItem = () => {
-  return <CategoryBlock isDaySection isRow value={-90} />;
+  return <OperationsItem value={-90} />;
 };
 
 export default OperationsScreen;

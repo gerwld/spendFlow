@@ -3,7 +3,6 @@ import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import OverviewScreen from "./OverviewScreen";
 import { useTranslation } from "react-i18next";
 import TutorialScreen from "./TutorialScreen";
-import DetailsHabitScreen from "./DetailsHabitScreen";
 import SettingsScreen from "./SettingsScreen";
 import AHSRepeat from "./subsreens/AHSRepeat";
 import STLanguage from "./subsreens/STLanguage";
@@ -29,8 +28,7 @@ import { ChartPie } from 'lucide-react-native';
 import { HandCoins } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedAppLoader from './AnimatedAppLoaderScreen';
-import { useSelector } from 'react-redux';
-import { appSelectors } from '@redux';
+
 
 
 
@@ -118,8 +116,11 @@ function MyTabs() {
             stroke={focused ? themeColors.tabsActiveColor : themeColors.tabsColor}/>
         }
     })}>
-        <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Overview" }} />
         <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
+      
+        <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Overview" }} />
+      
+       
         <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ headerShown: false, title: "Accounts" }} />
         <Tab.Screen name="more_tab" component={MoreScreen} options={{ headerShown: false, title: "More" }} />
       
@@ -191,11 +192,7 @@ export const Navigation = () => {
                 navigationBarColor: getNavigationBarColor(route) })}>
                 <Stack.Screen name="home" component={MyTabs} options={{ headerShown: false, title: t("home_screen") }} />
               
-              {/* {Platform.OS === "android"  || Platform.OS === "web" 
-              ? <Stack.Screen name="habitdetails" component={DetailsHabitScreenAndroid} options={{ headerShown: false, title: "Habit Details", animation:"fade" }} />
-              : <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
-            } */}
-                
+
                 {settingsSubdirectories}
                 {addEditSubdirectories}
                 <Stack.Screen

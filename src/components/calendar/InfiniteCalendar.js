@@ -117,7 +117,7 @@ const InfiniteCalendar = ({ children }) => {
     },
     slide: {
       width: width,
-      height: height - 50,
+      height: height - 240,
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
