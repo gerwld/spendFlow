@@ -7,12 +7,12 @@ import { LucideChevronRight } from 'lucide-react-native';
 const { width, height } = Dimensions.get('window');
 
 const getCurrentDate = () => new Date();
-const currentYear = getCurrentDate().getFullYear();
-const currentMonth = getCurrentDate().getMonth();
+// const currentYear = getCurrentDate().getFullYear();
+// const currentMonth = getCurrentDate().getMonth();
 const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 0).setHours(0,0,0,0);
 const firstDayOfTheMonth = getFirstDayOfTheMonth(getCurrentDate());
 
-const InfiniteCalendar = ({ children }) => {
+const InfiniteCalendar = ({ children, renderHeader }) => {
   const flatListRef = useRef(null);
   const [themeColors] = useCurrentTheme();
 
@@ -99,8 +99,6 @@ const InfiniteCalendar = ({ children }) => {
       alignItems: 'center',
       justifyContent: 'space-between',
       marginBottom: 0,
-      // borderBottomWidth: 1,
-      // borderTopWidth: 1,
       borderTopColor: themeColors.borderColorTh,
       borderBottomColor: themeColors.borderColorTh,
     },
@@ -142,6 +140,9 @@ const InfiniteCalendar = ({ children }) => {
           <LucideChevronRight width={28} height={30} stroke={themeColors.textColorHighlight}/>
         </Pressable>
       </View>
+
+      {renderHeader && renderHeader()}
+
       <FlatList
         ref={flatListRef}
         data={months}

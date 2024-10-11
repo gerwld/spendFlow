@@ -1,31 +1,28 @@
-import React, {useState, useRef} from "react";
-import { BaseView, HomeHeader } from "@components";
+import React from "react";
+import {  HomeHeader } from "@components";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useCurrentTheme } from "hooks";
-import { getGreenRedOrGray } from "@constants";
 import { ScrollView } from "react-native-gesture-handler";
-import CategoryItem from "src/components/items/CategoryItem";
 import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
 import { LucidePlus } from "lucide-react-native";
 import SearchAndFilter from "src/components/SearchAndFilter";
 import OperationsItem from "src/components/items/OperationsItem";
 import BottomSheet from "src/components/sheets/BottomSheet";
-import { useSharedValue } from "react-native-reanimated";
 
 const OperationsScreen = ({ navigation }) => {
   return (
     <>
-        <HeaderSaturated/>
-        <InfiniteCalendar 
-          renderHeader={() => <SearchAndFilter/>}>
-          <LastOperations />
-        </InfiniteCalendar>
-   
+      <HeaderSaturated navigation={navigation} />
+      <InfiniteCalendar
+        renderHeader={() => <SearchAndFilter />}>
+        <LastOperations />
+      </InfiniteCalendar>
+
     </>
   );
 };
 
-const HeaderSaturated = ({navigation}) => {
+const HeaderSaturated = ({ navigation }) => {
   const [isSheetOpen, toggleSheetOpen] = React.useState(false);
 
   const toggleSheet = () => {
@@ -33,15 +30,15 @@ const HeaderSaturated = ({navigation}) => {
   };
 
   const RightPress = (styles, stroke) => <Pressable style={styles} onPress={toggleSheet}>
-          <LucidePlus style={{ alignSelf: "center" }} stroke={stroke} height={34} width={34} />
-        </Pressable>
+    <LucidePlus style={{ alignSelf: "center" }} stroke={stroke} height={34} width={34} />
+  </Pressable>
 
-return <>
+  return <>
     <HomeHeader navigation={navigation} rightChild={RightPress} />
     <BottomSheet isOpen={isSheetOpen} toggleSheet={toggleSheet}>
       <Text>dsvsdv</Text>
     </BottomSheet>
-</>
+  </>
 }
 
 const LastOperations = () => {
@@ -58,29 +55,29 @@ const LastOperations = () => {
 
   return (
     <View style={styles.parent}>
-    <ScrollView 
-      contentContainerStyle={styles.content}
-       style={styles.block}>
-      <DaySection>
-        <DaySectionItem />
-        <DaySectionItem />
-        <DaySectionItem />
-      </DaySection>
-      <DaySection>
-        <DaySectionItem />
-        <DaySectionItem />
-      </DaySection>
-      <DaySection>
-        <DaySectionItem />
-        <DaySectionItem />
-        <DaySectionItem />
-      </DaySection>
-      <DaySection>
-        <DaySectionItem />
-        <DaySectionItem />
-        <DaySectionItem />
-      </DaySection>
-    </ScrollView>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        style={styles.block}>
+        <DaySection>
+          <DaySectionItem />
+          <DaySectionItem />
+          <DaySectionItem />
+        </DaySection>
+        <DaySection>
+          <DaySectionItem />
+          <DaySectionItem />
+        </DaySection>
+        <DaySection>
+          <DaySectionItem />
+          <DaySectionItem />
+          <DaySectionItem />
+        </DaySection>
+        <DaySection>
+          <DaySectionItem />
+          <DaySectionItem />
+          <DaySectionItem />
+        </DaySection>
+      </ScrollView>
     </View>
   );
 };
@@ -96,7 +93,6 @@ const DaySection = ({ children, timestamp }) => {
       flexDirection: "row",
       alignItems: "center",
       paddingVertical: 5,
-      // borderBottomWidth: 1,
       borderBottomColor: themeColors.borderColorSec,
     },
     t: {
@@ -117,10 +113,10 @@ const DaySection = ({ children, timestamp }) => {
 
   return (
     <View style={styles.block}>
-        <View style={styles.header}>
-          <Text style={styles.t}>7 October 2024</Text>
-          <Text style={styles.th}>(Monday)</Text>
-        </View>
+      <View style={styles.header}>
+        <Text style={styles.t}>7 October 2024</Text>
+        <Text style={styles.th}>(Monday)</Text>
+      </View>
 
       <View>{children}</View>
     </View>
