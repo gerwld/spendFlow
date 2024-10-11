@@ -15,10 +15,10 @@ const SearchAndFilter = () => {
       alignSelf: "center",
       marginLeft: 18,
       marginRight: 4,
-      marginTop: -4
+      backgroundColor: themeColors.background
     },
     input: {
-      height: 37,
+      height: 40,
       paddingLeft: 40,
       borderWidth: 1.2,
       borderColor: themeColors.borderColorSec,
@@ -27,12 +27,12 @@ const SearchAndFilter = () => {
     inputParent: {
       flex: 1,
       minWidth: 300,
-      height: 36,
+      height: 44,
     },
     inputIcon: {
       position: "absolute",
-      top: 4,
-      left: 4,
+      top: 7,
+      left: 10,
     },
     filterButton: {
       flex: 1,

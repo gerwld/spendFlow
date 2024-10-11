@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, FlatList, Dimensions, StyleSheet, Pressable } from 'react-native';
+import { View, Text, FlatList, Dimensions, StyleSheet, Pressable, Platform } from 'react-native';
 import { useCurrentTheme } from 'hooks';
 import { LucideChevronLeft } from 'lucide-react-native';
 import { LucideChevronRight } from 'lucide-react-native';
-import { HEADER_SHADOW } from '@constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -13,7 +12,7 @@ const currentMonth = getCurrentDate().getMonth();
 const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 0).setHours(0,0,0,0);
 const firstDayOfTheMonth = getFirstDayOfTheMonth(getCurrentDate());
 
-const InfiniteCalendar = ({ children, renderHeader }) => {
+const InfiniteCalendar = ({ children }) => {
   const flatListRef = useRef(null);
   const [themeColors] = useCurrentTheme();
 
@@ -72,6 +71,14 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
       }
       return child;
     });
+
+    if(Platform.OS === "android") return (
+      <View style={styles.slide}>
+        {(isInit && children && index === currentIndex)
+          ? childrenWithProps
+          : null}
+      </View>)
+
     return (
       <View style={styles.slide}>
         {(isInit && children && index === currentIndex) ||
@@ -117,7 +124,7 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
     },
     slide: {
       width: width,
-      // height: height - 240,
+      height: height - 240,
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
@@ -142,7 +149,6 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
           <LucideChevronRight width={28} height={30} stroke={themeColors.textColorHighlight}/>
         </Pressable>
       </View>
-      {renderHeader()}
       <FlatList
         ref={flatListRef}
         data={months}
@@ -163,5 +169,6 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
     </View>
   );
 };
+
 
 export default InfiniteCalendar;

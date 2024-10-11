@@ -85,7 +85,7 @@ function MyTabs() {
         tabBarItemStyle: {
             "height": 54
         },
-        tabBarStyle: [{display: "flex", height: insets.bottom + 60, position: "absolute",  bottom: 0 }, Platform.OS === "android" && {paddingBottom: 10, borderTopColor: themeColors.background, borderTopWidth: 1}],
+        tabBarStyle: [{display: "flex", height: insets.bottom + 60, position: "static",  bottom: 0 }, Platform.OS === "android" && {paddingBottom: 10, borderTopColor: themeColors.background, borderTopWidth: 1}],
         tabBarBackground: () => (
         Platform.OS === "fgn"
          ? <BlurView tint={themeColors.label} intensity={100} style={[StyleSheet.absoluteFill]} />

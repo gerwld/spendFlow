@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useRef} from "react";
 import { BaseView, HomeHeader } from "@components";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useCurrentTheme } from "hooks";
@@ -23,8 +23,8 @@ const OperationsScreen = ({ navigation }) => {
   return (
     <BaseView>
       <HomeHeader navigation={navigation} rightChild={RightPress} />
-      <InfiniteCalendar>
-        <SearchAndFilter/>
+        <InfiniteCalendar 
+          renderHeader={() => <SearchAndFilter/>}>
         <LastOperations />
       </InfiniteCalendar>
     </BaseView>
@@ -34,15 +34,19 @@ const OperationsScreen = ({ navigation }) => {
 const LastOperations = () => {
 
   const styles = StyleSheet.create({
-    block: {
+    parent: {
       width: "100%",
       flex: 1,
-      paddingTop: 10,
     },
+    content: {
+      paddingBottom: 20
+    }
   });
 
   return (
-    <ScrollView style={styles.block}>
+    <View style={styles.parent}>
+    <ScrollView 
+       style={styles.block}>
       <DaySection>
         <DaySectionItem />
         <DaySectionItem />
@@ -63,6 +67,7 @@ const LastOperations = () => {
         <DaySectionItem />
       </DaySection>
     </ScrollView>
+    </View>
   );
 };
 
@@ -71,7 +76,7 @@ const DaySection = ({ children, timestamp }) => {
   const styles = StyleSheet.create({
     block: {
       marginHorizontal: 19,
-      marginBottom: 10
+      marginTop: 10
     },
     header: {
       flexDirection: "row",
