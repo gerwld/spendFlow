@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    minHeight: 150,
+    maxHeight: screenHeight - 150,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 16,

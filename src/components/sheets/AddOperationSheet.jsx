@@ -1,14 +1,15 @@
-import { View, Text } from 'react-native'
+import { Text, Platform } from 'react-native'
 import React from 'react'
 import BottomSheetExperimental from './BottomSheetExperimental'
-import { useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
+import BottomSheet from './BottomSheet'
+import { useCurrentTheme } from 'hooks'
 
-const AddOperationSheet = ({isOpen, toggleSheet}) => {
+const AddOperationSheet = ({ isOpen, toggleSheet }) => {
+  const [themeColors] = useCurrentTheme();
 
-  return (
-    <BottomSheetExperimental isOpen={isOpen} toggleSheet={toggleSheet}>
-      <ScrollView>
+  const renderContent = (
+    <ScrollView>
       <Text>dfbfbfbdfb</Text>
       <Text>dfbfbfbdfb</Text>
       <Text>dfbfbfbdfb</Text>
@@ -21,9 +22,19 @@ const AddOperationSheet = ({isOpen, toggleSheet}) => {
       <Text>dfbfbfbdfb</Text>
       <Text>dfbfbfbdfb</Text>
       <Text>dfbfbfbdfb</Text>
-      </ScrollView>
-    </BottomSheetExperimental>
+    </ScrollView>
   )
+
+  return Platform.OS === "ios"
+  
+    ? <BottomSheetExperimental isOpen={isOpen} toggleSheet={toggleSheet} backgroundColor={themeColors.bgHighlight}>
+      {renderContent}
+    </BottomSheetExperimental>
+
+    : <BottomSheet isOpen={isOpen} toggleSheet={toggleSheet} backgroundColor={themeColors.bgHighlight}>
+      {renderContent}
+    </BottomSheet>
+
 }
 
 export default AddOperationSheet
