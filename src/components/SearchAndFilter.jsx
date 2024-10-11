@@ -25,8 +25,7 @@ const SearchAndFilter = () => {
       borderRadius: 10
     },
     inputParent: {
-      flex: 1,
-      minWidth: 300,
+      flexBasis: "86%",
       height: 44,
     },
     inputIcon: {
@@ -51,7 +50,7 @@ const SearchAndFilter = () => {
         <LucideSearch
           style={styles.inputIcon}
           stroke={themeColors.borderColorTh}
-          width="28" height="28" />
+          width="25" height="25" />
         <TextInput
           editable
           numberOfLines={1}
