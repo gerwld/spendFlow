@@ -114,64 +114,76 @@ const PageExpensesContent = () => {
         
     },
     });
+
+    const dataArray = React.useMemo(() => [
+        {
+            id: 1,
+            title: "Entertainment",
+            icon: <LucidePopcorn stroke="#ff3939" />,
+            iconColor: "#ff3939",
+        },
+        {
+            id: 2,
+            title: "Groceries",
+            icon: <LucideApple stroke="#3988ff" />,
+            iconColor: "#3988ff",
+        },
+        {
+            id: 3,
+            title: "Education",
+            icon: <LucideBookHeart stroke="#ff8c39" />,
+            iconColor: "#ff8c39",
+        },
+        {
+            id: 4,
+            title: "Transport",
+            icon: <LucideTrain stroke="#39ff6e" />,
+            iconColor: "#39ff6e",
+        },
+        {
+            id: 5,
+            title: "Savings",
+            icon: <Landmark stroke="#3999ff" />,
+            iconColor: "#3999ff",
+        },
+        {
+            id: 6,
+            title: "Pets",
+            icon: <LucideCat stroke="#decd36" />,
+            iconColor: "#decd36",
+        },
+        {
+            id: 7,
+            title: "Debt Payments",
+            icon: <ArrowBigDownDash stroke="#ff39ff" />,
+            iconColor: "#ff39ff",
+        },
+        {
+            id: 8,
+            title: "Insurance",
+            icon: <ShieldCheck stroke="#31e2cd" />,
+            iconColor: "#31e2cd",
+        },
+        {
+            id: 9,
+            title: "Subscriptions",
+            icon: <EthernetPort stroke="#5236f4" />,
+            iconColor: "#5236f4",
+        },
+        {
+            id: 10,
+            title: "Add new",
+            icon: <LucidePlus stroke="#b3b9bf" />,
+            iconColor: "#b3b9bf",
+            isAddNew: true,
+        },
+    ], []);
     
     return (
         <View style={styles.block}>
-            <CategoryItem
-            iconColor="#ff3939"
-            icon={<LucidePopcorn stroke="#ff3939"/>}
-            title="Entertainment"
-            isRow />
-            <CategoryItem
-            iconColor="#3988ff"
-            icon={<LucideApple stroke="#3988ff"/>}
-            title="Groceries"
-            isRow />
-            <CategoryItem
-            iconColor="#ff8c39"
-            icon={<LucideBookHeart stroke="#ff8c39"/>}
-            title="Education"
-            isRow />
-            <CategoryItem
-            iconColor="#39ff6e"
-            icon={<LucideTrain stroke="#32dc60"/>}
-            title="Transport"
-            isRow />
-              <CategoryItem
-            iconColor="#3999ff"
-            icon={<Landmark stroke="#3999ff"/>}
-            title="Savings"
-            isRow />
-            
-            <CategoryItem
-            iconColor="#ffe816"
-            icon={<LucideCat stroke="#decd36"/>}
-            title="Pets"
-            isRow />
-          
-             <CategoryItem
-            iconColor="#ff39ff"
-            icon={<ArrowBigDownDash stroke="#ff39ff"/>}
-            title="Debt Payments"
-            isRow />
-            <CategoryItem
-            iconColor="#36f4dd"
-            icon={<ShieldCheck stroke="#31e2cd"/>}
-            title="Insurance"
-            isRow />
-
-            <CategoryItem
-            iconColor="#5236f4"
-            icon={<EthernetPort stroke="#5236f4"/>}
-            title="Subscriptions"
-            isRow />
-           
-            <CategoryItem
-            isAddNew
-            icon={<LucidePlus stroke="#b3b9bf"/>}
-            title="Add new"
-            isRow
-             />
+            {dataArray.map(item => 
+                <CategoryItem key={item.id} iconColor={item.iconColor} icon={item.icon} title={item.title} isRow />
+        )}
         </View>
     )
 }

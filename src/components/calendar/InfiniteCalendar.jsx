@@ -72,19 +72,12 @@ const InfiniteCalendar = ({ children }) => {
       return child;
     });
 
-    if(Platform.OS === "android") return (
-      <View style={styles.slide}>
-        {(isInit && children && index === currentIndex)
-          ? childrenWithProps
-          : null}
-      </View>)
-
     return (
       <View style={styles.slide}>
         {(isInit && children && index === currentIndex) ||
         index === currentIndex - 1 ||
         index === currentIndex + 1
-          ? childrenWithProps
+          ? children
           : null}
       </View>
     );

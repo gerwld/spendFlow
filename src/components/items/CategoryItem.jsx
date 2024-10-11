@@ -13,7 +13,7 @@ const CategoryItem = ({ icon, iconColor, title, value }) => {
       borderColor: themeColors.borderColorSec,
       borderRadius: 12,
       maxHeight: 100,
-      flexBasis: "48.5%",
+      flexBasis: "48%",
     },
     icon: {
       width: 45,

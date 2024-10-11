@@ -80,6 +80,11 @@
       "expo-localization",
       "expo-router",
       "expo-asset"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "433e4d52-a8fe-46a3-b554-7db4965685f2"
+      }
+    }
   }
 }
