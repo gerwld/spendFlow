@@ -28,6 +28,7 @@ import { ChartPie } from 'lucide-react-native';
 import { HandCoins } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedAppLoader from './AnimatedAppLoaderScreen';
+import { TransitionPresets } from '@react-navigation/stack';
 
 
 
@@ -188,6 +189,7 @@ export const Navigation = () => {
         <GestureHandlerRootView style={{flex: 1, backgroundColor: themeColors.background || "white"}}>
         <NavigationContainer>
             <Stack.Navigator screenOptions={({ route }) => ({ 
+                ...TransitionPresets.ModalPresentationIOS,
                 gestureEnabled: true, 
                 navigationBarColor: getNavigationBarColor(route) })}>
                 <Stack.Screen name="home" component={MyTabs} options={{ headerShown: false, title: t("home_screen") }} />

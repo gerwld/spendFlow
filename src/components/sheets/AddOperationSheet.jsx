@@ -1,22 +1,28 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import BottomSheet from './BottomSheet'
-import { useCurrentTheme } from 'hooks';
-import { useNavigation } from '@react-navigation/native'
+import BottomSheetExperimental from './BottomSheetExperimental'
+import { useState } from 'react'
+import { ScrollView } from 'react-native-gesture-handler'
 
-const AddOperationSheet = ({ isOpen, toggleSheet }) => {
-  const [themeColors] = useCurrentTheme();
-  const navigation = useNavigation();
+const AddOperationSheet = ({isOpen, toggleSheet}) => {
 
-  console.log(navigation.setOptions);
-  
   return (
-    <BottomSheet
-      backgroundColor={themeColors.bgHighlight}
-      isOpen={isOpen}
-      toggleSheet={toggleSheet}>
-      <Text>dsvsdv</Text>
-    </BottomSheet>
+    <BottomSheetExperimental isOpen={isOpen} toggleSheet={toggleSheet}>
+      <ScrollView>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      <Text>dfbfbfbdfb</Text>
+      </ScrollView>
+    </BottomSheetExperimental>
   )
 }
 
