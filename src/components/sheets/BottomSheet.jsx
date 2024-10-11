@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
-  View,
   StyleSheet,
   TouchableWithoutFeedback,
   Modal,
@@ -10,26 +9,42 @@ import {
 
 const { height: screenHeight } = Dimensions.get("screen");
 
-const AnimatedBottomSheet = ({ isOpen, children, toggleSheet, duration = 200 }) => {
+const BottomSheet = ({ isOpen, children, toggleSheet, duration = 200, backgroundColor }) => {
   const translateY = useRef(new Animated.Value(screenHeight)).current;
+  const opacity = useRef(new Animated.Value(0)).current; // Create an animated value for opacity
   const [isOpenForModal, setIsOpenForModal] = useState(false);  
 
   useEffect(() => {
     if (isOpen) {
-      // Open the modal first, then start the animation
       setIsOpenForModal(true);
-      Animated.timing(translateY, {
-        toValue: 0, // Slide into view
-        duration: duration,
-        useNativeDriver: true,
-      }).start();
+
+      // Animate the background and the bottom sheet
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: 0, // Slide into view
+          duration: duration,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 1, // Fade in the background
+          duration: duration,
+          useNativeDriver: true,
+        }),
+      ]).start();
     } else {
-      // Start the closing animation, then close the modal after the animation finishes
-      Animated.timing(translateY, {
-        toValue: screenHeight, // Slide out of view
-        duration: duration,
-        useNativeDriver: true,
-      }).start(() => {
+      // Animate the background and the bottom sheet in reverse
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: screenHeight, // Slide out of view
+          duration: duration,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 0, // Fade out the background
+          duration: duration,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
         setTimeout(() => setIsOpenForModal(false), 0); // Delay modal closing to allow animation
       });
     }
@@ -39,15 +54,18 @@ const AnimatedBottomSheet = ({ isOpen, children, toggleSheet, duration = 200 }) 
     <Modal 
       animationType="none"
       onRequestClose={toggleSheet}
-      onPress={toggleSheet} transparent visible={isOpenForModal}>
+      transparent
+      visible={isOpenForModal}
+    >
       <TouchableWithoutFeedback onPress={toggleSheet}>
-        <View style={styles.overlay} />
+        <Animated.View style={[styles.overlay, { opacity }]} />
       </TouchableWithoutFeedback>
 
       <Animated.View
         style={[
           styles.sheet,
           {
+            backgroundColor: backgroundColor || "#ffffff",
             transform: [{ translateY }],
           },
         ]}
@@ -61,18 +79,17 @@ const AnimatedBottomSheet = ({ isOpen, children, toggleSheet, duration = 200 }) 
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dark overlay behind the bottom sheet
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // Dark overlay behind the bottom sheet
   },
   sheet: {
     position: "absolute",
     bottom: 0,
     width: "100%",
-    height: 300, // Adjust the height of your bottom sheet
-    backgroundColor: "white",
+    minHeight: 150,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 16,
   },
 });
 
-export default AnimatedBottomSheet;
+export default BottomSheet;

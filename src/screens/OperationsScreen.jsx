@@ -1,5 +1,5 @@
 import React from "react";
-import {  HomeHeader } from "@components";
+import { HomeHeader } from "@components";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useCurrentTheme } from "hooks";
 import { ScrollView } from "react-native-gesture-handler";
@@ -7,7 +7,7 @@ import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
 import { LucidePlus } from "lucide-react-native";
 import SearchAndFilter from "src/components/SearchAndFilter";
 import OperationsItem from "src/components/items/OperationsItem";
-import BottomSheet from "src/components/sheets/BottomSheet";
+import AddOperationSheet from "src/components/sheets/AddOperationSheet";
 
 const OperationsScreen = ({ navigation }) => {
   return (
@@ -29,17 +29,18 @@ const HeaderSaturated = ({ navigation }) => {
     toggleSheetOpen(!isSheetOpen);
   };
 
-  const RightPress = (styles, stroke) => <Pressable style={styles} onPress={toggleSheet}>
-    <LucidePlus style={{ alignSelf: "center" }} stroke={stroke} height={34} width={34} />
-  </Pressable>
+  const RightPress = (styles, stroke) => (
+    <Pressable style={styles} onPress={toggleSheet}>
+      <LucidePlus style={{ alignSelf: "center" }} stroke={stroke} height={34} width={34} />
+    </Pressable>)
 
   return <>
     <HomeHeader navigation={navigation} rightChild={RightPress} />
-    <BottomSheet isOpen={isSheetOpen} toggleSheet={toggleSheet}>
-      <Text>dsvsdv</Text>
-    </BottomSheet>
+    <AddOperationSheet isOpen={isSheetOpen} toggleSheet={toggleSheet} />
   </>
 }
+
+
 
 const LastOperations = () => {
 
