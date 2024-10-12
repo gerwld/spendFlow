@@ -30,6 +30,7 @@ const ActionSheetExperimental = ({ value, title, isOpen, toggleSheet,  options, 
       marginRight: "auto",
       flexDirection: "row",
       alignItems: "center",
+      height: 25,
     },
     itemText: {
       fontSize: 20,

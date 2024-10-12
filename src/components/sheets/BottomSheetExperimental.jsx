@@ -79,6 +79,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, title, setHeig
       visible={isOpen}
       onDismiss={closeModal}
       bottom
+      
       width={width}
       content={styles.content}
       containerStyle={styles.container}
