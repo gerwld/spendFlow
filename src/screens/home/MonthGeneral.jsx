@@ -4,19 +4,18 @@ import { useCurrentTheme } from 'hooks';
 import CategoryItem from 'src/components/items/CategoryItem';
 import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, LucideCat, Landmark, ShieldCheck, ArrowBigDownDash, EthernetPort } from 'lucide-react-native';
 
-const width = Dimensions.get('screen').width;
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   block: {
-    flex: 1,
-    maxWidth: Math.min(width - 30, 550),
+    width: Math.min(width - 30, 1000),
+    alignSelf: "center",
     flexDirection: 'row',
     gap: 2,
     minHeight: 80,
     marginTop: 5,
     marginHorizontal: 19,
     marginBottom: 14,
-    // alignSelf: 'center',
     padding: 7,
     borderRadius: 16,
   },
@@ -75,6 +74,7 @@ const MonthGeneral = ({ calendarDate, calendarIndex }) => {
           <Text style={[styles.subText, styles.subTextIncome]}>400 PLN</Text>
         </Pressable>
       </View>
+
 
       {page === 0 && <PageExpenses />}
       {page === 1 && <PageIncomes />}

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   tabs: {
     flex: 1,
     width: "100%",
-    backgroundColor: themeColors.monthGeneral
+    backgroundColor: themeColors.activeArea
   },
   tab: {
     marginRight: -1,
@@ -84,7 +84,9 @@ const styles = StyleSheet.create({
   selectedTab: {
     margin: 5,
     borderRightColor: "transparent",
-    borderRightWidth: 0
+    borderRightWidth: 0,
+    backgroundColor: themeColors.topBarBackgroundActive,
+    color: themeColors.textColorHighlight
   },
   tabText: {
     fontSize: 15,
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     padding: 8,
     marginVertical: 10,
     borderRadius: 10,
-    backgroundColor: themeColors.monthGeneral,
+    backgroundColor: themeColors.activeArea,
   },
   currencyBTN: {
     alignItems: 'center',
@@ -126,10 +128,11 @@ const styles = StyleSheet.create({
   });
 
   const renderContent = (
-    <ScrollView>
+    <ScrollView style={{height: "100%"}}>
       <SegmentedControl
       gap={5}
       textStyle={styles.tabText}
+      activeTextColor={themeColors.textColorHighlight}
       tabStyle={styles.tab}
       selectedTabStyle={styles.selectedTab}
       style={styles.tabs}

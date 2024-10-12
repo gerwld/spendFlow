@@ -66,6 +66,9 @@ const THEMEV = {
     green_dimmed: "rgba(94, 238, 94, 0.1)",
     red_dimmed: "rgba(238, 94, 101, 0.1)",
     gray_dimmed: "rgb(81, 84, 85, 0.1)",
+    topBarBackground: "#eeedee",
+    topBarBackgroundActive: "#ffffff",
+    activeArea: "#eff4f9",
   },
   st_theme__dark: {
     label: "dark",
@@ -95,7 +98,7 @@ const THEMEV = {
     borderLinesColor: "#363739",
     dayGraphColor: "#484c50",
     calendarBorderColor: "#313337",
-    monthGeneral: "#1e2022",
+    monthGeneral: "#1b1c1f",
     monthGeneralActive: "#2c2d2f",
     navigationBarColor: "#1c1c21",
     green: "#5eee5e",
@@ -104,6 +107,9 @@ const THEMEV = {
     green_dimmed: "rgba(94, 238, 94, 0.1)",
     red_dimmed: "rgba(238, 94, 101, 0.1)",
     gray_dimmed: "rgb(81, 84, 85, 0.1)",
+    topBarBackground: "#0d0d0d",
+    topBarBackgroundActive: "#35353a",
+    activeArea: "#1b1c1f",
   },
 };
 
