@@ -10,22 +10,26 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
   const renderContent = (
     <ScrollView>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
-      <Text>dfbfbfbdfb</Text>
+      
     </ScrollView>
   )
 
-  return Platform.OS === "ios"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  return Platform.OS === "ios" || Platform.OS === "web"
   
     ? <BottomSheetExperimental isOpen={isOpen} toggleSheet={toggleSheet} backgroundColor={themeColors.bgHighlight}>
       {renderContent}
