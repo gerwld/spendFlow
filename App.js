@@ -39,3 +39,20 @@ export default withTranslation(function RootComponent() {
     </Provider>
   );
 });
+
+
+if (process.env.NODE_ENV !== "production") {
+  // eslint-disable-next-line no-console
+  const originalWarn = console.error;
+  // eslint-disable-next-line no-console
+  console.error = (...args) => {
+    if (
+      args[0].includes(
+        "Support for defaultProps will be removed from function components in a future major release.",
+      )
+    ) {
+      return;
+    }
+    originalWarn(...args);
+  };
+}

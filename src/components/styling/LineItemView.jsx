@@ -5,10 +5,10 @@ import styled from 'styled-components/native';
 
 import { useCurrentTheme } from 'hooks';
 import Toggle from '../Toggle';
-import { ChevronRight, SvgFront } from '@icons';
+import { SvgFront } from '@icons';
 import { PLATFORM } from '@constants';
 
-const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
+const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, isOperation, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const [themeColors] = useCurrentTheme();
     const LineItemViewItem = styled.View`
         padding: 0;
@@ -39,7 +39,7 @@ const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, ch
                 borderTopRightRadius: isFirstItem ? 12 : 0, 
                 borderBottomLeftRadius: isLastItem ? 12 : 0, 
                 borderBottomRightRadius: isLastItem ? 12 : 0, 
-                paddingLeft: pl1 ? 15 : 0, 
+                paddingLeft: isOperation ? 7 : pl1 ? 15 : 0, 
                 marginBottom: pl1 ? 0 : 7, 
                 ...st 
             }, 
@@ -47,7 +47,7 @@ const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, ch
             {leftIcon ? <View style={{ height: 30, width: 30, marginRight: 12 }}>{leftIcon}</View> : null}
 
             <View style={[styles.group, isLastItem && {borderBottomWidth: 0, marginTop: -1, borderTopWidth: 0}]}>
-                {leftIcon ? <View style={{ flex: 1, flexDirection: "row" }}>{children}</View> : children}
+                {leftIcon || isOperation ? <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>{children}</View> : children}
                 {rightArrow ? <SvgFront style={{ marginLeft: 2, marginRight: 10, marginTop: 1}} size={17} color={themeColors.chevron} /> : null}
             </View>
             {toggle ?

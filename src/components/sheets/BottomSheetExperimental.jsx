@@ -5,7 +5,7 @@ import { Incubator } from 'react-native-ui-lib';
 
 const { width, height } = Dimensions.get("window")
 
-const BottomSheetExperimental = ({ isOpen, children, toggleSheet, title, setHeight = height - 100  }) => {
+const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, title, setHeight = height - 100  }) => {
   const [themeColors] = useCurrentTheme();
 
   const closeModal = () => {
@@ -69,7 +69,10 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, title, setHeig
       flexBasis: "25%"
     },
     rightButton: {
-      flexBasis: "25%"
+      flexBasis: "25%",
+    },
+    rightBtn: {
+      marginLeft: "auto"
     }
   });
 
@@ -101,7 +104,11 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, title, setHeig
         {title &&  <Text style={styles.headerTitle}>{title}</Text>}
 
         <View style={styles.rightButton}>
-
+          {rightButton &&
+            <Pressable style={[styles.cancelBTN, styles.rightBtn]} onPress={rightButton.onPress}>
+            <Text style={styles.cancelBTNText}>{rightButton.title}</Text>
+          </Pressable>
+          }
         </View>
         </View>
         {children}
