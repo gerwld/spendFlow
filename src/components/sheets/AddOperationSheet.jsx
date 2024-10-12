@@ -7,8 +7,7 @@ import { useCurrentTheme } from 'hooks';
 import SegmentedControl from "react-native-segmented-control-2";
 import ActionSheetExperimental from './ActionSheetExperimental';
 import { LineItemView } from '@components';
-import { Feature } from '@icons';
-import { ArrowBigDownDash, EthernetPort, Landmark, LucideApple, LucideBookHeart, LucideCalendar, LucideCat, LucidePlus, LucidePopcorn, LucideTrain, ShieldCheck } from 'lucide-react-native';
+import { ArrowBigDownDash, EthernetPort, Landmark, LucideApple, LucideBookHeart, LucideCalendar, LucideCat, LucidePlus, LucidePopcorn, LucideTrain, PenBoxIcon, ShieldCheck } from 'lucide-react-native';
 
 const isFirstPlusOrMinus = (value) => value[0] === "-" || value[0] === "+"
 
@@ -16,13 +15,6 @@ const categoriesArray = [
   { id: 1, title: 'Entertainment', icon: <LucidePopcorn stroke="#ff3939" />, iconColor: '#ff3939' },
   { id: 2, title: 'Groceries', icon: <LucideApple stroke="#3988ff" />, iconColor: '#3988ff' },
   { id: 3, title: 'Education', icon: <LucideBookHeart stroke="#ff8c39" />, iconColor: '#ff8c39' },
-  { id: 4, title: 'Transport', icon: <LucideTrain stroke="#39ff6e" />, iconColor: '#39ff6e' },
-  { id: 5, title: 'Savings', icon: <Landmark stroke="#3999ff" />, iconColor: '#3999ff' },
-  { id: 6, title: 'Pets', icon: <LucideCat stroke="#decd36" />, iconColor: '#decd36' },
-  { id: 7, title: 'Debt Payments', icon: <ArrowBigDownDash stroke="#ff39ff" />, iconColor: '#ff39ff' },
-  { id: 8, title: 'Insurance', icon: <ShieldCheck stroke="#31e2cd" />, iconColor: '#31e2cd' },
-  { id: 9, title: 'Subscriptions', icon: <EthernetPort stroke="#5236f4" />, iconColor: '#5236f4' },
-  { id: 10, title: 'Add new', icon: <LucidePlus stroke="#b3b9bf" />, iconColor: '#b3b9bf', isAddNew: true },
 ];
 
 
@@ -121,7 +113,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       alignItems: 'center',
       justifyContent: 'center',
       paddingHorizontal: 15,
-      height: 50,
+      height: 45,
+      marginVertical: 2,
+      marginLeft: 5,
       minWidth: 70,
       borderRadius: 6,
       overflow: "hidden",
@@ -219,6 +213,20 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
           </LineItemView>
       </View>
 
+      <View style={styles.valueBlock}>
+          <LineItemView isOperation pl1 isLastItem rightArrow>
+          <ItemViewIcon 
+              {...{
+                icon: <PenBoxIcon stroke={themeColors.textColor} width={24} height={24}/>,
+                defBackground: themeColors.bgHighlightSec,
+                theme: themeColors.label
+              }}/>
+            
+            <Text style={styles.selectItemText}>Add Title</Text>
+            <Text style={[styles.selectItemText, {opacity: 0.5, marginLeft: 2}]}> (not required)</Text>
+          </LineItemView>
+      </View>
+
       <ActionSheetExperimental {...{
         value: currency,
         isOpen: isShowCurrency,
@@ -246,7 +254,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
 
 
-  return Platform.OS === "ios" || Platform.OS === "web"
+  return Platform.OS === "ios" || Platform.OS === "web" || true
 
     ? <BottomSheetExperimental
       {...{

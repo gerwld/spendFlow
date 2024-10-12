@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Dimensions, StyleSheet, Pressable, Text } from 'react-native'
+import { View, Dimensions, StyleSheet, Pressable, Text, Platform } from 'react-native'
 import { useCurrentTheme } from 'hooks';
 import { Incubator } from 'react-native-ui-lib';
 
@@ -19,7 +19,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
       maxHeight: height - 80,
       backgroundColor: themeColors.bgHighlight,
       marginBottom: -50,
-      paddingHorizontal: 20,
+      paddingHorizontal: Platform.OS === "android" ? 15 : 20,
       paddingTop: 7,
       paddingBottom: 50,
 
@@ -70,9 +70,11 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
     },
     rightButton: {
       flexBasis: "25%",
+      marginLeft: "auto"
     },
     rightBtn: {
-      marginLeft: "auto"
+      marginLeft: "auto",
+      marginRight: 0
     }
   });
 
