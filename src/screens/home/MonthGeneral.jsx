@@ -8,13 +8,15 @@ const width = Dimensions.get('screen').width;
 
 const styles = StyleSheet.create({
   block: {
-    width: Math.min(width - 30, 400),
+    flex: 1,
+    maxWidth: Math.min(width - 30, 550),
     flexDirection: 'row',
     gap: 2,
     minHeight: 80,
     marginTop: 5,
+    marginHorizontal: 19,
     marginBottom: 14,
-    alignSelf: 'center',
+    // alignSelf: 'center',
     padding: 7,
     borderRadius: 16,
   },

@@ -105,7 +105,8 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
     headerText: {
       fontSize: 17,
       fontWeight: '600',
-      color: themeColors.textColorHighlight
+      color: themeColors.textColorHighlight,
+      userSelect: "none"
     },
     headerButton: {
       alignItems: 'center',

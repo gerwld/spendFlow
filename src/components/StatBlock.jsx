@@ -14,9 +14,11 @@ const StatBlock = ({ iconColor, title, value, isRow, currency }) => {
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
+      flex: 1,
+      width: "100%",
       flexDirection: "row",
       alignItems: "center",
-      flexBasis: isRow && "45%",
+      // flexBasis: isRow && "45%",
       padding: 0,
       borderColor: themeColors.borderColorSec,
       borderWidth: 1,
@@ -34,13 +36,21 @@ const StatBlock = ({ iconColor, title, value, isRow, currency }) => {
       fontSize: 18,
       color: themeColors.textColor,
     },
+
     group: {
+      flex: 1,
       width: "100%",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 2
     },
+    content: {
+      flex: 1,
+      minWidth: "100%",
+      padding: 10,
+    },
+
     header: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -54,9 +64,7 @@ const StatBlock = ({ iconColor, title, value, isRow, currency }) => {
       borderWidth: 0.2,
       backgroundColor: getGreenRedOrGray(value, themeColors).dimmed,
     },
-    content: {
-      padding: 10,
-    },
+  
     text_header: {
       color: getGreenRedOrGray(value, themeColors).color,
       fontSize: 20,
@@ -70,7 +78,7 @@ const StatBlock = ({ iconColor, title, value, isRow, currency }) => {
 
   return (
     <View style={styles.block}>
-      <View>
+      <View style={{flex: 1}}>
         <View style={styles.header}>
           <Text
             style={styles.text_header}

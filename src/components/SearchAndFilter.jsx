@@ -12,7 +12,7 @@ const SearchAndFilter = () => {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      alignSelf: "center",
+      // alignSelf: "center",
       marginLeft: 18,
       marginRight: 4,
       backgroundColor: themeColors.background
@@ -25,6 +25,7 @@ const SearchAndFilter = () => {
       borderRadius: 10
     },
     inputParent: {
+      width: "100%",
       flexBasis: "86%",
       height: 44,
     },
