@@ -5,7 +5,7 @@ import { Incubator } from 'react-native-ui-lib';
 
 const { width, height } = Dimensions.get("window")
 
-const BottomSheetExperimental = ({ isOpen, children, toggleSheet, setHeight = height - 100  }) => {
+const BottomSheetExperimental = ({ isOpen, children, toggleSheet, title, setHeight = height - 100  }) => {
   const [themeColors] = useCurrentTheme();
 
   const closeModal = () => {
@@ -20,7 +20,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, setHeight = he
       backgroundColor: themeColors.bgHighlight,
       marginBottom: -50,
       paddingHorizontal: 20,
-      paddingTop: 10,
+      paddingTop: 7,
       paddingBottom: 50,
 
       borderBottomLeftRadius: 0,
@@ -30,7 +30,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, setHeight = he
       overflow: "hidden"
     },
     topNotch: {
-      alignSelf: "center", borderRadius: 5, width: 50, height: 5, backgroundColor: themeColors.chevron, marginBottom: 3
+      alignSelf: "center", borderRadius: 5, width: 40, height: 4, backgroundColor: themeColors.crossSymb,
     },
 
     content: {
@@ -41,15 +41,35 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, setHeight = he
     },
     cancelBTN: {
       alignSelf: "flex-start",
-      marginTop: -6,
-      marginBottom: 14,
-      paddingVertical: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
       paddingRight: 10,
-
+      paddingLeft: 2,
+      height: 45
     },
     cancelBTNText: {
-      fontSize: 16,
+      fontSize: 17.5,
       color: "#4080f6",
+    },
+    header: {
+      marginTop: 1,
+      marginBottom: 6,
+      flexDirection:"row",
+      alignItems:"center",
+    },
+    headerTitle: {
+      fontSize: 19,
+      fontWeight: "600",
+      flexBasis: "50%",
+      lineHeight: 45,
+      textAlign: "center",
+      color: themeColors.textColorHighlight
+    },
+    leftButton: {
+      flexBasis: "25%"
+    },
+    rightButton: {
+      flexBasis: "25%"
     }
   });
 
@@ -69,9 +89,20 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, setHeight = he
     >
       <View>
         <View style={styles.topNotch} />
-        <Pressable style={styles.cancelBTN} onPress={closeModal}>
-          <Text style={styles.cancelBTNText}>Cancel</Text>
-        </Pressable>
+        <View style={styles.header}>
+
+        <View style={styles.leftButton}>
+          <Pressable style={styles.cancelBTN} onPress={closeModal}>
+            <Text style={styles.cancelBTNText}>Cancel</Text>
+          </Pressable>
+        </View>
+
+        {title &&  <Text style={styles.headerTitle}>{title}</Text>}
+
+        <View style={styles.rightButton}>
+
+        </View>
+        </View>
         {children}
       </View>
     </Incubator.Dialog>

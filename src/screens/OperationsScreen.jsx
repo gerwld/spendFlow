@@ -23,7 +23,7 @@ const OperationsScreen = ({ navigation }) => {
 };
 
 const HeaderSaturated = ({ navigation }) => {
-  const [isSheetOpen, toggleSheetOpen] = React.useState(false);
+  const [isSheetOpen, toggleSheetOpen] = React.useState(true);
 
   const toggleSheet = () => {
     toggleSheetOpen(!isSheetOpen);
