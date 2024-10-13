@@ -85,7 +85,7 @@ const ActionSheetExperimental = ({ value, title, isOpen, toggleSheet,  options, 
   }
 
   const renderHeader = () => (
-    <View style={styles.header}>
+    <View key="tab_header" style={styles.header}>
       <View style={styles.leftButton}>
         <Pressable style={styles.cancelBTN} onPress={closeModal}>
           <Text style={styles.cancelBTNText}>Back</Text>
@@ -97,7 +97,7 @@ const ActionSheetExperimental = ({ value, title, isOpen, toggleSheet,  options, 
   )
 
   const renderItem = ({ label, subLabel, onPress }) => (
-    <Pressable style={styles.item} onPress={() => onLabelPress(label)}>
+    <Pressable key={label} style={styles.item} onPress={() => onLabelPress(label)}>
       <View style={styles.item_content}>
         <Text style={styles.itemText}>{label}</Text>
         <Text style={styles.itemSub}>{subLabel}</Text>
