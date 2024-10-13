@@ -1,3 +1,4 @@
+import { useCurrentTheme } from "hooks";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -7,14 +8,27 @@ import {
   Dimensions,
   Pressable,
   Text,
+  View,
 } from "react-native";
 
 const { height: screenHeight } = Dimensions.get("screen");
 
-const BottomSheet = ({ isOpen, children, toggleSheet, duration = 200, backgroundColor }) => {
+const BottomSheet = ({
+  isOpen,
+  children,
+  toggleSheet,
+  duration = 200,
+  backgroundColor,
+  maxHeightMultiplier = 0.86,
+  setHeight = 400,
+  setFullWidth,
+  title,
+  rightButton,
+  leftButton }) => {
+  const [themeColors] = useCurrentTheme();
   const translateY = useRef(new Animated.Value(screenHeight)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const [isOpenForModal, setIsOpenForModal] = useState(false);  
+  const [isOpenForModal, setIsOpenForModal] = useState(false);
 
   const closeModal = () => {
     isOpen && toggleSheet()
@@ -29,25 +43,60 @@ const BottomSheet = ({ isOpen, children, toggleSheet, duration = 200, background
       position: "absolute",
       bottom: 0,
       width: "100%",
-      maxHeight: screenHeight - 150,
+
+      minHeight: setHeight ? (setHeight + 50) : (screenHeight * maxHeightMultiplier + 50),
+      height: setHeight + 50,
+      maxHeight: screenHeight - 80,
+      alignItems: "center",
+
       borderTopLeftRadius: 16,
       borderTopRightRadius: 16,
-      padding: 16,
+      paddingHorizontal: setFullWidth ? 0 : 20,
     },
+
     cancelBTN: {
       alignSelf: "flex-start",
-      marginTop: -6,
-      marginBottom: 14,
-      paddingVertical: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
       paddingRight: 10,
-
+      paddingLeft: 2,
+      height: 45
     },
     cancelBTNText: {
-      fontSize: 16,
+      fontSize: 17.5,
       color: "#4080f6",
+    },
+    header: {
+      width: "100%",
+      marginTop: 10,
+      marginBottom: 6,
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    headerTitle: {
+      fontSize: 19,
+      fontWeight: "600",
+      flexBasis: "50%",
+      lineHeight: 45,
+      textAlign: "center",
+      color: themeColors.textColorHighlight
+    },
+    leftButton: {
+      flexBasis: "25%",
+      paddingLeft: setFullWidth ? 20 : 0,
+    },
+    rightButton: {
+      flexBasis: "25%",
+      marginLeft: "auto",
+      paddingRight: setFullWidth ? 20 : 0,
+    },
+    rightBtn: {
+      marginLeft: "auto",
+      marginRight: 0
     }
+
   });
-  
+
 
   useEffect(() => {
     if (isOpen) {
@@ -67,10 +116,10 @@ const BottomSheet = ({ isOpen, children, toggleSheet, duration = 200, background
         }),
       ]).start();
     } else {
-      
+
       Animated.parallel([
         Animated.timing(translateY, {
-          toValue: screenHeight, 
+          toValue: screenHeight,
           duration: duration,
           useNativeDriver: true,
         }),
@@ -86,7 +135,7 @@ const BottomSheet = ({ isOpen, children, toggleSheet, duration = 200, background
   }, [isOpen]);
 
   return (
-    <Modal 
+    <Modal
       animationType="none"
       onRequestClose={closeModal}
       transparent
@@ -106,9 +155,31 @@ const BottomSheet = ({ isOpen, children, toggleSheet, duration = 200, background
         ]}
       >
 
-        <Pressable style={styles.cancelBTN} onPress={closeModal}>
-          <Text style={styles.cancelBTNText}>Cancel</Text>
-        </Pressable>
+        <View style={styles.header}>
+
+          <View style={styles.leftButton}>
+            {leftButton
+              ? <Pressable style={styles.cancelBTN} onPress={leftButton.onPress}>
+                <Text style={styles.cancelBTNText}>{leftButton.title}</Text>
+              </Pressable>
+
+              : <Pressable style={styles.cancelBTN} onPress={closeModal}>
+                <Text style={styles.cancelBTNText}>Cancel</Text>
+              </Pressable>
+
+            }
+          </View>
+
+          {title && <Text style={styles.headerTitle}>{title}</Text>}
+
+          <View style={styles.rightButton}>
+            {rightButton &&
+              <Pressable style={[styles.cancelBTN, styles.rightBtn]} onPress={rightButton.onPress}>
+                <Text style={styles.cancelBTNText}>{rightButton.title}</Text>
+              </Pressable>
+            }
+          </View>
+        </View>
 
         {children}
       </Animated.View>

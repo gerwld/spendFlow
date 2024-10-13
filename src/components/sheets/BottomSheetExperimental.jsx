@@ -5,7 +5,7 @@ import { Incubator } from 'react-native-ui-lib';
 
 const { width, height } = Dimensions.get("window")
 
-const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, title, setHeight = height - 100  }) => {
+const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, title, maxHeightMultiplier = 0.86, setFullWidth = false  }) => {
   const [themeColors] = useCurrentTheme();
 
   const closeModal = () => {
@@ -14,12 +14,12 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
 
   const styles = StyleSheet.create({
     container: {
-      width: Math.min(width, height) - 30,
-      height: setHeight + 50,
+      width: setFullWidth ? width : Math.min(width, height) - 30,
+      minHeight: height * maxHeightMultiplier + 50,
       maxHeight: height - 80,
       backgroundColor: themeColors.bgHighlight,
       marginBottom: -50,
-      paddingHorizontal: Platform.OS === "android" ? 15 : 20,
+      paddingHorizontal: setFullWidth ? 0 : Platform.OS === "android" ? 15 : 20,
       paddingTop: 7,
       paddingBottom: 50,
 
@@ -52,6 +52,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
       color: "#4080f6",
     },
     header: {
+      width: "100%",
       marginTop: 1,
       marginBottom: 6,
       flexDirection:"row",
@@ -66,11 +67,13 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
       color: themeColors.textColorHighlight
     },
     leftButton: {
-      flexBasis: "25%"
+      flexBasis: "25%",
+      paddingLeft: setFullWidth ? 20 : 0,
     },
     rightButton: {
       flexBasis: "25%",
-      marginLeft: "auto"
+      marginLeft: "auto",
+      paddingRight: setFullWidth ? 20 : 0,
     },
     rightBtn: {
       marginLeft: "auto",
@@ -93,7 +96,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
       modalProps={{ supportedOrientations: ['portrait', 'landscape'], overlayBackgroundColor: "rgba(0, 0, 0, 0.7)" }}
       blurView
     >
-      <View>
+      <View style={{alignItems: "center", flex: 1}}>
         <View style={styles.topNotch} />
         <View style={styles.header}>
 

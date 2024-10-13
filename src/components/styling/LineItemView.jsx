@@ -11,6 +11,7 @@ import { PLATFORM } from '@constants';
 const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, isOperation, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const [themeColors] = useCurrentTheme();
     const LineItemViewItem = styled.View`
+        width: 100%;
         padding: 0;
         padding-bottom: 1px;
         align-items:center;

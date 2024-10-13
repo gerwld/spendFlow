@@ -6,8 +6,9 @@ import BottomSheet from './BottomSheet';
 import { useCurrentTheme } from 'hooks';
 import SegmentedControl from "react-native-segmented-control-2";
 import ActionSheetExperimental from './ActionSheetExperimental';
-import { LineItemView } from '@components';
-import { ArrowBigDownDash, EthernetPort, Landmark, LucideApple, LucideBookHeart, LucideCalendar, LucideCat, LucidePlus, LucidePopcorn, LucideTrain, PenBoxIcon, ShieldCheck } from 'lucide-react-native';
+import { LineItemView, Calendar } from '@components';
+import { LucideApple, LucideBookHeart, LucideCalendar,  LucidePopcorn,  PenBoxIcon } from 'lucide-react-native';
+import { produce } from 'immer';
 
 const isFirstPlusOrMinus = (value) => value[0] === "-" || value[0] === "+"
 
@@ -20,6 +21,26 @@ const categoriesArray = [
 
 const AddOperationSheet = ({ isOpen, toggleSheet }) => {
   const [themeColors] = useCurrentTheme();
+  const [state, setState] = React.useState({
+    tabIndex: 0,
+    isCurrencySheet: false,
+    isAccountSheet: false,
+    isCategorySheet: false,
+    isCalendarSheet: false,
+    isTitleSheet: false,
+  })
+
+  const dispatchAction = (key, value) => {
+    setState(produce(draft => {
+      draft[key] = value;
+    }));
+  }
+
+  const toggleCalendar = () => {
+    dispatchAction("isCalendarSheet", !state.isCalendarSheet)
+  }
+
+
   const [index, setIndex] = React.useState(0);
   const getActionColor = () => index === 0 ? "red" : index === 1 ? "green" : "textColor";
 
@@ -98,6 +119,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     },
     tabText: {
       fontSize: 15,
+      paddingBottom: Platform.OS === "android" ? 2 : 0,
       color: themeColors.textColorHighlight
     },
     valueBlock: {
@@ -201,6 +223,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
         </Pressable>
       </View>
       <View style={styles.valueBlock}>
+        <Pressable style={{ width: "100%" }} onPress={toggleCalendar}>
           <LineItemView isOperation pl1 isLastItem rightArrow>
           <ItemViewIcon 
               {...{
@@ -211,6 +234,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
             
             <Text style={styles.selectItemText}>Friday, 16 February</Text>
           </LineItemView>
+          </Pressable>
       </View>
 
       <View style={styles.valueBlock}>
@@ -226,7 +250,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
             <Text style={[styles.selectItemText, {opacity: 0.5, marginLeft: 2}]}> (not required)</Text>
           </LineItemView>
       </View>
+    
 
+      {/* ----------------------------- SHEETS PART ---------------------------- */}
       <ActionSheetExperimental {...{
         value: currency,
         isOpen: isShowCurrency,
@@ -239,18 +265,14 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
           { label: 'UAH', subLabel: "(Ukraininan Hryvnia)" },
         ]
       }} />
+
+      <CalendarSheet
+        {...{
+          isOpen: state.isCalendarSheet,
+          toggleSheet: toggleCalendar
+        }}/>
     </ScrollView>
   )
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -270,7 +292,43 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       {renderContent}
     </BottomSheet>
 
+
+
 }
+
+
+const CalendarSheet = ({isOpen, toggleSheet}) => {
+  const [themeColors] = useCurrentTheme();
+
+  const onDayPress =() => {
+
+  }
+  
+  return (
+    <BottomSheet
+    {...{
+      leftButton: {title: "Back", onPress: toggleSheet},
+      setFullWidth: true,
+      maxHeightMultiplier: 0.50,
+      setHeight: 410,
+      scrollable: true,
+      title: "Select Date",
+      isOpen, toggleSheet,
+      backgroundColor: themeColors.bgHighlight
+    }}>
+    <Calendar
+      borderColor={themeColors.calendarBorderColor}
+      color={themeColors.textColor}
+      colorContrast={themeColors.textColorHighlight}
+      itemID={null}
+      activeColor={themeColors.tabsActiveColor}
+      onChange={onDayPress} />
+    </BottomSheet>
+  )
+}
+
+
+
 
 
 const ItemViewIcon = ({icon, iconColor, defBackground, theme}) => {

@@ -71,7 +71,7 @@ const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, ye
         }
     })
 
-    if (!itemID) return null;
+    // if (!itemID) return null;
 
     const first_day_timestamp = new Date(year, currentMonth, 1).getTime();
     const DAY_IN_MS = 86400000;
