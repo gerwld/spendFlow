@@ -140,6 +140,7 @@ const BottomSheet = ({
       onRequestClose={closeModal}
       transparent
       visible={isOpenForModal}
+      statusBarTranslucent={true} 
     >
       <TouchableWithoutFeedback onPress={closeModal}>
         <Animated.View style={[styles.overlay, { opacity }]} />

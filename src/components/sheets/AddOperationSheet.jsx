@@ -397,13 +397,13 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
   }, [isOpen]);
 
   return (
-    <BottomSheetExperimental
+    <BottomSheet
       {...{
         leftButton: { title: "Back", onPress: toggleSheet },
         rightButton: { title: "Save", onPress: () => alert("value: " + value) },
         setFullWidth: true,
         maxHeightMultiplier: 0.60,
-        setHeight: 500,
+        setHeight: 300,
         scrollable: true,
         title: "Add Title",
         isOpen,
@@ -414,6 +414,7 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
       <View style={styles.valueBlock}>
         <TextInput
           ref={inputRef}
+          placeholderTextColor={themeColors.borderColorTh}
           placeholder="New sneakers..."
           maxLength={10}
           style={styles.titleInput}
@@ -422,7 +423,7 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
         />
       </View>
 
-    </BottomSheetExperimental>
+    </BottomSheet>
   );
 };
 
