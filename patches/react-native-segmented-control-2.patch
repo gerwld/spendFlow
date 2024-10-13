@@ -1,0 +1,16 @@
+diff --git a/build/dist/SegmentedControl.js b/build/dist/SegmentedControl.js
+index 4c33ea733ea5f723fee4a116538a18b46ae74c9f..f17f0907c5a539f74f4e81a95eae49338083313b 100644
+--- a/build/dist/SegmentedControl.js
++++ b/build/dist/SegmentedControl.js
+@@ -18,9 +18,8 @@ const SegmentedControl = ({ style, tabs, onChange, value, tabStyle, textStyle, s
+     useEffect(() => {
+         Animated.spring(slideAnimation, {
+             toValue: (I18nManager.isRTL ? -1 : 1) * currentIndex * translateValue,
+-            stiffness: 180,
+-            damping: 25,
+-            mass: 1,
++            speed: 500, 
++            bounciness: 0,
+             useNativeDriver: true,
+         }).start();
+     }, [currentIndex, slideAnimation, translateValue]);

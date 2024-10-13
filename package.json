@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --dev-client",
-    "init": "pnpm i && pnpm patch react-native-ui-lib",
+    "init": "pnpm i && pnpm patch react-native-ui-lib && pnpm patch react-native-segmented-control-2",
     "kraken": "expo start --go --clear",
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -75,7 +75,8 @@
   "private": true,
   "pnpm": {
     "patchedDependencies": {
-      "react-native-ui-lib": "patches/react-native-ui-lib.patch"
+      "react-native-ui-lib": "patches/react-native-ui-lib.patch",
+      "react-native-segmented-control-2": "patches/react-native-segmented-control-2.patch"
     }
   }
 }
