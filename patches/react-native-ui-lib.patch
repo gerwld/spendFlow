@@ -1,0 +1,13 @@
+diff --git a/src/incubator/Dialog/index.js b/src/incubator/Dialog/index.js
+index bf902c959dedaf4285b6eaf9cf1a9fe0850e6ad3..fd6ca45417e3ca1d12f076caab87f2fc0ba24216 100644
+--- a/src/incubator/Dialog/index.js
++++ b/src/incubator/Dialog/index.js
+@@ -194,7 +194,7 @@ const Dialog = (props, ref) => {
+     };
+   }, [overlayBackgroundColor]);
+   const renderOverlayView = () => <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={overlayStyle} pointerEvents="none" />;
+-  return <Modal transparent animationType={'none'} {...otherModalProps} testID={`${testID}.modal`} useGestureHandlerRootView visible={modalVisibility} onBackgroundPress={ignoreBackgroundPress ? undefined : close} onRequestClose={ignoreBackgroundPress ? undefined : close} onDismiss={onDismiss}>
++  return <Modal statusBarTranslucent={true} transparent animationType={'none'} {...otherModalProps} testID={`${testID}.modal`} useGestureHandlerRootView visible={modalVisibility} onBackgroundPress={ignoreBackgroundPress ? undefined : close} onRequestClose={ignoreBackgroundPress ? undefined : close} onDismiss={onDismiss}>
+       {renderOverlayView()}
+       <View useSafeArea={useSafeArea} pointerEvents={'box-none'} style={alignmentStyle}>
+         {renderDialog()}
