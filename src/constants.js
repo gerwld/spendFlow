@@ -69,6 +69,7 @@ const THEMEV = {
     topBarBackground: "#eeedee",
     topBarBackgroundActive: "#ffffff",
     activeArea: "#eff4f9",
+    placeholderColor: "#bbc7ce"
   },
   st_theme__dark: {
     label: "dark",
@@ -110,6 +111,7 @@ const THEMEV = {
     topBarBackground: "#0d0d0d",
     topBarBackgroundActive: "#35353a",
     activeArea: "#1b1c1f",
+    placeholderColor: "red"
   },
 };
 

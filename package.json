@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --dev-client",
+    "init": "pnpm i && pnpm patch react-native-ui-lib",
     "kraken": "expo start --go --clear",
     "android": "expo run:android",
     "ios": "expo run:ios",

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, Platform, StyleSheet, View, Pressable, TextInput } from 'react-native';
+import { Text, Platform, StyleSheet, View, Pressable, TextInput, Dimensions } from 'react-native';
 import BottomSheetExperimental from './BottomSheetExperimental';
 import { ScrollView } from 'react-native-gesture-handler';
 import BottomSheet from './BottomSheet';
@@ -13,6 +13,7 @@ import CategoryItem from '../items/CategoryItem';
 import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, LucideCat, Landmark, ShieldCheck, ArrowBigDownDash, EthernetPort } from 'lucide-react-native';
 
 
+const {width: screenWidth, height: screenHeight} = Dimensions.get("screen")
 const isFirstPlusOrMinus = (value) => value[0] === "-" || value[0] === "+"
 
 const accountsArray = [
@@ -340,6 +341,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       {...{
         title: "Add operation",
         isOpen, toggleSheet,
+        setHeight: Platform.OS === "android" ? screenHeight - 50 : screenHeight - 100,
         rightButton: { title: "Save", onPress: () => alert("save pressed.") },
         backgroundColor: themeColors.bgHighlight
       }}>
@@ -368,7 +370,7 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
       fontSize: 20,
       paddingHorizontal: 15,
       color: themeColors.textColor,
-      fontWeight: "500",
+      fontWeight: "400",
       textAlign: "left",
     },
     valueBlock: {
@@ -376,7 +378,7 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
       flexDirection: "row",
       justifyContent: 'center',
       padding: 4,
-      marginTop: 12,
+      marginTop: 4,
       marginHorizontal: 20,
       borderRadius: 10,
       backgroundColor: themeColors.activeArea,
@@ -397,12 +399,12 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
   }, [isOpen]);
 
   return (
-    <BottomSheet
+    <BottomSheetExperimental
       {...{
         leftButton: { title: "Back", onPress: toggleSheet },
         rightButton: { title: "Save", onPress: () => alert("value: " + value) },
         setFullWidth: true,
-        maxHeightMultiplier: 0.60,
+        maxHeightMultiplier: Platform.OS === "android" ? 0.54 : 0.52,
         setHeight: 300,
         scrollable: true,
         title: "Add Title",
@@ -414,16 +416,16 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
       <View style={styles.valueBlock}>
         <TextInput
           ref={inputRef}
-          placeholderTextColor={themeColors.borderColorTh}
+          placeholderTextColor={themeColors.placeholderColor}
           placeholder="New sneakers..."
-          maxLength={10}
+          maxLength={50}
           style={styles.titleInput}
           value={value}
           onChangeText={setValue}
         />
       </View>
 
-    </BottomSheet>
+    </BottomSheetExperimental>
   );
 };
 
@@ -437,8 +439,8 @@ const AccountSheet = ({ isOpen, toggleSheet }) => {
       {...{
         leftButton: { title: "Back", onPress: toggleSheet },
         setFullWidth: true,
-        maxHeightMultiplier: 0.50,
-        setHeight: 410,
+        maxHeightMultiplier: 0.5,
+        setHeight: 500,
         scrollable: true,
         title: "Select Account",
         isOpen, toggleSheet,
@@ -464,7 +466,7 @@ const CategorySheet = ({ isOpen, toggleSheet }) => {
         leftButton: { title: "Back", onPress: toggleSheet },
         setFullWidth: true,
         maxHeightMultiplier: 0.5,
-        setHeight: 900,
+        setHeight: 500,
         scrollable: true,
         title: "Select Category",
         isOpen, toggleSheet,
