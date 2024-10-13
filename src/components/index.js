@@ -23,4 +23,7 @@ export { default as DonutChart } from "./charts/DonutChart";
 export { default as Calendar } from "./calendar/Calendar";
 
 
+export { default as IconGlob } from "./IconGlob";
+
+
 export {default as ButtonInline} from "./ButtonInline"

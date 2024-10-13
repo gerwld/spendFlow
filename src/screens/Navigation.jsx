@@ -29,6 +29,10 @@ import { HandCoins } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedAppLoader from './AnimatedAppLoaderScreen';
 import { TransitionPresets } from '@react-navigation/stack';
+import SetCategoryScreen from './SetCategoryScreen';
+import SCIcon from './subsreens/SCIcon';
+import SCColor from './subsreens/SCColor';
+import SCType from './subsreens/SCType';
 
 
 
@@ -117,6 +121,7 @@ function MyTabs() {
             stroke={focused ? themeColors.tabsActiveColor : themeColors.tabsColor}/>
         }
     })}>
+        <Tab.Screen name="addCategory" component={SetCategoryScreen} options={{ headerShown: false, title: t("home_screen") }} />
         <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
         <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Overview" }} />
       
@@ -166,18 +171,30 @@ export const Navigation = () => {
         </>
     ) 
 
+    const addEditSubdirectoriesCategory = (
+        <>
+            <Stack.Screen name="setcategory" component={SetCategoryScreen} options={{ headerShown: false, title: t("home_screen") }} />
+            <Stack.Screen name="setcategory/icon" component={SCIcon} options={{ headerShown: false, title: "Repeat" }} />
+            <Stack.Screen name="setcategory/color" component={SCColor} options={{ headerShown: false, title: "Repeat" }} />
+            <Stack.Screen name="setcategory/type" component={SCType} options={{ headerShown: false, title: "Repeat" }} />
+        </>
+    ) 
+
+
     const settingsSubdirectories = (
         <>
             <Stack.Screen
             name="settings"
             component={SettingsScreen}
             options={{
+                
                 headerShown: false,
                 title: t("st_screen"),
                 animation: "fade_from_bottom",  
                 gestureDirection: "horizontal-inverted",  
                 headerShown: false,
                 animationDuration: 150,
+                ...TransitionPresets.ModalPresentationIOS,
             }}
             />
             <Stack.Screen name="settings/language" component={STLanguage} options={{ headerShown: false, title: t("st_screen"), }} />
@@ -189,14 +206,13 @@ export const Navigation = () => {
         <GestureHandlerRootView style={{flex: 1, backgroundColor: themeColors.background || "white"}}>
         <NavigationContainer>
             <Stack.Navigator screenOptions={({ route }) => ({ 
-                ...TransitionPresets.ModalPresentationIOS,
                 gestureEnabled: true, 
-                navigationBarColor: getNavigationBarColor(route) })}>
+                navigationBarColor: getNavigationBarColor(route) })}>                
                 <Stack.Screen name="home" component={MyTabs} options={{ headerShown: false, title: t("home_screen") }} />
               
-
                 {settingsSubdirectories}
                 {addEditSubdirectories}
+                {addEditSubdirectoriesCategory}
                 <Stack.Screen
                     name="tutorial"
                     component={TutorialScreen}

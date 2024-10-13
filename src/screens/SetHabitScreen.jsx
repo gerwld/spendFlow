@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader, SelectDate } from '@components';
-import { HABIT_COLORS, PLATFORM, convertTo12HourFormat, getRandomItem, uses24HourClock } from '@constants';
+import { CATEGORY_COLORS, PLATFORM, convertTo12HourFormat, getRandomItem, uses24HourClock } from '@constants';
 import { habitsActions } from "actions";
 import { habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
@@ -23,7 +23,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
   const d = useDispatch();
 
   const initialState = {
-    color: getRandomItem(HABIT_COLORS),
+    color: getRandomItem(CATEGORY_COLORS),
     name: "",
     notification: "",
     remind: false,
@@ -241,7 +241,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
               <SafeAreaView>
                 <ModalContent>
                   <ColorPicker>
-                    {HABIT_COLORS.map(color =>
+                    {CATEGORY_COLORS.map(color =>
                       <BasePressButton
                         key={`key_pressbtn_${color}`}
                         onPress={() => { onChangeInput("color", color); setColorPicker(false); }}

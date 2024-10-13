@@ -13,7 +13,7 @@ import CategoryItem from '../items/CategoryItem';
 import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, LucideCat, Landmark, ShieldCheck, ArrowBigDownDash, EthernetPort } from 'lucide-react-native';
 
 
-const {width: screenWidth, height: screenHeight} = Dimensions.get("screen")
+const { height: screenHeight } = Dimensions.get("screen")
 const isFirstPlusOrMinus = (value) => value[0] === "-" || value[0] === "+"
 
 const accountsArray = [
@@ -50,7 +50,10 @@ const accStyles = StyleSheet.create({
 
 const AddOperationSheet = ({ isOpen, toggleSheet }) => {
   const [themeColors] = useCurrentTheme();
+  const [index, setIndex] = React.useState(0);
   const [state, setState] = React.useState({
+    operationValue: "",
+    operationCurrency: "USD",
     tabIndex: 0,
     isCurrencySheet: false,
     isAccountSheet: false,
@@ -64,7 +67,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       draft[key] = value;
     }));
   }
-
+  const toggleCurrency = () => {
+    dispatchAction("isCurrencySheet", !state.isCurrencySheet)
+  }
   const toggleCalendar = () => {
     dispatchAction("isCalendarSheet", !state.isCalendarSheet)
   }
@@ -77,32 +82,22 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
   const toggleTitle = () => {
     dispatchAction("isTitleSheet", !state.isTitleSheet)
   }
-
-
-  const [index, setIndex] = React.useState(0);
-  const getActionColor = () => index === 0 ? "red" : index === 1 ? "green" : "textColor";
-
-  // currency change / show modal state
-  const [isShowCurrency, setShowCurrency] = React.useState(false)
-  const [currency, setCurrency] = React.useState("PLN")
-
-  // main input state
-  const [numberValue, setNumberValue] = React.useState("");
-
-  const toggleCurrency = () => {
-    setShowCurrency(!isShowCurrency)
+  const setCurrency = (payload) => {
+    dispatchAction("operationCurrency", payload)
   }
+
+  const getActionColor = () => index === 0 ? "red" : index === 1 ? "green" : "textColor";
 
   // changes +-0 to +-0 current
   useEffect(() => {
-    let isFirst = isFirstPlusOrMinus(numberValue);
-    let newValue = isFirst ? numberValue.slice(1) : numberValue;
+    let isFirst = isFirstPlusOrMinus(state.operationValue);
+    let newValue = isFirst ? state.operationValue.slice(1) : state.operationValue;
     let firstChar = index === 0 ? "-" : index === 1 ? "+" : "";
 
     if (newValue === "")
-      setNumberValue("");
+      dispatchAction("operationValue", "");
 
-    else setNumberValue(firstChar + newValue)
+    else dispatchAction("operationValue", firstChar + newValue);
   }, [index])
 
   const onChangeNumber = (value) => {
@@ -113,28 +108,27 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     if (isValid) {
       // first with +- cannot be 0
       if (value[0] === "0" || value[1] === "0" && isFirst) {
-        setNumberValue("")
+        dispatchAction("operationValue", "");
       };
 
       // cannot be empty
       if (value === "-" || value === "+" || !value || value === "") {
-        setNumberValue("")
+        dispatchAction("operationValue", "");
         return
       }
 
       // only one divider
       if (value.split("").filter(e => e === "," || e === ".").length > 1) return;
 
-
       // add plus or minus
       if (index === 0 && !isFirst) {
-        setNumberValue("-" + value)
+        dispatchAction("operationValue", "-" + value);
       }
       else if (index === 1 && !isFirst) {
-        setNumberValue("+" + value)
+        dispatchAction("operationValue", "+" + value);
       }
       // else return normal
-      else setNumberValue(value)
+      else dispatchAction("operationValue", value);
     }
   }
 
@@ -156,7 +150,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       color: themeColors.textColorHighlight
     },
     tabText: {
-      fontSize: 15,
+      fontSize: 14,
       paddingBottom: Platform.OS === "android" ? 2 : 0,
       color: themeColors.textColorHighlight
     },
@@ -168,6 +162,17 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       marginTop: 12,
       borderRadius: 10,
       backgroundColor: themeColors.activeArea,
+    },
+    valueBlockSec: {
+      alignItems: 'center',
+      flexDirection: "row",
+      justifyContent: 'center',
+      // padding: 2,
+      // paddingHorizontal: 6,
+      marginTop: 12,
+      marginLeft: -2,
+      borderRadius: 10,
+      // backgroundColor: themeColors.activeArea,
     },
     currencyBTN: {
       alignItems: 'center',
@@ -196,7 +201,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       textAlign: "right",
     },
     selectItemText: {
-      fontSize: 16,
+      fontSize: 17,
       color: themeColors.textColor
     },
     extraGap: {
@@ -204,7 +209,8 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     },
     itemViewIcon: {
       marginRight: 14
-    }
+    },
+  
   });
 
   const renderContent = (
@@ -223,7 +229,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
       <View style={styles.valueBlock}>
         <Pressable style={styles.currencyBTN} onPress={toggleCurrency}>
-          <Text style={styles.currencyBTNText}>{currency}</Text>
+          <Text style={styles.currencyBTNText}>{state.operationCurrency}</Text>
         </Pressable>
         <TextInput
           {...{
@@ -232,11 +238,11 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
             maxLength: 10,
             keyboardType: "numeric",
             style: styles.numberInput,
-            value: numberValue,
+            value: state.operationValue,
             onChangeText: onChangeNumber
           }} />
       </View>
-      <View style={[styles.valueBlock, styles.extraGap]}>
+      <View style={[styles.valueBlockSec, styles.extraGap]}>
         <Pressable style={{ width: "100%" }} onPress={toggleAccount}>
           <LineItemView isOperation pl1 isLastItem rightArrow>
             <ItemViewIcon
@@ -249,7 +255,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
           </LineItemView>
         </Pressable>
       </View>
-      <View style={styles.valueBlock}>
+      <View style={styles.valueBlockSec}>
         <Pressable style={{ width: "100%" }} onPress={toggleCategory}>
           <LineItemView isOperation pl1 isLastItem rightArrow>
             <ItemViewIcon
@@ -262,7 +268,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
           </LineItemView>
         </Pressable>
       </View>
-      <View style={styles.valueBlock}>
+      <View style={styles.valueBlockSec}>
         <Pressable style={{ width: "100%" }} onPress={toggleCalendar}>
           <LineItemView isOperation pl1 isLastItem rightArrow>
             <ItemViewIcon
@@ -277,7 +283,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
         </Pressable>
       </View>
 
-      <View style={styles.valueBlock}>
+      <View style={styles.valueBlockSec}>
         <Pressable style={{ width: "100%" }} onPress={toggleTitle}>
           <LineItemView isOperation pl1 isLastItem rightArrow>
             <ItemViewIcon
@@ -296,8 +302,8 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
       {/* ----------------------------- SHEETS PART ---------------------------- */}
       <ActionSheetExperimental {...{
-        value: currency,
-        isOpen: isShowCurrency,
+        value: state.operationCurrency,
+        isOpen: state.isCurrencySheet,
         toggleSheet: toggleCurrency,
         onSelect: setCurrency,
         options: [
@@ -385,7 +391,7 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
     },
   });
 
-  
+
   React.useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
@@ -517,16 +523,16 @@ const CalendarSheet = ({ isOpen, toggleSheet }) => {
 
 
 
-const ItemViewIcon = ({ icon, iconColor, defBackground, theme }) => {
+export const ItemViewIcon = ({ icon, iconColor, defBackground, theme }) => {
 
   const styles = StyleSheet.create({
     icon: {
       width: 45,
       height: 45,
-      marginRight: 10,
+      marginRight: 15,
       justifyContent: "center",
       alignItems: "center",
-      borderRadius: 10,
+      borderRadius: 15,
       overflow: "hidden"
     },
     icon_bg: {

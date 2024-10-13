@@ -49,7 +49,7 @@ const LineItemView = React.memo(({ onPress,isFirstItem, isLastItem, leftIcon, is
 
             <View style={[styles.group, isLastItem && {borderBottomWidth: 0, marginTop: -1, borderTopWidth: 0}]}>
                 {leftIcon || isOperation ? <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>{children}</View> : children}
-                {rightArrow ? <SvgFront style={{ marginLeft: 2, marginRight: 10, marginTop: 1}} size={17} color={themeColors.chevron} /> : null}
+                {rightArrow ? <SvgFront style={{ marginLeft: 2, marginRight: isOperation ? 3 : 10, marginTop: 1}} size={17} color={themeColors.chevron} /> : null}
             </View>
             {toggle ?
                 PLATFORM === "ios"

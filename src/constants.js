@@ -42,7 +42,7 @@ const THEMEV = {
     bgHighlightTh: "#eef6ff",
     borderColor: "#ebeef4",
     borderColorSec: "#dee4f0",
-    borderColorTh: "#e0e5ee",
+    borderColorTh: "#c9d0dd",
     textColor: "#44677a",
     textColorHighlight: "#000",
     textColorRevert: "#fff",
@@ -111,7 +111,7 @@ const THEMEV = {
     topBarBackground: "#0d0d0d",
     topBarBackgroundActive: "#35353a",
     activeArea: "#1b1c1f",
-    placeholderColor: "red"
+    placeholderColor: "#3a3c42"
   },
 };
 
@@ -164,7 +164,7 @@ const LANG_MASKS = {
   },
 };
 
-const HABIT_COLORS = [
+const CATEGORY_COLORS = [
   "#f0893a", // Orange
   "#ffcf0f", // Yellow
   "#44C759", // Green
@@ -175,6 +175,72 @@ const HABIT_COLORS = [
   "#69dd91", // Green 2
   "#e44244", // Bordo
 ];
+
+const ICONS_SETS = {
+  "food": [
+    "Pizza", "Coffee", "Apple", "Wine",
+    "Utensils", "Carrot", "Fish", "Milk",
+    "Cake", "ChefHat", "Soup"
+  ],
+  "utilities": [
+    "Phone", "Wifi", "Plug",
+    "Lightbulb", "Battery", "Thermometer", "Clock", "Fan",
+    "Cable", "Router", "WashingMachine", "Heater"
+  ],
+  "entertainment": [
+    "Tv", "Music", "Gamepad", "Film", "Ticket", "Popcorn",
+    "Headphones", "Guitar", "Camera", "Theater", "Speaker"
+  ],
+  "healthcare": [
+    "Heart", "Stethoscope", "Pill", "Syringe", "Hospital",
+    "Bandage", "Thermometer", "Microscope", "Brain", "Ambulance",
+    "TestTube"
+  ],
+  "shopping": [
+    "Tag", "CreditCard", "Gift", "DollarSign", "ShoppingBag",
+    "Receipt", "Box", "Store",
+    "Package", "Wallet"
+  ],
+  "education": [
+    "Book", "GraduationCap", "Pencil", "Ruler",
+    "Backpack", "Globe", "Calculator", "Notebook", "Eraser", "School",
+    "Laptop", "Trophy", "Tablet", "Brain"
+  ],
+  "travel": [
+    "Plane", "Map", "Camera", "Hotel",
+    "Backpack", "Compass", "Mountain",
+    "Globe", "Umbrella", "Binoculars", "Caravan", "Tent"
+  ],
+  "fitness": [
+    "Dumbbell", "Heart", "Apple",
+    "Medal", "Weight"
+  ],
+  "housing": [
+    "Key", "Building", "House",
+    "Lamp", "Bed", "Mailbox"
+  ],
+  "transportation": [
+    "Car", "Bus", "Plane", "Ship",
+    "Map", "Ticket", "Fuel", "Truck"
+  ],
+
+};
+
+
+const ICONS_SETS_MASKS = [
+  "travel",  "housing", "food", "utilities", "entertainment", "fitness", "healthcare", "education", "shopping", "transportation",  
+];
+
+const COLORS_ARRAY = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
 const getRandomItem = (arr) => {
   const randomIndex = Math.floor(Math.random() * arr.length);
@@ -298,6 +364,13 @@ const getGreenRedOrGray =(val, styles) => {
   return {color: val > 0 ? styles.green : val == 0 ? styles.gray : styles.red}
  }
 
+ function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+  );
+}
+
 module.exports = {
   PLATFORM,
   WEEKDAYS,
@@ -305,11 +378,14 @@ module.exports = {
   LANG_MASKS,
   THEMES_MASKS,
   HEADER_SHADOW,
+  ICONS_SETS,
+  ICONS_SETS_MASKS,
 
   REPEAT_MASKS,
   REPEAT_GAP_VALUES,
 
-  HABIT_COLORS,
+  CATEGORY_COLORS,
+  COLORS_ARRAY,
   THEMEV,
   getWeekdays,
   getRandomItem,
@@ -321,5 +397,6 @@ module.exports = {
   convertTo24Hour,
   convertTo12HourFormat,
   isFirstDayOfWeekMonday,
-  getGreenRedOrGray
+  getGreenRedOrGray,
+  toTitleCase
 };
