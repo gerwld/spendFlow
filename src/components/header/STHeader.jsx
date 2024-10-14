@@ -26,6 +26,7 @@ const STHeader = React.memo(({
     // from headerStyles hook preset, otherways - white text and color bg
     const s = {
         textColor: { color: bgColor ? "#ffffff" : themeColors.textColorHighlight },
+        activeTextColor: { color: bgColor ? "#ffffff" : themeColors.tabsActiveColor },
         backgroundColor: bgColor ? bgColor : themeColors.bac
     }
 
@@ -69,7 +70,7 @@ const STHeader = React.memo(({
                                 style={[headerStyles.componentPressable, headerStyles.componentPressableRight, { opacity: rightPress === null ? 0.6 : 1 }]}>
                                 <Text 
                                 numberOfLines={1} ellipsizeMode="tail"
-                                style={[headerStyles.headerButton, s.textColor]}>{rightText}</Text>
+                                style={[headerStyles.headerButton, s.activeTextColor]}>{rightText}</Text>
                             </Pressable>
                         </View>
                         : <View style={headerStyles.rightComponent} />}

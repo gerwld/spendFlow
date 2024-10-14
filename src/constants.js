@@ -122,6 +122,17 @@ const REPEAT_MASKS = {
   "5-times-week": "5 times per week",
 };
 
+const CATEGORY_TYPES_MASKS = {
+  "expenses": {
+    type: "EXPENSES_TYPE",
+    mask: "expenses"
+  },
+  "incomes": {
+    type: "INCOMES_TYPE",
+    mask: "incomes"
+  },
+}
+
 const REPEAT_GAP_VALUES = {
   "every-day": {
     scale: 30, // day_percent * scale = 100%
@@ -383,6 +394,7 @@ module.exports = {
 
   REPEAT_MASKS,
   REPEAT_GAP_VALUES,
+  CATEGORY_TYPES_MASKS,
 
   CATEGORY_COLORS,
   COLORS_ARRAY,

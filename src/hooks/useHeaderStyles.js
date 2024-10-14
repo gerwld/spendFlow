@@ -54,6 +54,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
       justifyContent: 'center',
       height: HEADER_HEIGHT_SAFE,
       width: 55,
+      color: "red"
     },
     headerTitle: {
       color: 'white',

@@ -8,6 +8,7 @@ import { IconGlob, LineItemView, STHeader } from '@components'
 import { ItemViewIcon } from 'src/components/sheets/AddOperationSheet';
 import { LucideArrowDownUp, LucideBrush, LucideImage } from 'lucide-react-native';
 import CategoryItem from 'src/components/items/CategoryItem';
+import { CATEGORY_TYPES_MASKS } from '@constants';
 
 const SetCategoryScreen = ({ navigation }) => {
   const focusInputRef = React.useRef(null);
@@ -19,7 +20,7 @@ const SetCategoryScreen = ({ navigation }) => {
     categoryTitle: "",
     categoryIcon: null,
     categoryColor: "#4DB3FF",
-    categoryType: "expenses"
+    categoryType: CATEGORY_TYPES_MASKS[Object.keys(CATEGORY_TYPES_MASKS)[0]].type
   })
 
   const dispatchAction = (key, value) => {
@@ -117,12 +118,18 @@ const SetCategoryScreen = ({ navigation }) => {
     }
   });
 
+  const onPressSave =() => {
+    alert(JSON.stringify(state))
+  }
+
 
   return (
     <View>
       <STHeader
         navigation={navigation}
         title="Add Category"
+        rightText="Save"
+        rightPress={onPressSave}
       />
 
       <ScrollView style={styles.content}>
@@ -197,7 +204,7 @@ const SetCategoryScreen = ({ navigation }) => {
                 }} />
 
               <Text style={styles.selectItemText}>Type</Text>
-              <Text style={styles.selectItemTextValue}>Expenses</Text>
+              <Text style={styles.selectItemTextValue}>{state.categoryType}</Text>
             </LineItemView>
           </Pressable>
         </View>

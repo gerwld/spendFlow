@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
 import { BaseView, SelectList, STHeader } from '@components';
-import { REPEAT_MASKS } from '@constants';
+import { CATEGORY_TYPES_MASKS, REPEAT_MASKS } from '@constants';
 
 const SCType = ({ route, navigation }) => {
   const { t } = useTranslation();
@@ -12,23 +12,34 @@ const SCType = ({ route, navigation }) => {
   });
   const theme = route.params.theme
 
-
   const onChangeInput = useCallback((name, value) => {
     if (name && value !== undefined) {
-      setState({ ...state, [name]: value })
+        setState({ ...state, [name]: value })
+        if(state)
+            route.params.onGoBack({data: { ...state, [name]: value }});
     }
-  }, [])
+}, [])
 
-  const handleGoBack = () => {
+const handleGoBack = () => {
     // Pass data back to ScreenA using the onGoBack callback
     route.params.onGoBack({ data: { ...state } });
     navigation.goBack();
-  };
+};
 
-  React.useEffect(() => {
+React.useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      if (route.params?.onGoBack) {
+        route.params.onGoBack({ data: { ...state } });
+      }
+      navigation.dispatch(e.data.action);
+    });
+    return unsubscribe;
+  }, [navigation, route.params, state]);
+
+React.useEffect(() => {
     setState({ ...state, ...route.params.state });
-  }, [route.params])
-
+}, [route.params])
   return (
 
     <BaseView>
@@ -43,11 +54,11 @@ const SCType = ({ route, navigation }) => {
         <SelectList
           theme={theme}
           style={{ flex: 1 }}
-          currentValue={state.repeat}
+          currentValue={state.categoryType}
           color={state.color}
-          setValue={(v) => onChangeInput('repeat', v)}
-          data={Object.keys(REPEAT_MASKS).map(e => ({ name: REPEAT_MASKS[e], value: e }))}
-          title={t('label_reg')}
+          setValue={(v) => onChangeInput('categoryType', v)}
+          data={Object.keys(CATEGORY_TYPES_MASKS).map(e => ({ value: CATEGORY_TYPES_MASKS[e].type }))}
+          title={t('label_type')}
         />
       </View>
 
