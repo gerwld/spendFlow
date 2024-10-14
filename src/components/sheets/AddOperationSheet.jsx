@@ -16,7 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { categoriesSelectors } from '@redux';
 import { useSelector } from 'react-redux';
 
-
+const TIMESTAMP_TODAY = new Date().setHours(0,0,0,0);
 const { height: screenHeight } = Dimensions.get("screen")
 const isFirstPlusOrMinus = (value) => value[0] === "-" || value[0] === "+"
 
@@ -69,7 +69,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     currency: "USD",
     accountID: null,
     categoryID: null,
-    timestamp: null,
+    timestamp: TIMESTAMP_TODAY,
     title: null,
   })
 
@@ -221,12 +221,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       alignItems: 'center',
       flexDirection: "row",
       justifyContent: 'center',
-      // padding: 2,
-      // paddingHorizontal: 6,
       marginTop: 12,
       marginLeft: -2,
       borderRadius: 10,
-      // backgroundColor: themeColors.activeArea,
     },
     currencyBTN: {
       alignItems: 'center',
@@ -257,6 +254,13 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     selectItemText: {
       fontSize: 17,
       color: themeColors.textColor
+    },
+    selectItemTextValue: {
+      fontSize: 17,
+
+      marginLeft: "auto",
+      marginRight: 7,
+      color: themeColors.chevronText
     },
     extraGap: {
       marginTop: 20
@@ -305,7 +309,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
                 defBackground: themeColors.bgHighlightSec,
                 theme: themeColors.label
               }} />
-            <Text style={styles.selectItemText}>Select Account</Text>
+            <Text style={styles.selectItemText}>Account</Text>
+            <RenderValueCategory itemID={state.accountID} style={styles.selectItemTextValue}/>
+        
           </LineItemView>
         </Pressable>
       </View>
@@ -319,7 +325,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
                 theme: themeColors.label
               }} />
             <Text style={styles.selectItemText}>Category</Text>
-            <RenderValueCategory itemID={state.categoryID}/>
+            <RenderValueCategory itemID={state.categoryID} style={styles.selectItemTextValue}/>
           </LineItemView>
         </Pressable>
       </View>
@@ -333,7 +339,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
                 theme: themeColors.label
               }} />
 
-            <Text style={styles.selectItemText}>Friday, 16 February</Text>
+            <Text style={styles.selectItemText}>Date</Text>
+            <ReanderValueCalendar timestamp={state.timestamp} style={styles.selectItemTextValue}/>
+            
           </LineItemView>
         </Pressable>
       </View>
@@ -348,8 +356,8 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
                 theme: themeColors.label
               }} />
 
-            <Text style={styles.selectItemText}>Add Title</Text>
-            <Text style={[styles.selectItemText, { opacity: 0.5, marginLeft: 2 }]}> (not required)</Text>
+            <Text style={styles.selectItemText}>Description</Text>
+            <Text style={styles.selectItemTextValue}>{typeof state.title === "string" ? state.title.truncate(12) : "(not required)"}</Text>
           </LineItemView>
         </Pressable>
       </View>
@@ -372,7 +380,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       <CalendarSheet
         {...{
           isOpen: sheetState.isCalendarSheet,
-          toggleSheet: toggleCalendar
+          toggleSheet: toggleCalendar,
+          onPress: setDateTimestamp,
+          current: state.timestamp,
         }} />
 
       <AccountSheet
@@ -391,7 +401,8 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       <TitleSheet
         {...{
           isOpen: sheetState.isTitleSheet,
-          toggleSheet: toggleTitle
+          toggleSheet: toggleTitle,
+          onSubmit: setTitle
         }} />
     </ScrollView>
   )
@@ -417,26 +428,38 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
 }
 
-const RenderValueAccount = ({ itemID }) => {
+const RenderValueAccount = ({ itemID, style }) => {
   if (itemID) {
     const category = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
-    return <Text>{category.title}</Text>
+    return <Text style={style}>{category.title}</Text>
   }
-  return null;
+  return <Text style={style}>Not selected</Text>;
 }
 
-const RenderValueCategory = ({ itemID }) => {
+const RenderValueCategory = ({ itemID, style }) => {
   if (itemID) {
     const category = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
-    return <Text>{category.title}</Text>
+    return <Text style={style}>{category?.title}</Text>
   }
-  return null;
+  return <Text style={style}>Not selected</Text>;
 }
 
-const TitleSheet = ({ isOpen, toggleSheet }) => {
+const ReanderValueCalendar = ({timestamp, style}) => {
+  return <Text style={style}>{timestamp}</Text>
+}
+
+
+const TitleSheet = ({ isOpen, toggleSheet, onSubmit }) => {
   const [themeColors] = useCurrentTheme();
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef(null);
+
+  const onTitleSubmit = () => {
+    if(onSubmit) {
+      onSubmit(value);
+      toggleSheet()
+    }
+  }
 
   const styles = StyleSheet.create({
     titleInput: {
@@ -479,12 +502,12 @@ const TitleSheet = ({ isOpen, toggleSheet }) => {
     <BottomSheetExperimental
       {...{
         leftButton: { title: "Back", onPress: toggleSheet },
-        rightButton: { title: "Save", onPress: () => alert("value: " + value) },
+        rightButton: { title: "Save", onPress: onTitleSubmit },
         setFullWidth: true,
         maxHeightMultiplier: Platform.OS === "android" ? 0.54 : 0.52,
         setHeight: 300,
         scrollable: true,
-        title: "Add Title",
+        title: "Description",
         isOpen,
         toggleSheet,
         backgroundColor: themeColors.bgHighlight
@@ -560,17 +583,32 @@ const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
   )
 }
 
-const CalendarSheet = ({ isOpen, toggleSheet }) => {
+const CalendarSheet = ({ isOpen, toggleSheet, current, onPress }) => {
   const [themeColors] = useCurrentTheme();
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = React.useState([current]);
 
-  const onDayPress = () => { }
+  const onDayPress = (timestamp) => {     
+    setValue([timestamp]);
+    onPress && onPress(timestamp);
+  }
+
+  const renderCalendar = (
+    <Calendar
+    key={value[0]}
+    borderColor={themeColors.calendarBorderColor}
+    color={themeColors.textColor}
+    colorContrast={themeColors.textColorHighlight}
+    data={value}
+    itemID={null}
+    activeColor={themeColors.tabsActiveColor}
+    onChange={onDayPress} />
+  )
 
   return (
     <BottomSheet
       {...{
         leftButton: { title: "Back", onPress: toggleSheet },
-        rightButton: { title: "Save", onPress: () => alert("value: " + value) },
+        rightButton: { title: "Save", onPress: toggleSheet },
         setFullWidth: true,
         maxHeightMultiplier: 0.50,
         setHeight: 410,
@@ -579,13 +617,7 @@ const CalendarSheet = ({ isOpen, toggleSheet }) => {
         isOpen, toggleSheet,
         backgroundColor: themeColors.bgHighlight
       }}>
-      <Calendar
-        borderColor={themeColors.calendarBorderColor}
-        color={themeColors.textColor}
-        colorContrast={themeColors.textColorHighlight}
-        itemID={null}
-        activeColor={themeColors.tabsActiveColor}
-        onChange={onDayPress} />
+        {value && renderCalendar}
     </BottomSheet>
   )
 }

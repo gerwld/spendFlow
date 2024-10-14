@@ -18,8 +18,8 @@ let currentMonth = currentDate.getMonth();
  * @param {string} itemID - Habit ID to show active (selected) habit timestamps (Days.jsx).
  * @returns {React FC} - Returns Calendar. 
  */
-const Calendar = React.memo(({ onChange, color, colorContrast, borderColor, activeColor, itemID }) => {
-    // console.log('calendar rerender');
+const Calendar = React.memo(({ onChange, color, colorContrast, borderColor, activeColor, itemID, data }) => {
+    // console.log('calendar rerender');    
 
     const [visibleMonth, setVisibleMonth] = useState(currentMonth); // Default to current month
     const { width } = useWidthDimensions(700, 20);
@@ -68,6 +68,7 @@ const Calendar = React.memo(({ onChange, color, colorContrast, borderColor, acti
                                     key: visibleMonth,
                                     width,
                                     itemID,
+                                    data,
                                     onChange,
                                     color,
                                     colorContrast,

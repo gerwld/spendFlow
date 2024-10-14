@@ -6,7 +6,7 @@ import { SvgBack, SvgFront } from '@icons';
 
 const NAV_HEIGHT = 46;
 
-const Month = ({ width, color, colorContrast, activeColor, borderColor, date, onNavigate, itemID, onChange, currentDate }) => {
+const Month = ({ width, color, colorContrast, activeColor, borderColor, date, onNavigate, itemID, data, onChange, currentDate }) => {
     console.log('month rerender')
     const { t } = useTranslation();
     const year = date.getFullYear();
@@ -66,6 +66,7 @@ const Month = ({ width, color, colorContrast, activeColor, borderColor, date, on
                 borderColor,
                 currentDate,
                 color, activeColor, year,
+                data,
                 itemID, onChange,
             }} />
         </View>

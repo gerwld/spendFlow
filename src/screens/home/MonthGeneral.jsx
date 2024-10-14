@@ -6,6 +6,7 @@ import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, L
 import { IconGlob } from '@components';
 import { shallowEqual, useSelector } from 'react-redux';
 import { categoriesSelectors } from '@redux';
+import { useNavigation } from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 
@@ -79,31 +80,19 @@ const MonthGeneral = ({ calendarDate, calendarIndex }) => {
       </View>
 
 
-      {page === 0 && <PageExpenses />}
-      {page === 1 && <PageIncomes />}
+      {page === 0 && <PageExpensesOrIncomes currentType="CATEGORY_TYPE_EXPENSES" />}
+      {page === 1 && <PageExpensesOrIncomes currentType="CATEGORY_TYPE_INCOMES" />}
     </View>
   );
 };
 
-const PageExpenses = React.memo(() => {
+export const PageExpensesOrIncomes = React.memo(({currentType, onPress, currentItem}) => {
+  const navigation = useNavigation();
   const {categories, categoriesArray} = useSelector(state => categoriesSelectors.selectCategoriesAndIDs(state), shallowEqual)
-  console.log(categories, categoriesArray);
-  
-  const dataArray = React.useMemo(() => [
-    { id: 1, title: 'Entertainment', icon: "Popcorn", iconColor: '#ff3939' },
-    { id: 2, title: 'Groceries', icon: "Apple", iconColor: '#3988ff' },
-    { id: 3, title: 'Education', icon: "BookHeart", iconColor: '#ff8c39' },
-    { id: 4, title: 'Transport', icon: "BusFront", iconColor: '#39ff6e' },
-    { id: 5, title: 'Savings', icon: "Landmark", iconColor: '#3999ff' },
-    { id: 6, title: 'Pets', icon: "Cat", iconColor: '#decd36' },
-    { id: 7, title: 'Debt Payments', icon: "ArrowBigDownDash", iconColor: '#ff39ff' },
-    { id: 8, title: 'Insurance', icon: "ShieldCheck", iconColor: '#31e2cd' },
-    { id: 9, title: 'Subscriptions', icon: "EthernetPort", iconColor: '#6147f5' },
-  ], []);
 
   const renderAddNew = (
     <CategoryItem  {...{  
-      navigateTo: "setcategory",
+      onPress: () => navigation.navigate("setcategory"),
       icon: <IconGlob {...{name: "Plus", color: "#b3b9bf"}} />,
       iconColor: "#b3b9bf",
       title: "Add New",
@@ -113,12 +102,20 @@ const PageExpenses = React.memo(() => {
     }} />
   )
 
+  const onCategoryPress = (itemID) => {
+    onPress && onPress(itemID) 
+  }
+
  return (
     <View style={styles.pageExpensesContent}>
       {categoriesArray?.length 
-        ? categoriesArray.map(item => (
+        ? categoriesArray.map(item => {
+        
+      // filter by currentType if specified, return all if not
+       if(categories[item].type === currentType || !currentType) return (
         <CategoryItem {...{
-          // ...categories[item],
+          onPress: () => onCategoryPress(item),
+          isCurrent: currentItem === item,
           title: categories[item].title,
           iconColor: categories[item].color,
           key: item,
@@ -126,18 +123,12 @@ const PageExpenses = React.memo(() => {
           size: 24,
           isRow: true
         }} />
-      )) : null}
+      )
+      
+     }) : null}
         
        {renderAddNew}
 
-    </View>
-  );
-});
-
-const PageIncomes = React.memo(() => {
-  return (
-    <View>
-      <Text>PageIncomes</Text>
     </View>
   );
 });

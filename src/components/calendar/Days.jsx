@@ -4,7 +4,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { getWeekdays } from "@constants";
 
 
-const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, year, activeColor, onChange }) => {
+const Days = ({ width, currentMonth, itemID, data, currentDate, color, borderColor, year, activeColor, onChange }) => {
     // console.log('days rerender')
 
     const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();
@@ -88,7 +88,7 @@ const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, ye
                 onChange(timestamp)
             }
 
-            return <DayCalendarRender {...{ key: timestamp, itemID, day, timestamp, timestamp_now, onDateSelect, s, }} />
+            return <DayCalendarRender {...{ key: timestamp, itemID, data, day, timestamp, timestamp_now, onDateSelect, s, }} />
         })
         }
     </View>
@@ -98,14 +98,19 @@ const DayCalendarRender = (props) => {
     // console.log("DayRenderItem rerender");
     
     const {
+        data,
         itemID,
         timestamp,
         timestamp_now,
         onDateSelect,
         s,
         day } = props;
+         
 
-    const timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, timestamp), shallowEqual)
+    let timestampSelected = data?.indexOf(timestamp) !== -1;
+    if(itemID)
+        timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, timestamp), shallowEqual)
+    
 
     if (timestamp === timestamp_now)
         return <TouchableOpacity style={s.to} onPress={onDateSelect}>
