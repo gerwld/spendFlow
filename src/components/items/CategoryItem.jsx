@@ -4,7 +4,7 @@ import { useCurrentTheme } from "hooks";
 import { useNavigation } from "@react-navigation/native";
 
 
-const CategoryItem = ({ icon, iconColor, title, value, isAddNew, navigateTo }) => {
+const CategoryItem = ({ icon, iconColor, title, value, isAddNew, onPress, isCurrent }) => {
   const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
@@ -12,8 +12,10 @@ const CategoryItem = ({ icon, iconColor, title, value, isAddNew, navigateTo }) =
       flexDirection: "row",
       alignItems: "center",
       padding: 7,
-      borderWidth: 1,
-      borderColor: themeColors.borderColorSec,
+      borderWidth: 1.2,
+      marginRight: isAddNew ? "auto" : 0,
+      marginLeft: isAddNew ? "1.9%" : 0,
+      borderColor: isCurrent ? themeColors.tabsActiveColor : themeColors.borderColorSec,
       borderRadius: 12,
       maxHeight: 100,
       minHeight: 55,
@@ -46,7 +48,7 @@ const CategoryItem = ({ icon, iconColor, title, value, isAddNew, navigateTo }) =
   });
 
   return (
-    <Pressable onPress={() => navigateTo && navigation.navigate(navigateTo)} style={styles.block}>
+    <Pressable onPress={onPress} style={styles.block}>
       <View style={styles.icon}>
         {icon}
         <View style={styles.icon_bg} />

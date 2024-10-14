@@ -14,12 +14,16 @@ import { categoriesActions } from 'actions';
 import uuid from 'react-native-uuid';
 
 const SetCategoryScreen = ({ navigation }) => {
-  const d = useDispatch();
+  // focus on ref
   const focusInputRef = React.useRef(null);
-  const [themeColors] = useCurrentTheme();
   useInputFocusOnInit(focusInputRef);
-  const [isValid, setValid] = React.useState(false)
 
+
+  const d = useDispatch();
+  const [themeColors] = useCurrentTheme();
+
+
+  const [isValid, setValid] = React.useState(false)
   const initialState = {
     title: "",
     icon: "House",
@@ -28,12 +32,16 @@ const SetCategoryScreen = ({ navigation }) => {
   }
   const [state, setState] = React.useState({...initialState})
 
-  // state "form" validation
-  React.useEffect(() => {
-    if(state.title.length && !!state.icon && !!state.type) 
-      setValid(true)
-    else setValid(false)
-  }, [state])
+  const onSubmit =() => {
+    // ~65ms in assign benchmark (removes Object.proto)
+    const cleanObj = Object.create(null);
+    Object.assign(cleanObj, state);
+    Object.assign(cleanObj, { id: uuid.v4() });
+    d(categoriesActions.addCatergory(cleanObj));
+
+    setState(initialState);
+    navigation.navigate('overview_tab')
+  }
 
   const dispatchLocalAction = (key, value) => {
     setState(produce(draft => {
@@ -48,8 +56,8 @@ const SetCategoryScreen = ({ navigation }) => {
   const navigateWithState = (route) => {
     navigation.navigate(route, {
       state,
+      // Callback function to handle data from ScreenB
       onGoBack: ({ data }) => {
-        // Callback function to handle data from ScreenB
         setState(data);
       },
     });
@@ -59,6 +67,12 @@ const SetCategoryScreen = ({ navigation }) => {
   const navigateToSubscreenColor = () => navigateWithState("setcategory/color")
   const navigateToSubscreenType = () => navigateWithState("setcategory/type")
 
+   // state "form" validation
+   React.useEffect(() => {
+    if(state.title.length && !!state.icon && !!state.type) 
+      setValid(true)
+    else setValid(false)
+  }, [state])
 
   const styles = StyleSheet.create({
     content: {
@@ -129,18 +143,6 @@ const SetCategoryScreen = ({ navigation }) => {
       maxWidth: 200
     }
   });
-
-  const onSubmit =() => {
-    // ~35ms vs 65ms in assign benchmark
-    const cleanObj = Object.create(null);
-    Object.assign(cleanObj, state);
-    Object.assign(cleanObj, { id: uuid.v4() });
-    d(categoriesActions.addCatergory(cleanObj));
-
-    setState(initialState);
-    navigation.navigate('overview_tab')
-  }
-
 
   return (
     <View>

@@ -2,11 +2,14 @@ import React from 'react'
 import { View, Dimensions, StyleSheet, Pressable, Text, Platform } from 'react-native'
 import { useCurrentTheme } from 'hooks';
 import { Incubator } from 'react-native-ui-lib';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get("window")
 
-const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, title, setHeight, maxHeightMultiplier = 0.86, setFullWidth = false  }) => {
+
+const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, leftButton, title, setHeight, maxHeightMultiplier = 0.86, setFullWidth = false  }) => {
   const [themeColors] = useCurrentTheme();
+  const insets = useSafeAreaInsets()
 
   const closeModal = () => {
     isOpen && toggleSheet()
@@ -15,11 +18,11 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
   const styles = StyleSheet.create({
     container: {
       width: setFullWidth ? width : Math.min(width, height) - 30,
-      minHeight: height * maxHeightMultiplier + 50,
-      maxHeight: height - 80,
+      minHeight: height * maxHeightMultiplier + 65,
+      maxHeight: height - 50,
       height: setHeight || "auto",
       backgroundColor: themeColors.bgHighlight,
-      marginBottom: -50,
+      marginBottom: -50 - insets.bottom,
       paddingHorizontal: setFullWidth ? 0 : Platform.OS === "android" ? 15 : 20,
       paddingTop: 7,
       paddingBottom: 50,
@@ -97,15 +100,23 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, t
       modalProps={{ supportedOrientations: ['portrait', 'landscape'], overlayBackgroundColor: "rgba(0, 0, 0, 0.7)" }}
       blurView
     >
-      <View style={{alignItems: "center", flex: 1}}>
+      <View style={{alignItems: "center", flex: 1,}}>
         <View style={styles.topNotch} />
         <View style={styles.header}>
 
-        <View style={styles.leftButton}>
-          <Pressable style={styles.cancelBTN} onPress={closeModal}>
-            <Text style={styles.cancelBTNText}>Cancel</Text>
-          </Pressable>
-        </View>
+        {leftButton  
+       ? <View style={styles.leftButton}>
+            <Pressable style={styles.cancelBTN} onPress={leftButton.onPress}>
+              <Text style={styles.cancelBTNText}>{leftButton.title}</Text>
+            </Pressable>
+          </View>
+
+        : <View style={styles.leftButton}>
+            <Pressable style={styles.cancelBTN} onPress={closeModal}>
+              <Text style={styles.cancelBTNText}>Cancel</Text>
+            </Pressable>
+          </View>
+        }
 
         {title &&  <Text style={styles.headerTitle}>{title}</Text>}
 

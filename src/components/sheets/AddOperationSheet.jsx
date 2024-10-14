@@ -11,6 +11,10 @@ import { LucideCalendar, PenBoxIcon } from 'lucide-react-native';
 import { produce } from 'immer';
 import CategoryItem from '../items/CategoryItem';
 import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, LucideCat, Landmark, ShieldCheck, ArrowBigDownDash, EthernetPort } from 'lucide-react-native';
+import { PageExpensesOrIncomes } from 'src/screens/home/MonthGeneral';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { categoriesSelectors } from '@redux';
+import { useSelector } from 'react-redux';
 
 
 const { height: screenHeight } = Dimensions.get("screen")
@@ -50,11 +54,9 @@ const accStyles = StyleSheet.create({
 
 const AddOperationSheet = ({ isOpen, toggleSheet }) => {
   const [themeColors] = useCurrentTheme();
-  const [index, setIndex] = React.useState(0);
-  const [state, setState] = React.useState({
-    operationValue: "",
-    operationCurrency: "USD",
-    tabIndex: 0,
+
+  const [sheetState, setSheetState] = React.useState({
+    tab: 0,
     isCurrencySheet: false,
     isAccountSheet: false,
     isCategorySheet: false,
@@ -62,43 +64,95 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     isTitleSheet: false,
   })
 
-  const dispatchLocalAction = (key, value) => {
+  const [state, setState] = React.useState({
+    value: "",
+    currency: "USD",
+    accountID: null,
+    categoryID: null,
+    timestamp: null,
+    title: null,
+  })
+
+  const onSubmit =() => {
+    // ~65ms in assign benchmark (removes Object.proto)
+    const cleanObj = Object.create(null);
+    Object.assign(cleanObj, state);
+    Object.assign(cleanObj, { id: uuid.v4() });
+    d(categoriesActions.addCatergory(cleanObj));
+
+    setSheetState(initialState);
+    navigation.navigate('overview_tab')
+  }
+
+
+  const dispatchSheetAction = (key, value) => 
+    setSheetState(produce(draft => {
+      draft[key] = value;
+    }));
+
+  const dispatchStateAction = (key, value) => 
     setState(produce(draft => {
       draft[key] = value;
     }));
-  }
-  const toggleCurrency = () => {
-    dispatchLocalAction("isCurrencySheet", !state.isCurrencySheet)
-  }
-  const toggleCalendar = () => {
-    dispatchLocalAction("isCalendarSheet", !state.isCalendarSheet)
-  }
-  const toggleAccount = () => {
-    dispatchLocalAction("isAccountSheet", !state.isAccountSheet)
-  }
-  const toggleCategory = () => {
-    dispatchLocalAction("isCategorySheet", !state.isCategorySheet)
-  }
-  const toggleTitle = () => {
-    dispatchLocalAction("isTitleSheet", !state.isTitleSheet)
-  }
-  const setCurrency = (payload) => {
-    dispatchLocalAction("operationCurrency", payload)
-  }
 
-  const getActionColor = () => index === 0 ? "red" : index === 1 ? "green" : "textColor";
+
+
+
+  // SHEET ACTIONS
+  
+  const toggleCurrency = () => 
+    dispatchSheetAction("isCurrencySheet", !sheetState.isCurrencySheet)
+  
+  const toggleCalendar = () => 
+    dispatchSheetAction("isCalendarSheet", !sheetState.isCalendarSheet)
+  
+  const toggleAccount = () => 
+    dispatchSheetAction("isAccountSheet", !sheetState.isAccountSheet)
+  
+  const toggleCategory = () => 
+    dispatchSheetAction("isCategorySheet", !sheetState.isCategorySheet)
+  
+  const toggleTitle = () => 
+    dispatchSheetAction("isTitleSheet", !sheetState.isTitleSheet)
+  
+  const setIndex = (payload) => 
+    dispatchSheetAction("tab", payload)
+
+
+
+  // STATE ACTIONS
+
+  const setCurrency = (payload) => 
+    dispatchStateAction("currency", payload)
+
+  const setAccountID = (payload) => 
+    dispatchStateAction("accountID", payload)
+
+  const setCategoryID = (payload) => 
+    dispatchStateAction("categoryID", payload)
+
+  const setDateTimestamp = (payload) => 
+    dispatchStateAction("timestamp", payload)
+  
+  const setTitle = (payload) => 
+    dispatchStateAction("title", payload)
+
+  const getActionColor = () => sheetState.tab === 0 ? "red" : sheetState.tab === 1 ? "green" : "textColor";
+
+
+
 
   // changes +-0 to +-0 current
   useEffect(() => {
-    let isFirst = isFirstPlusOrMinus(state.operationValue);
-    let newValue = isFirst ? state.operationValue.slice(1) : state.operationValue;
-    let firstChar = index === 0 ? "-" : index === 1 ? "+" : "";
+    let isFirst = isFirstPlusOrMinus(state.value);
+    let newValue = isFirst ? state.value.slice(1) : state.value;
+    let firstChar = sheetState.tab === 0 ? "-" : sheetState.tab === 1 ? "+" : "";
 
     if (newValue === "")
-      dispatchLocalAction("operationValue", "");
+      dispatchStateAction("value", "");
 
-    else dispatchLocalAction("operationValue", firstChar + newValue);
-  }, [index])
+    else dispatchStateAction("value", firstChar + newValue);
+  }, [sheetState.tab])
 
   const onChangeNumber = (value) => {
     const regex = /^[+-]?[0123456789.,]*$/;
@@ -108,12 +162,12 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     if (isValid) {
       // first with +- cannot be 0
       if (value[0] === "0" || value[1] === "0" && isFirst) {
-        dispatchLocalAction("operationValue", "");
+        dispatchStateAction("value", "");
       };
 
       // cannot be empty
       if (value === "-" || value === "+" || !value || value === "") {
-        dispatchLocalAction("operationValue", "");
+        dispatchStateAction("value", "");
         return
       }
 
@@ -121,14 +175,14 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       if (value.split("").filter(e => e === "," || e === ".").length > 1) return;
 
       // add plus or minus
-      if (index === 0 && !isFirst) {
-        dispatchLocalAction("operationValue", "-" + value);
+      if (sheetState.tab === 0 && !isFirst) {
+        dispatchStateAction("value", "-" + value);
       }
-      else if (index === 1 && !isFirst) {
-        dispatchLocalAction("operationValue", "+" + value);
+      else if (sheetState.tab === 1 && !isFirst) {
+        dispatchStateAction("value", "+" + value);
       }
       // else return normal
-      else dispatchLocalAction("operationValue", value);
+      else dispatchStateAction("value", value);
     }
   }
 
@@ -224,21 +278,21 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
         style={styles.tabs}
         tabs={["Expense", "Income", "Transfer"]}
         onChange={setIndex}
-        value={index}
+        value={sheetState.tab}
       />
 
       <View style={styles.valueBlock}>
         <Pressable style={styles.currencyBTN} onPress={toggleCurrency}>
-          <Text style={styles.currencyBTNText}>{state.operationCurrency}</Text>
+          <Text style={styles.currencyBTNText}>{state.currency}</Text>
         </Pressable>
         <TextInput
           {...{
-            placeholder: index === 0 ? "-0" : index === 1 ? "+0" : "0",
+            placeholder: sheetState.tab === 0 ? "-0" : sheetState.tab === 1 ? "+0" : "0",
             placeholderTextColor: themeColors[getActionColor()],
             maxLength: 10,
             keyboardType: "numeric",
             style: styles.numberInput,
-            value: state.operationValue,
+            value: state.value,
             onChangeText: onChangeNumber
           }} />
       </View>
@@ -264,7 +318,8 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
                 defBackground: themeColors.bgHighlightSec,
                 theme: themeColors.label
               }} />
-            <Text style={styles.selectItemText}>Select Category</Text>
+            <Text style={styles.selectItemText}>Category</Text>
+            <RenderValueCategory itemID={state.categoryID}/>
           </LineItemView>
         </Pressable>
       </View>
@@ -302,8 +357,8 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
       {/* ----------------------------- SHEETS PART ---------------------------- */}
       <ActionSheetExperimental {...{
-        value: state.operationCurrency,
-        isOpen: state.isCurrencySheet,
+        value: state.currency,
+        isOpen: sheetState.isCurrencySheet,
         toggleSheet: toggleCurrency,
         onSelect: setCurrency,
         options: [
@@ -316,24 +371,26 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
       <CalendarSheet
         {...{
-          isOpen: state.isCalendarSheet,
+          isOpen: sheetState.isCalendarSheet,
           toggleSheet: toggleCalendar
         }} />
 
       <AccountSheet
         {...{
-          isOpen: state.isAccountSheet,
+          isOpen: sheetState.isAccountSheet,
           toggleSheet: toggleAccount
         }} />
 
       <CategorySheet
         {...{
-          isOpen: state.isCategorySheet,
-          toggleSheet: toggleCategory
+          isOpen: sheetState.isCategorySheet,
+          toggleSheet: toggleCategory,
+          onPress: setCategoryID,
+          current: state.categoryID
         }} />
       <TitleSheet
         {...{
-          isOpen: state.isTitleSheet,
+          isOpen: sheetState.isTitleSheet,
           toggleSheet: toggleTitle
         }} />
     </ScrollView>
@@ -348,7 +405,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
         title: "Add operation",
         isOpen, toggleSheet,
         setHeight: Platform.OS === "android" ? screenHeight - 50 : screenHeight - 100,
-        rightButton: { title: "Save", onPress: () => alert("save pressed.") },
+        rightButton: { title: "Save", onPress: onSubmit },
         backgroundColor: themeColors.bgHighlight
       }}>
       {renderContent}
@@ -358,8 +415,22 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
       {renderContent}
     </BottomSheet>
 
+}
 
+const RenderValueAccount = ({ itemID }) => {
+  if (itemID) {
+    const category = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
+    return <Text>{category.title}</Text>
+  }
+  return null;
+}
 
+const RenderValueCategory = ({ itemID }) => {
+  if (itemID) {
+    const category = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
+    return <Text>{category.title}</Text>
+  }
+  return null;
 }
 
 const TitleSheet = ({ isOpen, toggleSheet }) => {
@@ -463,8 +534,10 @@ const AccountSheet = ({ isOpen, toggleSheet }) => {
   )
 }
 
-const CategorySheet = ({ isOpen, toggleSheet }) => {
+const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
   const [themeColors] = useCurrentTheme();
+  const {bottom} = useSafeAreaInsets()
+
 
   return (
     <BottomSheetExperimental
@@ -479,11 +552,9 @@ const CategorySheet = ({ isOpen, toggleSheet }) => {
         backgroundColor: themeColors.bgHighlight
       }}>
 
-      <View style={accStyles.pageExpensesContent}>
-        {categoriesArray.map(item => (
-          <CategoryItem key={item.id} iconColor={item.iconColor} icon={item.icon} title={item.title} isRow />
-        ))}
-      </View>
+      <ScrollView contentContainerStyle={{paddingBottom: bottom + 10}}>
+        <PageExpensesOrIncomes onPress={onPress} currentItem={current}/>
+      </ScrollView>
 
     </BottomSheetExperimental>
   )
