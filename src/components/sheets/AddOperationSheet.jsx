@@ -14,7 +14,11 @@ import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, L
 import { PageExpensesOrIncomes } from 'src/screens/home/MonthGeneral';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { categoriesSelectors } from '@redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import uuid from "react-native-uuid"
+import { OPERATION_TYPES } from '@constants';
+import { operationsActions } from 'actions';
+import { useNavigation } from '@react-navigation/native';
 
 const TIMESTAMP_TODAY = new Date().setHours(0,0,0,0);
 const { height: screenHeight } = Dimensions.get("screen")
@@ -53,35 +57,52 @@ const accStyles = StyleSheet.create({
 
 
 const AddOperationSheet = ({ isOpen, toggleSheet }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
 
-  const [sheetState, setSheetState] = React.useState({
+  const initialSheetState = {
     tab: 0,
     isCurrencySheet: false,
     isAccountSheet: false,
     isCategorySheet: false,
     isCalendarSheet: false,
     isTitleSheet: false,
-  })
+  }
 
-  const [state, setState] = React.useState({
+  const initialDataState = {
     value: "",
     currency: "USD",
     accountID: null,
     categoryID: null,
     timestamp: TIMESTAMP_TODAY,
     title: null,
+  }
+
+  const [sheetState, setSheetState] = React.useState({
+    ...initialSheetState
   })
 
-  const onSubmit =() => {
-    // ~65ms in assign benchmark (removes Object.proto)
+  const [state, setState] = React.useState({
+    ...initialDataState
+  })
+
+  const onOperationSubmit =() => {
+    // ~65ms in assign benchmark (removes Object.proto & less garbage)
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
-    Object.assign(cleanObj, { id: uuid.v4() });
-    d(categoriesActions.addCatergory(cleanObj));
+    Object.assign(cleanObj, { id: uuid.v4(), type: OPERATION_TYPES[sheetState.tab], value: state.value * 1 });
 
-    setSheetState(initialState);
-    navigation.navigate('overview_tab')
+    
+
+
+
+    dispatch(operationsActions.addOperation(cleanObj));
+
+    setSheetState(initialSheetState);
+    setState(initialDataState);
+    toggleSheet();
+    // navigation.navigate('operations_tab');
   }
 
 
@@ -416,7 +437,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
         title: "Add operation",
         isOpen, toggleSheet,
         setHeight: Platform.OS === "android" ? screenHeight - 50 : screenHeight - 100,
-        rightButton: { title: "Save", onPress: onSubmit },
+        rightButton: { title: "Save", onPress: onOperationSubmit },
         backgroundColor: themeColors.bgHighlight
       }}>
       {renderContent}

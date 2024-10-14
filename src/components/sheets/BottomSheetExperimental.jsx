@@ -82,6 +82,9 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, l
     rightBtn: {
       marginLeft: "auto",
       marginRight: 0
+    },
+    disabled: {
+      color: "gray"
     }
   });
 
@@ -123,7 +126,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, l
         <View style={styles.rightButton}>
           {rightButton &&
             <Pressable style={[styles.cancelBTN, styles.rightBtn]} onPress={rightButton.onPress}>
-            <Text style={styles.cancelBTNText}>{rightButton.title}</Text>
+            <Text style={[[styles.cancelBTNText, !rightButton.onPress && styles.disabled]]}>{rightButton.title}</Text>
           </Pressable>
           }
         </View>

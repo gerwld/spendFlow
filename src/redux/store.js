@@ -9,7 +9,7 @@ import { default as operations } from "./reducers/operationsReducer"
 const store = configureStore({
     reducer: {
         app,
-        habits,
+        // habits,
         categories,
         operations
     },
