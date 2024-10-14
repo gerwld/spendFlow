@@ -3,6 +3,7 @@ import { View, Text, Pressable, SafeAreaView } from 'react-native'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { useTranslation } from 'react-i18next';
 import { SvgBack } from '@icons';
+import { LucideCheck } from 'lucide-react-native';
 
 
 const STHeader = React.memo(({
@@ -15,6 +16,7 @@ const STHeader = React.memo(({
     leftText,
     rightText,
     rightPress,
+    rightPressDisabled,
     bgColor,
     ...rest
 }) => {
@@ -63,14 +65,18 @@ const STHeader = React.memo(({
                 </View>
 
                 {rightComponent ? rightComponent :
-                    rightText
+                    rightPress
                         ? <View style={[headerStyles.rightComponent]}>
                             <Pressable
-                                onPress={rightPress}
-                                style={[headerStyles.componentPressable, headerStyles.componentPressableRight, { opacity: rightPress === null ? 0.6 : 1 }]}>
-                                <Text 
-                                numberOfLines={1} ellipsizeMode="tail"
-                                style={[headerStyles.headerButton, s.activeTextColor]}>{rightText}</Text>
+                                onPress={rightPressDisabled ? null : rightPress}
+                                style={[headerStyles.componentPressable, headerStyles.componentPressableRight, { opacity: rightPressDisabled ? 0.6 : 1 }]}>
+                                
+                                {rightText
+                                ? <Text 
+                                    numberOfLines={1} ellipsizeMode="tail"
+                                    style={[headerStyles.headerButton, s.activeTextColor, headerStyles.textAlignRight]}>{rightText}</Text>
+
+                                : <LucideCheck style={{color: themeColors.textColorHighlight, pointerEvents: "none", marginLeft: -3}} size={30} strokeWidth={2.5} />}
                             </Pressable>
                         </View>
                         : <View style={headerStyles.rightComponent} />}

@@ -16,12 +16,19 @@ const SetCategoryScreen = ({ navigation }) => {
 
   useInputFocusOnInit(focusInputRef);
 
+  const [isValid, setValid] = React.useState(false)
   const [state, setState] = React.useState({
     categoryTitle: "",
-    categoryIcon: null,
+    categoryIcon: "House",
     categoryColor: "#4DB3FF",
     categoryType: CATEGORY_TYPES_MASKS[Object.keys(CATEGORY_TYPES_MASKS)[0]].type
   })
+
+  React.useEffect(() => {
+    if(state.categoryTitle.length && !!state.categoryIcon && state.categoryType) 
+      setValid(true)
+    else setValid(false)
+  }, [state])
 
   const dispatchAction = (key, value) => {
     setState(produce(draft => {
@@ -129,6 +136,7 @@ const SetCategoryScreen = ({ navigation }) => {
         navigation={navigation}
         title="Add Category"
         rightText="Save"
+        rightPressDisabled={!isValid}
         rightPress={onPressSave}
       />
 

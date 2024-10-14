@@ -97,6 +97,10 @@ export const useHeaderStyles = (_, isWhite = false) => {
       paddingRight: GAP_BETWEEN_SCREEN_BORDERS,
       paddingLeft: 4,
     },
+    textAlignRight: {
+      textAlign: "right",
+      marginRight: "10%"
+    },
 
     headerButton: {
       fontSize: 19,
