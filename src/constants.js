@@ -124,11 +124,11 @@ const REPEAT_MASKS = {
 
 const CATEGORY_TYPES_MASKS = {
   "expenses": {
-    type: "EXPENSES_TYPE",
+    type: "CATEGORY_TYPE_EXPENSES",
     mask: "expenses"
   },
   "incomes": {
-    type: "INCOMES_TYPE",
+    type: "CATEGORY_TYPE_INCOMES",
     mask: "incomes"
   },
 }
