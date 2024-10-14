@@ -1,8 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useCurrentTheme } from "hooks";
+import { useNavigation } from "@react-navigation/native";
 
-const CategoryItem = ({ icon, iconColor, title, value }) => {
+
+const CategoryItem = ({ icon, iconColor, title, value, isAddNew, navigateTo }) => {
+  const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
@@ -43,16 +46,16 @@ const CategoryItem = ({ icon, iconColor, title, value }) => {
   });
 
   return (
-    <View style={styles.block}>
+    <Pressable onPress={() => navigateTo && navigation.navigate(navigateTo)} style={styles.block}>
       <View style={styles.icon}>
         {icon}
         <View style={styles.icon_bg} />
       </View>
       <View>
         <Text style={styles.text_title}>{title || "no data"}</Text>
-        <Text style={styles.text_value}>{value || "0"} PLN</Text>
+        {!isAddNew && <Text style={styles.text_value}>{value || "0"} PLN</Text>}
       </View>
-    </View>
+    </Pressable>
   );
 };
 
