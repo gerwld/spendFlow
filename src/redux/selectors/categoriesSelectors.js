@@ -22,6 +22,11 @@ export const selectCategoriesAndIDs = createSelector(
  )
 
 
+export const selectCategoryByID = createSelector(
+  [selectCategories, (_, categoryID) => categoryID],
+  (items, categoryID) => items[categoryID]
+)
+
 
 
 
