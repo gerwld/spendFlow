@@ -94,7 +94,6 @@ const SCIcon = ({ route, navigation }) => {
 
         <BaseView>
             <STHeader
-                bgColor={state.color}
                 onGoBack={handleGoBack}
                 navigation={navigation}
                 title={"Icon"}
@@ -108,7 +107,7 @@ const SCIcon = ({ route, navigation }) => {
                             styles,
                             category,
                             onChangeInput,
-                            currentIcon: state.categoryIcon,
+                            currentIcon: state.icon,
                             delay: index > 3 ? (100 * (index - 3)) : 0 // for shift
                         }} />
                     })}
@@ -145,7 +144,7 @@ const CategoryBlock = ({ styles, category, currentIcon, onChangeInput, delay = 5
                     let isCurrent = icon === currentIcon;
                     return (
                         <TouchableOpacity {...{
-                            onPress: () => onChangeInput("categoryIcon", icon),
+                            onPress: () => onChangeInput("icon", icon),
                             key: icon,
                             style: [styles.categoryIcon, isCurrent && styles.categoryIconActive]
                         }}>

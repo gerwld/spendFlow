@@ -62,28 +62,28 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     isTitleSheet: false,
   })
 
-  const dispatchAction = (key, value) => {
+  const dispatchLocalAction = (key, value) => {
     setState(produce(draft => {
       draft[key] = value;
     }));
   }
   const toggleCurrency = () => {
-    dispatchAction("isCurrencySheet", !state.isCurrencySheet)
+    dispatchLocalAction("isCurrencySheet", !state.isCurrencySheet)
   }
   const toggleCalendar = () => {
-    dispatchAction("isCalendarSheet", !state.isCalendarSheet)
+    dispatchLocalAction("isCalendarSheet", !state.isCalendarSheet)
   }
   const toggleAccount = () => {
-    dispatchAction("isAccountSheet", !state.isAccountSheet)
+    dispatchLocalAction("isAccountSheet", !state.isAccountSheet)
   }
   const toggleCategory = () => {
-    dispatchAction("isCategorySheet", !state.isCategorySheet)
+    dispatchLocalAction("isCategorySheet", !state.isCategorySheet)
   }
   const toggleTitle = () => {
-    dispatchAction("isTitleSheet", !state.isTitleSheet)
+    dispatchLocalAction("isTitleSheet", !state.isTitleSheet)
   }
   const setCurrency = (payload) => {
-    dispatchAction("operationCurrency", payload)
+    dispatchLocalAction("operationCurrency", payload)
   }
 
   const getActionColor = () => index === 0 ? "red" : index === 1 ? "green" : "textColor";
@@ -95,9 +95,9 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     let firstChar = index === 0 ? "-" : index === 1 ? "+" : "";
 
     if (newValue === "")
-      dispatchAction("operationValue", "");
+      dispatchLocalAction("operationValue", "");
 
-    else dispatchAction("operationValue", firstChar + newValue);
+    else dispatchLocalAction("operationValue", firstChar + newValue);
   }, [index])
 
   const onChangeNumber = (value) => {
@@ -108,12 +108,12 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     if (isValid) {
       // first with +- cannot be 0
       if (value[0] === "0" || value[1] === "0" && isFirst) {
-        dispatchAction("operationValue", "");
+        dispatchLocalAction("operationValue", "");
       };
 
       // cannot be empty
       if (value === "-" || value === "+" || !value || value === "") {
-        dispatchAction("operationValue", "");
+        dispatchLocalAction("operationValue", "");
         return
       }
 
@@ -122,13 +122,13 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
       // add plus or minus
       if (index === 0 && !isFirst) {
-        dispatchAction("operationValue", "-" + value);
+        dispatchLocalAction("operationValue", "-" + value);
       }
       else if (index === 1 && !isFirst) {
-        dispatchAction("operationValue", "+" + value);
+        dispatchLocalAction("operationValue", "+" + value);
       }
       // else return normal
-      else dispatchAction("operationValue", value);
+      else dispatchLocalAction("operationValue", value);
     }
   }
 

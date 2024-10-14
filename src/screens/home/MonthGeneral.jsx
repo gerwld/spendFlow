@@ -4,6 +4,8 @@ import { useCurrentTheme } from 'hooks';
 import CategoryItem from 'src/components/items/CategoryItem';
 import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, LucideCat, Landmark, ShieldCheck, ArrowBigDownDash, EthernetPort } from 'lucide-react-native';
 import { IconGlob } from '@components';
+import { shallowEqual, useSelector } from 'react-redux';
+import { categoriesSelectors } from '@redux';
 
 const width = Dimensions.get('window').width;
 
@@ -84,6 +86,9 @@ const MonthGeneral = ({ calendarDate, calendarIndex }) => {
 };
 
 const PageExpenses = React.memo(() => {
+  const {categories, categoriesArray} = useSelector(state => categoriesSelectors.selectCategoriesAndIDs(state), shallowEqual)
+  console.log(categories, categoriesArray);
+  
   const dataArray = React.useMemo(() => [
     { id: 1, title: 'Entertainment', icon: "Popcorn", iconColor: '#ff3939' },
     { id: 2, title: 'Groceries', icon: "Apple", iconColor: '#3988ff' },
@@ -96,27 +101,34 @@ const PageExpenses = React.memo(() => {
     { id: 9, title: 'Subscriptions', icon: "EthernetPort", iconColor: '#6147f5' },
   ], []);
 
-  return (
+  const renderAddNew = (
+    <CategoryItem  {...{  
+      navigateTo: "setcategory",
+      icon: <IconGlob {...{name: "Plus", color: "#b3b9bf"}} />,
+      iconColor: "#b3b9bf",
+      title: "Add New",
+      size: 24,
+      isRow: true,
+      isAddNew: true,
+    }} />
+  )
+
+ return (
     <View style={styles.pageExpensesContent}>
-      {dataArray.map(item => (
+      {categoriesArray?.length 
+        ? categoriesArray.map(item => (
         <CategoryItem {...{
-          ...item,
-          key: item.id,
-          icon: <IconGlob {...{name: item.icon, color: item.iconColor}} />,
+          // ...categories[item],
+          title: categories[item].title,
+          iconColor: categories[item].color,
+          key: item,
+          icon: <IconGlob {...{name: categories[item].icon, color: categories[item].color}} />,
           size: 24,
           isRow: true
         }} />
-      ))}
+      )) : null}
         
-        <CategoryItem  {...{  
-          navigateTo: "setcategory",
-          icon: <IconGlob {...{name: "Plus", color: "#b3b9bf"}} />,
-          iconColor: "#b3b9bf",
-          title: "Add New",
-          size: 24,
-          isRow: true,
-          isAddNew: true,
-        }} />
+       {renderAddNew}
 
     </View>
   );

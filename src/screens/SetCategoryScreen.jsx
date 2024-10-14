@@ -9,35 +9,40 @@ import { ItemViewIcon } from 'src/components/sheets/AddOperationSheet';
 import { LucideArrowDownUp, LucideBrush, LucideImage } from 'lucide-react-native';
 import CategoryItem from 'src/components/items/CategoryItem';
 import { CATEGORY_TYPES_MASKS } from '@constants';
+import { useDispatch } from 'react-redux';
+import { categoriesActions } from 'actions';
+import uuid from 'react-native-uuid';
 
 const SetCategoryScreen = ({ navigation }) => {
+  const d = useDispatch();
   const focusInputRef = React.useRef(null);
   const [themeColors] = useCurrentTheme();
-
   useInputFocusOnInit(focusInputRef);
-
   const [isValid, setValid] = React.useState(false)
-  const [state, setState] = React.useState({
-    categoryTitle: "",
-    categoryIcon: "House",
-    categoryColor: "#4DB3FF",
-    categoryType: CATEGORY_TYPES_MASKS[Object.keys(CATEGORY_TYPES_MASKS)[0]].type
-  })
 
+  const initialState = {
+    title: "",
+    icon: "House",
+    color: "#4DB3FF",
+    type: CATEGORY_TYPES_MASKS[Object.keys(CATEGORY_TYPES_MASKS)[0]].type
+  }
+  const [state, setState] = React.useState({...initialState})
+
+  // state "form" validation
   React.useEffect(() => {
-    if(state.categoryTitle.length && !!state.categoryIcon && state.categoryType) 
+    if(state.title.length && !!state.icon && !!state.type) 
       setValid(true)
     else setValid(false)
   }, [state])
 
-  const dispatchAction = (key, value) => {
+  const dispatchLocalAction = (key, value) => {
     setState(produce(draft => {
       draft[key] = value;
     }));
   }
 
   const onTitleChange = (value) => {
-    dispatchAction("categoryTitle", value);
+    dispatchLocalAction("title", value);
   }
 
   const navigateWithState = (route) => {
@@ -125,8 +130,15 @@ const SetCategoryScreen = ({ navigation }) => {
     }
   });
 
-  const onPressSave =() => {
-    alert(JSON.stringify(state))
+  const onSubmit =() => {
+    // ~35ms vs 65ms in assign benchmark
+    const cleanObj = Object.create(null);
+    Object.assign(cleanObj, state);
+    Object.assign(cleanObj, { id: uuid.v4() });
+    d(categoriesActions.addCatergory(cleanObj));
+
+    setState(initialState);
+    navigation.navigate('overview_tab')
   }
 
 
@@ -137,7 +149,7 @@ const SetCategoryScreen = ({ navigation }) => {
         title="Add Category"
         rightText="Save"
         rightPressDisabled={!isValid}
-        rightPress={onPressSave}
+        rightPress={onSubmit}
       />
 
       <ScrollView style={styles.content}>
@@ -151,7 +163,7 @@ const SetCategoryScreen = ({ navigation }) => {
               placeholderTextColor: themeColors.placeholderColor,
               maxLength: 16,
               style: styles.input,
-              value: state.categoryTitle,
+              value: state.title,
               onChangeText: onTitleChange
             }} />
         </View>
@@ -169,8 +181,8 @@ const SetCategoryScreen = ({ navigation }) => {
               <Text style={styles.selectItemText}>Select Icon</Text>
 
               {
-                state.categoryIcon
-                  ? <View style={styles.selectedIcon}><IconGlob name={state.categoryIcon} color={themeColors.textColor} size={25} /></View>
+                state.icon
+                  ? <View style={styles.selectedIcon}><IconGlob name={state.icon} color={themeColors.textColor} size={25} /></View>
                   : <Text style={styles.selectItemTextValue}>Default</Text>
               }
 
@@ -193,8 +205,8 @@ const SetCategoryScreen = ({ navigation }) => {
               <Text style={styles.selectItemText}>Select Color</Text>
 
               {
-                state.categoryColor
-                  ? <View style={[styles.selectedColor, { backgroundColor: state.categoryColor }]} />
+                state.color
+                  ? <View style={[styles.selectedColor, { backgroundColor: state.color }]} />
                   : <Text style={styles.selectItemTextValue}>Gray</Text>
               }
             </LineItemView>
@@ -212,7 +224,7 @@ const SetCategoryScreen = ({ navigation }) => {
                 }} />
 
               <Text style={styles.selectItemText}>Type</Text>
-              <Text style={styles.selectItemTextValue}>{state.categoryType}</Text>
+              <Text style={styles.selectItemTextValue}>{state.type}</Text>
             </LineItemView>
           </Pressable>
         </View>
@@ -220,7 +232,7 @@ const SetCategoryScreen = ({ navigation }) => {
 
         <Text style={[styles.label, { marginTop: 10 }]}>Preview</Text>
         <View style={[styles.segment, styles.preview]}>
-          <CategoryItem iconColor={state.categoryColor || themeColors.tabsActiveColor} icon={<IconGlob color={state.categoryColor || themeColors.tabsActiveColor} name={state.categoryIcon} />} title={(state.categoryTitle || "No data").toProperCase()} value={100} isRow />
+          <CategoryItem iconColor={state.color || themeColors.tabsActiveColor} icon={<IconGlob color={state.color || themeColors.tabsActiveColor} name={state.icon} />} title={(state.title || "No data").toProperCase()} value={100} isRow />
         </View>
 
 

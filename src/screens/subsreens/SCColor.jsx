@@ -55,12 +55,12 @@ const SCColor = ({ route, navigation }) => {
         },
         categoryColorActive: {
             borderWidth: 2,
-            borderColor: state.categoryColor !== "gray" ? state.categoryColor : themeColors.tabsActiveColor,
+            borderColor: state.color !== "gray" ? state.color : themeColors.tabsActiveColor,
         },
         active_icon_bg: {
             position: "absolute",
             ...StyleSheet.absoluteFill,
-            backgroundColor: state.categoryColor !== "gray" ? state.categoryColor : themeColors.tabsActiveColor,
+            backgroundColor: state.color !== "gray" ? state.color : themeColors.tabsActiveColor,
             zIndex: -1,
             borderRadius: 10,
             opacity: iconColor ? (themeColors.label === "dark" ? 0.2 : 0.1) : 1,
@@ -102,7 +102,6 @@ const SCColor = ({ route, navigation }) => {
 
         <BaseView>
             <STHeader
-                bgColor={state.color}
                 onGoBack={handleGoBack}
                 navigation={navigation}
                 title={"Color"}
@@ -120,7 +119,7 @@ const SCColor = ({ route, navigation }) => {
                                 key: color,
                                 color,
                                 onChangeInput,
-                                currentColor: state.categoryColor,
+                                currentColor: state.color,
                                 index,
                                 delay: (index > FIRST_PORTION) ? (FIRST_PORTION * (index - FIRST_PORTION) * 0.1) : 100 // for shift
                             }} />
@@ -151,7 +150,7 @@ const CategoryBlock = ({ styles, currentColor, color, onChangeInput, index, dela
 
     const renderContent = (
         <TouchableOpacity {...{
-            onPress: () => onChangeInput("categoryColor", color),
+            onPress: () => onChangeInput("color", color),
             style: [styles.categoryColor, isCurrent && styles.categoryColorActive, { backgroundColor: color }]
         }}>
             {isCurrent && <LucideCheck color={"white"} strokeWidth={3} />}

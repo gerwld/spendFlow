@@ -44,7 +44,6 @@ React.useEffect(() => {
 
     <BaseView>
       <STHeader
-        bgColor={state.color}
         onGoBack={handleGoBack}
         navigation={navigation}
         title={"Type"}
@@ -54,9 +53,9 @@ React.useEffect(() => {
         <SelectList
           theme={theme}
           style={{ flex: 1 }}
-          currentValue={state.categoryType}
+          currentValue={state.type}
           color={state.color}
-          setValue={(v) => onChangeInput('categoryType', v)}
+          setValue={(v) => onChangeInput('type', v)}
           data={Object.keys(CATEGORY_TYPES_MASKS).map(e => ({ value: CATEGORY_TYPES_MASKS[e].type }))}
           title={t('label_type')}
         />
