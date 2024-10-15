@@ -17,3 +17,34 @@ export const selectCategoryByID = createSelector(
   (items, operationID) => items[operationID]
 )
 
+
+/**
+ * createSelector callback that recieves `timestampMin, timestampMax`
+ * and returns memoized portion of timestamps range, which helps to avoid unnecessary re-renders.
+ * @param {object} state - returned redux state object.
+ * @param {string} timestampMin - from which included) timestamp select.
+ * @param {string} timestampMax - to which (included) timestamp select.
+ * @returns {array} - returns memoized portion of specified operations in specified range. 
+ */
+export const selectOperationsPortionMinMax = createSelector(
+  [selectOperationsAndIDs, (_, timestampMin) => timestampMin, (_, __, timestampMax) => timestampMax],
+  (items, timestampMin, timestampMax) => {
+    if (!items) return []; 
+
+    const {operations, operationsArray} = items;
+
+    // Validate timestamps
+    const min = Number(timestampMin);
+    const max = Number(timestampMax);
+    if (isNaN(min) || isNaN(max)) return [];
+
+    // only keys of those who's timestamp >= timestampMin and <= timestampMax
+    const filteredKeys = operationsArray.filter(operationID => {
+      const itemTimestamp = operations[operationID].timestamp;      
+      return (itemTimestamp >= min  && itemTimestamp <= max)
+    })    
+    
+    // Filter the itemsArray based on the timestampMin and timestampMax
+    return filteredKeys;
+  }
+);

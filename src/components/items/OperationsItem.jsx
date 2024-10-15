@@ -72,7 +72,7 @@ value
   return (
     <View style={styles.block}>
       <View style={styles.icon}>
-        {categoryItem.icon ? <IconGlob name={categoryItem?.icon} color={categoryItem?.color}/> : null}
+        {categoryItem?.icon ? <IconGlob name={categoryItem?.icon} color={categoryItem?.color}/> : null}
         <View style={styles.icon_bg} />
       </View>
       <View>

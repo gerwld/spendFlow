@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get('window');
 const getCurrentDate = () => new Date();
 // const currentYear = getCurrentDate().getFullYear();
 // const currentMonth = getCurrentDate().getMonth();
-const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 0).setHours(0,0,0,0);
+const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).setHours(0,0,0,0);
 const firstDayOfTheMonth = getFirstDayOfTheMonth(getCurrentDate());
 
 const InfiniteCalendar = ({ children, renderHeader }) => {
@@ -77,7 +77,7 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
         {(isInit && children && index === currentIndex) ||
         index === currentIndex - 1 ||
         index === currentIndex + 1
-          ? children
+          ? childrenWithProps
           : null}
       </View>
     );
