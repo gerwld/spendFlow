@@ -2,8 +2,30 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useCurrentTheme } from "hooks";
 import { getGreenRedOrGray } from "@constants";
+import { useSelector } from "react-redux";
+import { categoriesSelectors } from "@redux";
+import { IconGlob } from "@components";
 
-const OperationsItem = ({ icon, iconColor, title, value }) => {
+const OperationsItem = ({ item }) => {
+  let iconColor, icon, categoryItem, accountItem = null;
+  const {
+accountID,
+categoryID,
+currency,
+id,
+timestamp,
+title,
+type,
+value
+  } = item;
+
+  if(categoryID)
+    categoryItem = useSelector((state) => categoriesSelectors.selectCategoryByID(state, categoryID))
+
+  function getCurrentWithPrefix() {
+    return (type === "OPERATION_TYPE_INCOME") ? ("+" + value) : ("-" + value)
+  }
+  
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
@@ -25,9 +47,9 @@ const OperationsItem = ({ icon, iconColor, title, value }) => {
     icon_bg: {
       position: "absolute",
       ...StyleSheet.absoluteFill,
-      backgroundColor: iconColor || themeColors.bgHighlightSec,
+      backgroundColor: categoryItem?.color || themeColors.bgHighlightSec,
       zIndex: -1,
-      opacity: iconColor ? (themeColors.label === "dark" ? 0.2 : 0.1) : 1,
+      opacity: categoryItem?.color ? (themeColors.label === "dark" ? 0.2 : 0.1) : 1,
     },
     text_title: {
       fontSize: 17,
@@ -43,21 +65,21 @@ const OperationsItem = ({ icon, iconColor, title, value }) => {
       flex: 1,
       fontSize: 15,
       textAlign: "right",
-      color: getGreenRedOrGray(value, themeColors).color,
+      color: getGreenRedOrGray(getCurrentWithPrefix(value), themeColors).color,
     },
   });
 
   return (
     <View style={styles.block}>
       <View style={styles.icon}>
-        {icon}
+        {categoryItem.icon ? <IconGlob name={categoryItem?.icon} color={categoryItem?.color}/> : null}
         <View style={styles.icon_bg} />
       </View>
       <View>
-        <Text style={styles.text_title}>{title || "no data"}</Text>
+        <Text style={styles.text_title}>{categoryItem?.title || "no data"}</Text>
         <Text style={styles.text_account}>card</Text>
       </View>
-      <Text style={styles.text_operationPrice}>{value || "no data"} PLN</Text>
+      <Text style={styles.text_operationPrice}>{getCurrentWithPrefix(value) || "no data"} {currency}</Text>
     </View>
   );
 };

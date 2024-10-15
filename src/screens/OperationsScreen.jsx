@@ -8,6 +8,8 @@ import { LucidePlus } from "lucide-react-native";
 import SearchAndFilter from "src/components/SearchAndFilter";
 import OperationsItem from "src/components/items/OperationsItem";
 import AddOperationSheet from "src/components/sheets/AddOperationSheet";
+import { operationsSelectors } from "@redux";
+import { shallowEqual, useSelector } from "react-redux";
 
 const OperationsScreen = ({ navigation }) => {
   return (
@@ -23,7 +25,7 @@ const OperationsScreen = ({ navigation }) => {
 };
 
 const HeaderSaturated = ({ navigation }) => {
-  const [isSheetOpen, toggleSheetOpen] = React.useState(true);
+  const [isSheetOpen, toggleSheetOpen] = React.useState(false);
 
   const toggleSheet = () => {
     toggleSheetOpen(!isSheetOpen);
@@ -41,9 +43,8 @@ const HeaderSaturated = ({ navigation }) => {
 }
 
 
-
 const LastOperations = () => {
-
+  const {operations, operationsArray} = useSelector(state => operationsSelectors.selectOperationsAndIDs(state), shallowEqual)
   const styles = StyleSheet.create({
     parent: {
       width: "100%",
@@ -59,25 +60,15 @@ const LastOperations = () => {
       <ScrollView
         contentContainerStyle={styles.content}
         style={styles.block}>
+        
+
+
         <DaySection>
-          <DaySectionItem />
-          <DaySectionItem />
-          <DaySectionItem />
+          {operationsArray.map(itemID => 
+              <OperationsItem key={itemID} item={operations[itemID]} />
+          )}
         </DaySection>
-        <DaySection>
-          <DaySectionItem />
-          <DaySectionItem />
-        </DaySection>
-        <DaySection>
-          <DaySectionItem />
-          <DaySectionItem />
-          <DaySectionItem />
-        </DaySection>
-        <DaySection>
-          <DaySectionItem />
-          <DaySectionItem />
-          <DaySectionItem />
-        </DaySection>
+        
       </ScrollView>
     </View>
   );
@@ -122,10 +113,6 @@ const DaySection = ({ children, timestamp }) => {
       <View>{children}</View>
     </View>
   );
-};
-
-const DaySectionItem = () => {
-  return <OperationsItem value={-90} />;
 };
 
 export default OperationsScreen;

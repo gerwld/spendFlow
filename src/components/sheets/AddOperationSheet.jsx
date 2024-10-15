@@ -91,9 +91,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     // ~65ms in assign benchmark (removes Object.proto & less garbage)
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
-    Object.assign(cleanObj, { id: uuid.v4(), type: OPERATION_TYPES[sheetState.tab], value: state.value * 1 });
-
-    
+    Object.assign(cleanObj, { id: uuid.v4(), type: OPERATION_TYPES[sheetState.tab], value: Math.abs(state.value * 1) });
 
 
 

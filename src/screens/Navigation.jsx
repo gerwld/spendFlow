@@ -121,8 +121,8 @@ function MyTabs() {
             stroke={focused ? themeColors.tabsActiveColor : themeColors.tabsColor}/>
         }
     })}>
-        <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Overview" }} />
         <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
+        <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Overview" }} />
       
       
        
@@ -186,14 +186,13 @@ export const Navigation = () => {
             name="settings"
             component={SettingsScreen}
             options={{
-                
                 headerShown: false,
                 title: t("st_screen"),
                 animation: "fade_from_bottom",  
                 gestureDirection: "horizontal-inverted",  
                 headerShown: false,
                 animationDuration: 150,
-                ...TransitionPresets.ModalPresentationIOS,
+                // ...TransitionPresets.ModalPresentationIOS,
             }}
             />
             <Stack.Screen name="settings/language" component={STLanguage} options={{ headerShown: false, title: t("st_screen"), }} />

@@ -9,7 +9,7 @@ import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
 
 function OverviewScreen({ navigation }) {
   const theme = useSelector(appSelectors.selectAppTheme);
-  const isInit = useSelector(appSelectors.isHabitsInit);
+  const isInit = true;
   const statusBarStyle = getThemeStatusBar(theme, true);
 
   if (!isInit) return null;

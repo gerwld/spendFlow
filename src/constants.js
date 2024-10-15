@@ -122,6 +122,12 @@ const REPEAT_MASKS = {
   "5-times-week": "5 times per week",
 };
 
+const OPERATION_TYPES = [
+  "OPERATION_TYPE_EXPENSE", 
+  "OPERATION_TYPE_INCOME",
+  "OPERATION_TYPE_TRANSFER"
+]
+
 const CATEGORY_TYPES_MASKS = {
   "expenses": {
     type: "CATEGORY_TYPE_EXPENSES",
@@ -399,6 +405,9 @@ module.exports = {
   CATEGORY_COLORS,
   COLORS_ARRAY,
   THEMEV,
+
+  OPERATION_TYPES,
+
   getWeekdays,
   getRandomItem,
   getTheme,

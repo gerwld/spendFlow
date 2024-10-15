@@ -11,7 +11,7 @@ export default function operations(state = initialState, action) {
         switch (action.type) {
             case ADD_OPERATION:
                 draft.items[action.payload.id] = action.payload;
-                draft.itemsIdsArray.push(action.payload.id);
+                draft.itemsIdsArray.unshift(action.payload.id);
                 break;
             default:
                 return state;
