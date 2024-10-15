@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import alert from '../polyfils/alert';
-import { habitsActions } from "actions";
+import { habitsActions } from "@actions";
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { uses24HourClock, convertTo12HourFormat } from '@constants';
 import { CircularProgress, LineItemView, STHeader, BaseView, Calendar } from '@components';

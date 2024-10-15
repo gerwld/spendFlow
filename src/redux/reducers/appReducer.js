@@ -3,7 +3,7 @@ import {
     APP_INITIALIZE,
     SET_THEME,
     SET_THEME_SYSTEM
-} from "actions/appActions";
+} from "@actions/appActions";
 import { produce } from "immer";
 
 const initialState = {

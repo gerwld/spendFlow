@@ -11,7 +11,7 @@ module.exports = function (api) {
             screens: './src/screens',
             locales: './src/locales',
             "@redux": './src/redux',
-            actions: './src/redux/actions',
+            "@actions": './src/redux/actions',
             hocs: './src/hocs',
             hooks: './src/hooks',
             styles: './src/styles',

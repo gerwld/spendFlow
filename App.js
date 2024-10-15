@@ -4,7 +4,7 @@ import { Provider, useSelector } from "react-redux";
 
 import { Navigation } from "screens/Navigation";
 import withTranslation from "hocs/withTranslation";
-import { useInitializeAppDemo } from "hooks";
+// import { useInitializeAppDemo } from "hooks";
 import { appSelectors, store } from "@redux";
 import i18n from "./i18n";
 
@@ -19,7 +19,7 @@ function AppWithProvider({ children }) {
 
   const lang = useSelector(appSelectors.selectAppLang);
   // useInitializeApp(lang);
-  useInitializeAppDemo(lang);
+  // useInitializeAppDemo(lang);
 
   useEffect(() => {
     i18n.changeLanguage(lang);

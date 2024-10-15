@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useCurrentTheme } from "hooks";
-import { LucidePlus } from "lucide-react-native";
 
 const getGreenRedOrGray = (val, styles) => {
   return {

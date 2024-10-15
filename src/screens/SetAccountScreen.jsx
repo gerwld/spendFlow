@@ -7,13 +7,13 @@ import { useCurrentTheme, useInputFocusOnInit } from 'hooks';
 import { IconGlob, LineItemView, STHeader } from '@components'
 import { ItemViewIcon } from 'src/components/sheets/AddOperationSheet';
 import { LucideArrowDownUp, LucideBrush, LucideImage } from 'lucide-react-native';
-import CategoryItem from 'src/components/items/CategoryItem';
-import { CATEGORY_TYPES_MASKS } from '@constants';
+import { ACCOUNT_TYPES_MASKS } from '@constants';
 import { useDispatch } from 'react-redux';
-import { categoriesActions } from "@actions";;
 import uuid from 'react-native-uuid';
+import AccountItem from 'src/components/items/AccountItem';
+import { accountsActions } from '@actions';
 
-const SetCategoryScreen = ({ navigation }) => {
+const SetAccountScreen = ({ navigation }) => {
   // focus on ref
   const focusInputRef = React.useRef(null);
   useInputFocusOnInit(focusInputRef);
@@ -26,9 +26,9 @@ const SetCategoryScreen = ({ navigation }) => {
   const [isValid, setValid] = React.useState(false)
   const initialState = {
     title: "",
-    icon: "House",
-    color: "#4DB3FF",
-    type: CATEGORY_TYPES_MASKS[Object.keys(CATEGORY_TYPES_MASKS)[0]].type
+    icon: "Calculator",
+    color: "#1AB399",
+    type: ACCOUNT_TYPES_MASKS[Object.keys(ACCOUNT_TYPES_MASKS)[0]].type
   }
   const [state, setState] = React.useState({...initialState})
 
@@ -37,10 +37,10 @@ const SetCategoryScreen = ({ navigation }) => {
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
     Object.assign(cleanObj, { id: uuid.v4() });
-    d(categoriesActions.addCatergory(cleanObj));
+    d(accountsActions.addAccount(cleanObj));
 
     setState(initialState);
-    navigation.navigate('overview_tab')
+    navigation.navigate('accounts_tab')
   }
 
   const dispatchLocalAction = (key, value) => {
@@ -63,9 +63,9 @@ const SetCategoryScreen = ({ navigation }) => {
     });
   }
 
-  const navigateToSubscreenIcon = () => navigateWithState("setcategory/icon")
-  const navigateToSubscreenColor = () => navigateWithState("setcategory/color")
-  const navigateToSubscreenType = () => navigateWithState("setcategory/type")
+  const navigateToSubscreenIcon = () => navigateWithState("setaccount/icon")
+  const navigateToSubscreenColor = () => navigateWithState("setaccount/color")
+  const navigateToSubscreenType = () => navigateWithState("setaccount/type")
 
    // state "form" validation
    React.useEffect(() => {
@@ -140,7 +140,7 @@ const SetCategoryScreen = ({ navigation }) => {
 
     },
     preview: {
-      maxWidth: 200
+      // maxWidth: 200
     }
   });
 
@@ -148,7 +148,7 @@ const SetCategoryScreen = ({ navigation }) => {
     <View>
       <STHeader
         navigation={navigation}
-        title="Add Category"
+        title="Add Account"
         rightText="Save"
         rightPressDisabled={!isValid}
         rightPress={onSubmit}
@@ -163,7 +163,7 @@ const SetCategoryScreen = ({ navigation }) => {
               ref: focusInputRef,
               placeholder: "Provide name",
               placeholderTextColor: themeColors.placeholderColor,
-              maxLength: 16,
+              maxLength: 35,
               style: styles.input,
               value: state.title,
               onChangeText: onTitleChange
@@ -225,7 +225,7 @@ const SetCategoryScreen = ({ navigation }) => {
                   theme: themeColors.label
                 }} />
 
-              <Text style={styles.selectItemText}>Operation Type</Text>
+              <Text style={styles.selectItemText}>Account Type</Text>
               <Text style={styles.selectItemTextValue}>{state.type}</Text>
             </LineItemView>
           </Pressable>
@@ -234,7 +234,15 @@ const SetCategoryScreen = ({ navigation }) => {
 
         <Text style={[styles.label, { marginTop: 10 }]}>Preview</Text>
         <View style={[styles.segment, styles.preview]}>
-          <CategoryItem iconColor={state.color || themeColors.tabsActiveColor} icon={<IconGlob color={state.color || themeColors.tabsActiveColor} name={state.icon} />} title={(state.title || "Category").toProperCase()} value={100} isRow />
+          <AccountItem {
+            ...{
+              iconColor: state.color || themeColors.tabsActiveColor,
+              icon: <IconGlob color={state.color || themeColors.tabsActiveColor} name={state.icon} />,
+              title: (state.title || "Account").toProperCase(),
+              value: state.type === "ACCOUNT_TYPE_DEBT" ? "-100" : 100,
+              isRow: true,
+            }
+          }/>
         </View>
 
 
@@ -244,4 +252,4 @@ const SetCategoryScreen = ({ navigation }) => {
   )
 }
 
-export default SetCategoryScreen
+export default SetAccountScreen

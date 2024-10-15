@@ -139,6 +139,21 @@ const CATEGORY_TYPES_MASKS = {
   },
 }
 
+const ACCOUNT_TYPES_MASKS = {
+  "debit": {
+    type: "ACCOUNT_TYPE_DEBIT",
+    mask: "expenses"
+  },
+  "savings": {
+    type: "ACCOUNT_TYPE_SAVINGS",
+    mask: "incomes"
+  },
+  "debt": {
+    type: "ACCOUNT_TYPE_DEBT",
+    mask: "incomes"
+  },
+}
+
 const REPEAT_GAP_VALUES = {
   "every-day": {
     scale: 30, // day_percent * scale = 100%
@@ -407,6 +422,7 @@ module.exports = {
   THEMEV,
 
   OPERATION_TYPES,
+  ACCOUNT_TYPES_MASKS,
 
   getWeekdays,
   getRandomItem,

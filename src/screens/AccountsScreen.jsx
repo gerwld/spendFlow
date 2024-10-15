@@ -1,28 +1,32 @@
-import React, { useMemo } from "react";
-import { BaseView, HomeHeader } from "@components";
+import React from "react";
+import { BaseView, HomeHeader, IconGlob } from "@components";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { useCurrentTheme } from "hooks";
 import { Platform, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import AccountItem from "src/components/items/AccountItem";
 import StatBlock from "src/components/StatBlock";
-import { HEADER_SHADOW } from "@constants";
+import { getGreenRedOrGray, HEADER_SHADOW } from "@constants";
+import { useNavigation } from "@react-navigation/native";
+import { shallowEqual, useSelector } from "react-redux";
+import { accountsSelectors } from "@redux";
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 5,
-    marginBottom: 0,
-    marginHorizontal: 16,
+    marginTop: 15,
+    marginBottom: 10,
+    marginHorizontal: 22,
   },
   headerText: {
     fontSize: 19,
   },
   subitems: {
-    gap: 10,
-    margin: 12,
+    gap: 12,
+    marginBottom: 5,
+    marginHorizontal: 20
   },
   tabBarStyle: {
     ...HEADER_SHADOW,
@@ -47,40 +51,58 @@ const styles = StyleSheet.create({
   },
 });
 
-const getGreenRedOrGray = (val, themeColors) => {
-  return { color: val > 0 ? themeColors.green : val === 0 ? themeColors.gray : themeColors.red };
-};
 
-const SectionHeader = ({ title, balance, themeColors }) => (
-  <View style={styles.header}>
-    <Text style={[styles.headerText, { color: themeColors.textColorHighlight }]}>{title}</Text>
-    {balance !== undefined && (
-      <Text style={[styles.headerText, getGreenRedOrGray(balance, themeColors)]}>{balance} PLN</Text>
-    )}
-  </View>
+const AccountsScreen = ({ navigation }) => (
+  <BaseView>
+    <HomeHeader navigation={navigation} />
+    <AccountsOrTotalTabs />
+  </BaseView>
 );
 
 const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
+  const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
+  const {accounts, accountsArray} = useSelector(state => accountsSelectors.selectAccountsAndIDs(state), shallowEqual)
+
+  const onAddNewPress = () => {
+    navigation.navigate("setaccount")
+  }
+
+  const renderAddNew = (
+    <AccountItem
+    {...{    
+      onPress: onAddNewPress,  
+      icon: <IconGlob size={28} {...{name: "Plus", color: "#ced2de"}} />,
+      isAddNew: true,
+      title: "Add Account"
+    }}/>
+  )
 
   return (
     <ScrollView>
       <SectionHeader title="Accounts" balance={balance} themeColors={themeColors} />
       <View style={styles.subitems}>
-        <AccountItem title="Card" />
-        <AccountItem title="Cash" />
-        <AccountItem addNewPressable title="Add financial account" />
+        {accountsArray.length  
+          ? accountsArray.map(itemID => 
+            <AccountItem {...{
+              key: itemID,
+              title: accounts[itemID].title,
+              iconColor: accounts[itemID].color,
+              icon: <IconGlob name={accounts[itemID].icon} color={accounts[itemID].color} size={24}/>
+            }} />) 
+          : null}
+        {renderAddNew}
       </View>
       <SectionHeader title="Savings" balance={balanceSavings} themeColors={themeColors} />
       <View style={styles.subitems}>
-        <AccountItem title="New car" />
-        <AccountItem addNewPressable title="Add new saving" />
+        <AccountItem title="Lorem Item" />
+       {renderAddNew}
       </View>
     </ScrollView>
   );
 };
 
-const TotalSubscreen = ({ balance = -200 }) => {
+const TotalSubscreen = () => {
   const [themeColors] = useCurrentTheme();
 
   return (
@@ -97,6 +119,22 @@ const TotalSubscreen = ({ balance = -200 }) => {
   );
 };
 
+
+const SectionHeader = ({ title, balance, themeColors }) => (
+  <View style={styles.header}>
+    <Text style={[styles.headerText, { color: themeColors.textColorHighlight }]}>{title}</Text>
+    {balance !== undefined && (
+      <Text style={[styles.headerText, getGreenRedOrGray(balance, themeColors)]}>{balance} PLN</Text>
+    )}
+  </View>
+);
+
+
+
+
+
+// TABS PART 
+
 const renderScene = SceneMap({
   accounts: AccountsSubscreen,
   total: TotalSubscreen,
@@ -104,7 +142,7 @@ const renderScene = SceneMap({
 
 const AccountsOrTotalTabs = () => {
   const layout = useWindowDimensions();
-  const [index, setIndex] = React.useState(1);
+  const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "accounts", title: "Accounts" },
     { key: "total", title: "Total" },
@@ -144,12 +182,5 @@ const renderTabBar = (props) => {
     />
   );
 };
-
-const AccountsScreen = ({ navigation }) => (
-  <BaseView>
-    <HomeHeader navigation={navigation} />
-    <AccountsOrTotalTabs />
-  </BaseView>
-);
 
 export default AccountsScreen;

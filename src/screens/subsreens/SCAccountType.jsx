@@ -3,9 +3,9 @@ import { View } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
 import { BaseView, SelectList, STHeader } from '@components';
-import { CATEGORY_TYPES_MASKS, REPEAT_MASKS } from '@constants';
+import { ACCOUNT_TYPES_MASKS } from '@constants';
 
-const SCType = ({ route, navigation }) => {
+const SCAccountType = ({ route, navigation }) => {
   const { t } = useTranslation();
   const [state, setState] = React.useState({
     ...route.params.state
@@ -56,7 +56,7 @@ React.useEffect(() => {
           currentValue={state.type}
           color={state.color}
           setValue={(v) => onChangeInput('type', v)}
-          data={Object.keys(CATEGORY_TYPES_MASKS).map(e => ({ value: CATEGORY_TYPES_MASKS[e].type }))}
+          data={Object.keys(ACCOUNT_TYPES_MASKS).map(e => ({ value: ACCOUNT_TYPES_MASKS[e].type }))}
           title={t('label_type')}
         />
       </View>
@@ -66,4 +66,4 @@ React.useEffect(() => {
   )
 }
 
-export default SCType
+export default SCAccountType

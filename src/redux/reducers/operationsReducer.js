@@ -1,5 +1,5 @@
 import { produce } from "immer";
-import { ADD_OPERATION } from "actions/operationsActions";
+import { ADD_OPERATION } from "@actions/operationsActions";
 
 const initialState = {
     items: {},

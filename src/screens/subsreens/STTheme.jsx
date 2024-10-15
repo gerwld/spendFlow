@@ -6,7 +6,7 @@ import { BaseView, SelectList, STHeader } from '@components';
 import { THEMES_MASKS } from '@constants';
 
 import { useTranslation } from 'react-i18next';
-import { appActions } from "actions"
+import { appActions } from "@actions";
 import { appSelectors } from '@redux';
 
 LogBox.ignoreLogs([

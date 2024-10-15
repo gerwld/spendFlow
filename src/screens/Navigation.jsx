@@ -28,11 +28,12 @@ import { ChartPie } from 'lucide-react-native';
 import { HandCoins } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedAppLoader from './AnimatedAppLoaderScreen';
-import { TransitionPresets } from '@react-navigation/stack';
 import SetCategoryScreen from './SetCategoryScreen';
 import SCIcon from './subsreens/SCIcon';
 import SCColor from './subsreens/SCColor';
-import SCType from './subsreens/SCType';
+import SCOperationType from './subsreens/SCOperationType';
+import SetAccountScreen from './SetAccountScreen';
+import SCAccountType from './subsreens/SCAccountType';
 
 
 
@@ -121,12 +122,12 @@ function MyTabs() {
             stroke={focused ? themeColors.tabsActiveColor : themeColors.tabsColor}/>
         }
     })}>
+        <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ headerShown: false, title: "Accounts" }} />
         <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
         <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Overview" }} />
       
       
        
-        <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ headerShown: false, title: "Accounts" }} />
         <Tab.Screen name="more_tab" component={MoreScreen} options={{ headerShown: false, title: "More" }} />
       
     </Tab.Navigator>
@@ -170,12 +171,21 @@ export const Navigation = () => {
         </>
     ) 
 
-    const addEditSubdirectoriesCategory = (
+    const addEditAccounts = (
+        <>
+            <Stack.Screen name="setaccount" component={SetAccountScreen} options={{ headerShown: false, title: t("home_screen") }} />
+            <Stack.Screen name="setaccount/icon" component={SCIcon} options={{ headerShown: false, title: "Icon" }} />
+            <Stack.Screen name="setaccount/color" component={SCColor} options={{ headerShown: false, title: "Color" }} />
+            <Stack.Screen name="setaccount/type" component={SCAccountType} options={{ headerShown: false, title: "Type" }} />
+        </>
+    ) 
+
+    const addEditCategories = (
         <>
             <Stack.Screen name="setcategory" component={SetCategoryScreen} options={{ headerShown: false, title: t("home_screen") }} />
-            <Stack.Screen name="setcategory/icon" component={SCIcon} options={{ headerShown: false, title: "Repeat" }} />
-            <Stack.Screen name="setcategory/color" component={SCColor} options={{ headerShown: false, title: "Repeat" }} />
-            <Stack.Screen name="setcategory/type" component={SCType} options={{ headerShown: false, title: "Repeat" }} />
+            <Stack.Screen name="setcategory/icon" component={SCIcon} options={{ headerShown: false, title: "Icon" }} />
+            <Stack.Screen name="setcategory/color" component={SCColor} options={{ headerShown: false, title: "Color" }} />
+            <Stack.Screen name="setcategory/type" component={SCOperationType} options={{ headerShown: false, title: "Type" }} />
         </>
     ) 
 
@@ -210,7 +220,10 @@ export const Navigation = () => {
               
                 {settingsSubdirectories}
                 {addEditSubdirectories}
-                {addEditSubdirectoriesCategory}
+
+                {addEditAccounts}
+                {addEditCategories}
+
                 <Stack.Screen
                     name="tutorial"
                     component={TutorialScreen}

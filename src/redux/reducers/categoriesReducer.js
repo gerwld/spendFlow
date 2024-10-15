@@ -1,5 +1,5 @@
 import { produce } from "immer";
-import { ADD_CATEGORY } from "actions/categoriesActions";
+import { ADD_CATEGORY } from "@actions/categoriesActions";
 
 const initialState = {
     items: {

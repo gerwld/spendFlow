@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader, SelectDate } from '@components';
 import { CATEGORY_COLORS, PLATFORM, convertTo12HourFormat, getRandomItem, uses24HourClock } from '@constants';
-import { habitsActions } from "actions";
+import { habitsActions } from "@actions";
 import { habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
 import { useCurrentTheme, useInputFocusOnInit } from 'hooks';

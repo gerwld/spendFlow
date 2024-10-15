@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { appActions, habitsActions } from "actions";
+import { appActions, habitsActions } from "@actions";
 import i18n from '../../i18n';
 import { LogBox, useColorScheme } from 'react-native';
 import { Appearance } from 'react-native';

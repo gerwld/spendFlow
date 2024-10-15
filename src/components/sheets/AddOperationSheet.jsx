@@ -17,7 +17,7 @@ import { categoriesSelectors } from '@redux';
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from "react-native-uuid"
 import { OPERATION_TYPES } from '@constants';
-import { operationsActions } from 'actions';
+import { operationsActions } from "@actions";;
 import { useNavigation } from '@react-navigation/native';
 
 const TIMESTAMP_TODAY = new Date().setHours(0,0,0,0);

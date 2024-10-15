@@ -1,22 +1,25 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useCurrentTheme } from "hooks";
 
-const AccountItem = ({ icon, iconColor, title, value }) => {
+const AccountItem = ({id, icon, iconColor, title, value, isAddNew, onPress }) => {
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
+      marginLeft:  isAddNew ? "auto" : 0,
       flexDirection: "row",
       alignItems: "center",
-      padding: 7,
+      paddingLeft: isAddNew ? 10 : 8,
+      paddingRight: isAddNew ? 15 : 8,
+      paddingVertical: isAddNew ? 8 : 6,
       borderWidth: 1,
       borderColor: themeColors.borderColorSec,
-      borderRadius: 12,
+      borderRadius: isAddNew ? 50 : 12,
       maxHeight: 100,
     },
     icon: {
-      width: 45,
-      height: 45,
+      width: isAddNew ? 25 : 45,
+      height: isAddNew ? 25 : 45,
       marginRight: 8,
       justifyContent: "center",
       alignItems: "center",
@@ -26,7 +29,7 @@ const AccountItem = ({ icon, iconColor, title, value }) => {
     icon_bg: {
       position: "absolute",
       ...StyleSheet.absoluteFill,
-      backgroundColor: iconColor || themeColors.bgHighlightSec,
+      backgroundColor: isAddNew ? "transparent" : (iconColor || themeColors.bgHighlightSec),
       zIndex: -1,
       opacity: iconColor ? (themeColors.label === "dark" ? 0.2 : 0.1) : 1,
     },
@@ -40,17 +43,21 @@ const AccountItem = ({ icon, iconColor, title, value }) => {
     },
   });
 
+  const onAccountPress = () => {
+    onPress && onPress(id)
+  }
+
   return (
-    <View style={styles.block}>
+    <Pressable style={styles.block} onPress={onAccountPress}>
       <View style={styles.icon}>
         {icon}
         <View style={styles.icon_bg} />
       </View>
       <View>
         <Text style={styles.text_title}>{title || "no data"}</Text>
-        <Text style={styles.text_value}>{value || "0"} PLN</Text>
+        {!isAddNew &&  <Text style={styles.text_value}>{value || "0"} PLN</Text>}
       </View>
-    </View>
+    </Pressable>
   );
 };
 
