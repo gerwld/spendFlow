@@ -11,7 +11,7 @@ import { LucideCalendar, PenBoxIcon } from 'lucide-react-native';
 import { produce } from 'immer';
 import CategoryItem from '../items/CategoryItem';
 import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, LucideCat, Landmark, ShieldCheck, ArrowBigDownDash, EthernetPort } from 'lucide-react-native';
-import { PageExpensesOrIncomes } from 'src/screens/home/MonthGeneral';
+import SelectCategory from 'src/components/SelectCategory';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { categoriesSelectors } from '@redux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -100,7 +100,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     setSheetState(initialSheetState);
     setState(initialDataState);
     toggleSheet();
-    // navigation.navigate('operations_tab');
+    // navigation.navigate('home_tab');
   }
 
 
@@ -595,7 +595,7 @@ const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
       }}>
 
       <ScrollView contentContainerStyle={{paddingBottom: bottom + 10}}>
-        <PageExpensesOrIncomes onPress={onPress} currentItem={current}/>
+        <SelectCategory onPress={onPress} currentItem={current}/>
       </ScrollView>
 
     </BottomSheetExperimental>

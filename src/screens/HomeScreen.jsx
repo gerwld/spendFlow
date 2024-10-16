@@ -1,10 +1,10 @@
 import React from "react";
 import { HomeHeader } from "@components";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { useCurrentTheme } from "hooks";
 import { ScrollView } from "react-native-gesture-handler";
 import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
-import { LucidePlus } from "lucide-react-native";
+import { LucideBriefcaseBusiness, LucideHandCoins, LucideLandmark, LucidePlus, LucideWallet } from "lucide-react-native";
 import SearchAndFilter from "src/components/SearchAndFilter";
 import OperationsItem from "src/components/items/OperationsItem";
 import AddOperationSheet from "src/components/sheets/AddOperationSheet";
@@ -12,12 +12,97 @@ import { operationsSelectors } from "@redux";
 import { shallowEqual, useSelector } from "react-redux";
 import { getWeekdays } from "@constants";
 
-const OperationsScreen = ({ navigation }) => {
+const width = Dimensions.get('window').width;
+
+const styles = StyleSheet.create({
+  block: {
+    width: Math.min(width - 30, 1000),
+    alignSelf: "center",
+    flexDirection: 'row',
+    gap: 2,
+    minHeight: 76,
+    maxWidth: 360,
+    marginTop: 5,
+    marginHorizontal: 19,
+    // marginBottom: 10,
+    padding: 7,
+    borderRadius: 10,
+    shadowColor: "#000000",
+    zIndex: 100,
+
+    shadowOffset: {
+      width: 0,
+      height: 0.5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  child: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 0
+  },
+  childActive: {
+    borderRadius: 12,
+  },
+  headerText: {
+    fontSize: 15,
+    lineHeight: 15,
+    marginTop: 2,
+    fontWeight: "400",
+  },
+  subText: {
+    fontSize: 18,
+    lineHeight: 18,
+    marginTop: 3,
+    fontWeight: '400',
+    paddingTop: 2,
+    
+  },
+  subTextExpense: { color: '#db4263' },
+  subTextBalance: { color: '#4de971' },
+  pageExpensesContent: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 10,
+    rowGap: 12,
+    marginHorizontal: 15,
+  },
+});
+
+
+
+
+const HomeScreen = ({ navigation }) => {
+  const [themeColors] = useCurrentTheme();
+  const memoizedStyles = React.useMemo(() => ({
+    block: [styles.block, { backgroundColor: themeColors.background }],
+    subTextBalance: {color: themeColors.textColor},
+    headerText: [styles.headerText, { color: themeColors.textColor }],
+  }), [themeColors]);
+  
   return (
     <>
       <HeaderSaturated navigation={navigation} />
       <InfiniteCalendar
-        renderHeader={() => <SearchAndFilter />}>
+        renderHeader={() => 
+          <View style={memoizedStyles.block}>
+            <View style={styles.child}>
+              <Text style={memoizedStyles.headerText}>Expenses</Text>
+              <Text style={[styles.subText, styles.subTextExpense]}>400 PLN</Text>
+            </View>
+            <View style={styles.child}>
+              <Text style={memoizedStyles.headerText}>Balance</Text>
+              <Text style={[styles.subText, styles.subTextBalance]}>400 PLN</Text>
+            </View>
+            <View style={styles.child}>
+              <Text style={memoizedStyles.headerText}>Income</Text>
+              <Text style={[styles.subText, memoizedStyles.subTextBalance]}>400 PLN</Text>
+            </View>
+          </View>}>
         <LastOperations />
       </InfiniteCalendar>
 
@@ -77,8 +162,8 @@ const LastOperations = ({ calendarDate, calendarIndex }) => {
   
     },
     noDataText: {
-      fontSize: 20,
-      fontWeight: "600",
+      fontSize: 18,
+      fontWeight: "400",
       color: themeColors.textColor,
       textAlign: "center"
     }
@@ -88,7 +173,7 @@ const LastOperations = ({ calendarDate, calendarIndex }) => {
     <View style={styles.parent}>
       <ScrollView
         contentContainerStyle={styles.content}
-        style={styles.block}>
+        >
 
         {/* <Text>Year: {Year}</Text>
         <Text>Month Index: {Month}</Text>
@@ -171,4 +256,5 @@ const DaySection = ({ children, timestamp }) => {
   );
 };
 
-export default OperationsScreen;
+
+export default HomeScreen;

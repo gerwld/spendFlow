@@ -67,6 +67,7 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
         return React.cloneElement(child, {
           calendarDate: item.toString(),
           calendarIndex: index,
+          isCurrentPage: index === currentIndex
         });
       }
       return child;
@@ -79,6 +80,7 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
         index === currentIndex + 1
           ? childrenWithProps
           : null}
+          <Text>bottom_test</Text>
       </View>
     );
   };
@@ -91,6 +93,7 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
     container: {
       flex: 1,
       justifyContent: 'center',
+      maxHeight: "100%"
     },
     header: {
       backgroundColor: themeColors.background,
@@ -116,7 +119,8 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
     },
     slide: {
       width: width,
-      height: height - 240,
+      // height: height - (240 - renderHeader ? 0 : 76) ,
+      // maxHeight: "100%",
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
@@ -151,6 +155,8 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
         horizontal
         keyExtractor={(item) => item.toString()}
         pagingEnabled
+        style={{overflow:"hidden"}}
+        rowWrapperStyle={{backgroundColor: "red"}}
         showsHorizontalScrollIndicator={false}
         getItemLayout={(data, index) => ({
           length: width,

@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { getThemeStatusBar } from "@constants";
 import { appSelectors } from "@redux";
 import { StatusBar } from "expo-status-bar";
-import MonthGeneral from "./home/MonthGeneral";
+import MonthReport from "../components/MonthReport";
 import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
 
-function OverviewScreen({ navigation }) {
+function ReportScreen({ navigation }) {
   const theme = useSelector(appSelectors.selectAppTheme);
   const isInit = true;
   const statusBarStyle = getThemeStatusBar(theme, true);
@@ -18,7 +18,7 @@ function OverviewScreen({ navigation }) {
       <BaseView>
         <HomeHeader navigation={navigation} />
         <InfiniteCalendar>
-          <MonthGeneral />
+          <MonthReport />
         </InfiniteCalendar>
 
       <StatusBar translucent style={statusBarStyle.split("-")[0]} />
@@ -27,4 +27,4 @@ function OverviewScreen({ navigation }) {
 }
 
 
-export default React.memo(OverviewScreen);
+export default React.memo(ReportScreen);

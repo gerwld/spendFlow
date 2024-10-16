@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import OverviewScreen from "./OverviewScreen";
+import ReportScreen from "./ReportScreen";
 import { useTranslation } from "react-i18next";
 import TutorialScreen from "./TutorialScreen";
 import SettingsScreen from "./SettingsScreen";
@@ -18,11 +18,11 @@ import Constants from "expo-constants";
 
 import { BlurView } from 'expo-blur';
 
-import OperationsScreen from './OperationsScreen';
+import HomeScreen from './HomeScreen';
 import AccountsScreen from './AccountsScreen';
 import MoreScreen from './MoreScreen';
 
-import { Wallet } from 'lucide-react-native';
+import { Home, Wallet } from 'lucide-react-native';
 import { Grip } from 'lucide-react-native';
 import { ChartPie } from 'lucide-react-native';
 import { HandCoins } from 'lucide-react-native';
@@ -83,15 +83,28 @@ function MyTabs() {
         tabBarOptions: {
             style: {
               height: 90,
+           
             },
             tabStyle: {
               height: 60,
+            
             },
           },
         tabBarItemStyle: {
             "height": 54
         },
-        tabBarStyle: [{display: "flex", height: insets.bottom + 60, position: "static",  bottom: 0 }, Platform.OS === "android" && {paddingBottom: 10, borderTopColor: themeColors.background, borderTopWidth: 1}],
+        tabBarStyle: [{
+            display: "flex",  
+            borderTopWidth: 1,
+            borderTopColor: themeColors.borderColorSec, 
+            height: insets.bottom + 60, 
+            position: "static",  
+            bottom: 0 
+        }, Platform.OS === "android" 
+        && {
+            paddingBottom: 10, 
+            borderTopColor: themeColors.background, 
+            borderTopWidth: 1}],
         tabBarBackground: () => (
         Platform.OS === "fgn"
          ? <BlurView tint={themeColors.label} intensity={100} style={[StyleSheet.absoluteFill]} />
@@ -102,12 +115,12 @@ function MyTabs() {
             let width = 30;
             let stroke = 2;
 
-            if(route.name === "overview_tab") {
+            if(route.name === "report_tab") {
                 TabIcon = ChartPie;
                 width = 22;
                 stroke = 2.5;
             }
-            if(route.name === "operations_tab") TabIcon = HandCoins
+            if(route.name === "home_tab") TabIcon = Home
             if(route.name === "more_tab") TabIcon = Grip
             if(route.name === "accounts_tab") {
                 TabIcon = Wallet;
@@ -122,14 +135,18 @@ function MyTabs() {
             stroke={focused ? themeColors.tabsActiveColor : themeColors.tabsColor}/>
         }
     })}>
-        <Tab.Screen name="overview_tab" component={OverviewScreen} options={{ headerShown: false, title: "Statistics" }} />
-        <Tab.Screen name="operations_tab" component={OperationsScreen} options={{ headerShown: false, title: "Operations" }} />
+
+
+
+        <Tab.Screen name="home_tab" component={HomeScreen} options={{ headerShown: false, title: "Home" }} />
+
+        <Tab.Screen name="report_tab" component={ReportScreen} options={{ headerShown: false, title: "Report" }} />
         <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ headerShown: false, title: "Accounts" }} />
-      
-      
-       
         <Tab.Screen name="more_tab" component={MoreScreen} options={{ headerShown: false, title: "More" }} />
       
+
+
+
     </Tab.Navigator>
     </AnimatedAppLoader>
   );
