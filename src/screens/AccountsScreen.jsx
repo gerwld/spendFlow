@@ -43,11 +43,9 @@ const styles = StyleSheet.create({
   },
   indicatorStyle: {
     alignSelf: "center",
-    width: 10,
-    height: 4,
-    borderRadius: 10,
-    marginBottom: 8,
-    opacity: 0.5,
+    // width: 10,
+    height: 3,
+    // marginBottom: 8,
   },
 });
 
@@ -144,8 +142,8 @@ const AccountsOrTotalTabs = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "accounts", title: "Accounts" },
-    { key: "total", title: "Total" },
+    { key: "accounts", title: "Savings" },
+    { key: "total", title: "Debts" },
   ]);
 
   return (
@@ -177,7 +175,7 @@ const renderTabBar = (props) => {
           </Text>
         </TouchableOpacity>
       )}
-      indicatorStyle={[styles.indicatorStyle, { backgroundColor: themeColors.tabsActiveColor, marginLeft: "24.5%" }]}
+      indicatorStyle={[styles.indicatorStyle, { backgroundColor: themeColors.tabsActiveColor, }]}
       style={[styles.tabBarStyle, { backgroundColor: themeColors.background, borderTopColor: themeColors.borderColorTh, borderBottomColor: themeColors.borderColorTh }]}
     />
   );
