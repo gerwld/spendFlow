@@ -96,7 +96,7 @@ function MyTabs() {
         tabBarStyle: [{
             display: "flex",  
             borderTopWidth: 1,
-            borderTopColor: themeColors.borderColorSec, 
+            borderTopColor: themeColors.borderColor, 
             height: insets.bottom + 60, 
             position: "static",  
             bottom: 0 

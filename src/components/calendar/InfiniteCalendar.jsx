@@ -93,7 +93,7 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
 
   const styles = StyleSheet.create({
     gradient: {
-      paddingBottom: 9,
+      paddingBottom: 10,
       borderBottomLeftRadius: 18,
       borderBottomRightRadius: 18,
     },
@@ -112,7 +112,7 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
       borderBottomColor: themeColors.borderColorTh,
     },
     headerText: {
-      fontSize: 16,
+      fontSize: 16.5,
       fontWeight: '500',
       color: themeColors.textColorHighlight,
       userSelect: "none"
