@@ -4,8 +4,7 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { useCurrentTheme } from "hooks";
 import { ScrollView } from "react-native-gesture-handler";
 import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
-import { LucideBriefcaseBusiness, LucideHandCoins, LucideLandmark, LucidePlus, LucideWallet } from "lucide-react-native";
-import SearchAndFilter from "src/components/SearchAndFilter";
+import { LucidePlus } from "lucide-react-native";
 import OperationsItem from "src/components/items/OperationsItem";
 import AddOperationSheet from "src/components/sheets/AddOperationSheet";
 import { operationsSelectors } from "@redux";
@@ -15,29 +14,30 @@ import { getWeekdays } from "@constants";
 const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-  block: {
-    width: Math.min(width - 30, 1000),
+  mainHeader: {
+    width: Math.min(width - 40, 1000),
     alignSelf: "center",
     flexDirection: 'row',
     gap: 2,
-    minHeight: 76,
-    maxWidth: 360,
-    marginTop: 5,
-    marginHorizontal: 19,
+    minHeight: 60,
+    // maxWidth: 360,
+    marginTop: 4,
+    // marginHorizontal: 19,
     // marginBottom: 10,
     padding: 7,
-    borderRadius: 10,
-    shadowColor: "#000000",
+    borderRadius: 12,
+    shadowColor: "#343A48",
     zIndex: 100,
 
     shadowOffset: {
       width: 0,
-      height: 0.5,
+      height: 1,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
     elevation: 2,
   },
+
   child: {
     flex: 1,
     alignItems: 'center',
@@ -53,16 +53,22 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontWeight: "400",
   },
+  mainHeaderText: {
+    fontSize: 15,
+    fontWeight: "600",
+    marginTop: 2
+  },
   subText: {
     fontSize: 18,
     lineHeight: 18,
-    marginTop: 3,
+    marginTop: 1,
     fontWeight: '400',
     paddingTop: 2,
     
   },
-  subTextExpense: { color: '#db4263' },
-  subTextBalance: { color: '#4de971' },
+  subTextExpense: { color: '#E11951' },
+  subTextBalance: { color: '#19E18D' },
+  subTextIncome: { color: '#44677A' },
   pageExpensesContent: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -79,28 +85,33 @@ const styles = StyleSheet.create({
 const HomeScreen = ({ navigation }) => {
   const [themeColors] = useCurrentTheme();
   const memoizedStyles = React.useMemo(() => ({
-    block: [styles.block, { backgroundColor: themeColors.background }],
+    mainHeader: [styles.mainHeader, { backgroundColor: "#EDF0F7" }],
+    mainHeaderText: [styles.mainHeaderText, { color: themeColors.textColor }],
     subTextBalance: {color: themeColors.textColor},
     headerText: [styles.headerText, { color: themeColors.textColor }],
   }), [themeColors]);
   
   return (
     <>
-      <HeaderSaturated navigation={navigation} />
+      
       <InfiniteCalendar
+        isGradient={true}
+        renderTopHeader={() =>
+          <HeaderSaturated navigation={navigation} />
+        }
         renderHeader={() => 
-          <View style={memoizedStyles.block}>
+          <View style={memoizedStyles.mainHeader}>
             <View style={styles.child}>
-              <Text style={memoizedStyles.headerText}>Expenses</Text>
-              <Text style={[styles.subText, styles.subTextExpense]}>400 PLN</Text>
+              <Text style={memoizedStyles.mainHeaderText}>Expenses</Text>
+              <Text style={[styles.subText, styles.subTextExpense]}>-240 PLN</Text>
             </View>
             <View style={styles.child}>
-              <Text style={memoizedStyles.headerText}>Balance</Text>
-              <Text style={[styles.subText, styles.subTextBalance]}>400 PLN</Text>
+              <Text style={memoizedStyles.mainHeaderText}>Balance</Text>
+              <Text style={[styles.subText, styles.subTextBalance]}>240 PLN</Text>
             </View>
             <View style={styles.child}>
-              <Text style={memoizedStyles.headerText}>Income</Text>
-              <Text style={[styles.subText, memoizedStyles.subTextBalance]}>400 PLN</Text>
+              <Text style={memoizedStyles.mainHeaderText}>Income</Text>
+              <Text style={[styles.subText, styles.subTextIncome]}>7200 PLN</Text>
             </View>
           </View>}>
         <LastOperations />

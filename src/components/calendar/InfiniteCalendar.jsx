@@ -3,6 +3,8 @@ import { View, Text, FlatList, Dimensions, StyleSheet, Pressable, Platform } fro
 import { useCurrentTheme } from 'hooks';
 import { LucideChevronLeft } from 'lucide-react-native';
 import { LucideChevronRight } from 'lucide-react-native';
+import { SVGCalendar, SVGChevronBottom } from '@icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const { width, height } = Dimensions.get('window');
 
@@ -12,7 +14,7 @@ const getCurrentDate = () => new Date();
 const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).setHours(0,0,0,0);
 const firstDayOfTheMonth = getFirstDayOfTheMonth(getCurrentDate());
 
-const InfiniteCalendar = ({ children, renderHeader }) => {
+const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient }) => {
   const flatListRef = useRef(null);
   const [themeColors] = useCurrentTheme();
 
@@ -80,7 +82,7 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
         index === currentIndex + 1
           ? childrenWithProps
           : null}
-          <Text>bottom_test</Text>
+          {/* <Text>bottom_test</Text> */}
       </View>
     );
   };
@@ -90,13 +92,17 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
   // ------- APPEND CHILD PART END ---------//
 
   const styles = StyleSheet.create({
+    gradient: {
+      paddingBottom: 9,
+      borderBottomLeftRadius: 18,
+      borderBottomRightRadius: 18,
+    },
     container: {
       flex: 1,
       justifyContent: 'center',
-      maxHeight: "100%"
+      maxHeight: "100%",
     },
-    header: {
-      backgroundColor: themeColors.background,
+    dateNavigation: {
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
@@ -106,8 +112,8 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
       borderBottomColor: themeColors.borderColorTh,
     },
     headerText: {
-      fontSize: 17,
-      fontWeight: '600',
+      fontSize: 16,
+      fontWeight: '500',
       color: themeColors.textColorHighlight,
       userSelect: "none"
     },
@@ -118,9 +124,10 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
       height: 50,
     },
     slide: {
+      // borderWidth: 6,
       width: width,
       // height: height - (240 - renderHeader ? 0 : 76) ,
-      // maxHeight: "100%",
+      maxHeight: "100%",
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
@@ -131,22 +138,73 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
     buttonText: {
       height: 30,
       lineHeight: 30
+    },
+    selectDateBTN: {
+      flexDirection: "row",
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 6,
+      paddingVertical: 5.5,
+      borderWidth: 1,
+      borderRadius: 50,
+      borderColor: "#BBCBF4",
+      backgroundColor: "#D0DBF8"
+    },
+    selectDateBTNCalendarSVG: {
+      marginLeft: 6,
+      marginRight: 6,
+      height: 15,
+      width: 20
+    },
+    selectDateBTNChevronSVG: {
+      marginLeft: 5,
+      marginRight: 4,
+      height: 10,
+      width: 11
     }
   });
 
+  const onSelectDate = () => {
+    alert("Date Select Click")
+  }
+
+  const renderGradient = (children, isGradient) => 
+    isGradient 
+    ? <LinearGradient
+        style={styles.gradient}
+        colors={['#EDF7FE', '#C7D4FE']}>
+        {children}
+      </LinearGradient>
+  : children
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Pressable style={styles.headerButton} onPress={handlePrevPress}>
+     {renderGradient(
+     <>
+      {renderTopHeader && renderTopHeader()}
+
+      <View style={styles.dateNavigation}>
+        <Pressable 
+          onPress={handlePrevPress} 
+          style={styles.headerButton}>
           <LucideChevronLeft width={28} height={30} stroke={themeColors.textColorHighlight}/>
         </Pressable>
-        <Text style={styles.headerText}>{formatDate(currentDate)}</Text>
-        <Pressable style={styles.headerButton} onPress={handleNextPress}>
+        <Pressable 
+          onPress={onSelectDate} 
+          style={styles.selectDateBTN}>
+          <SVGCalendar style={styles.selectDateBTNCalendarSVG}/>
+          <Text style={styles.headerText}>{formatDate(currentDate)}</Text>
+          <SVGChevronBottom style={styles.selectDateBTNChevronSVG}/>
+        </Pressable>
+        <Pressable 
+          onPress={handleNextPress} 
+          style={styles.headerButton}>
           <LucideChevronRight width={28} height={30} stroke={themeColors.textColorHighlight}/>
         </Pressable>
       </View>
 
       {renderHeader && renderHeader()}
+      </>, isGradient)}
 
       <FlatList
         ref={flatListRef}
@@ -155,8 +213,8 @@ const InfiniteCalendar = ({ children, renderHeader }) => {
         horizontal
         keyExtractor={(item) => item.toString()}
         pagingEnabled
-        style={{overflow:"hidden"}}
-        rowWrapperStyle={{backgroundColor: "red"}}
+        style={{maxHeight:"100%"}}
+        contentContainerStyle={{maxHeight:"100%", overflow: "scroll"}}
         showsHorizontalScrollIndicator={false}
         getItemLayout={(data, index) => ({
           length: width,

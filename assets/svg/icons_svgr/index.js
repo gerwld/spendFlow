@@ -16,3 +16,6 @@ export { default as Gear3 } from "./Gear3";
 export { default as SvgRepeat } from "./Repeat";
 export { default as SvgClock } from "./Clock";
 export { default as SvgLogoInline } from "./LogoInline";
+
+export { default as SVGCalendar } from "./Calendar";
+export { default as SVGChevronBottom } from "./ChevronBottom";
