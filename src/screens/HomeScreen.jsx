@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.26,
     shadowRadius: 3,
     elevation: 2,
+    borderWidth: 1
   },
 
   child: {
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
   mainHeaderText: {
     fontSize: 15,
     fontWeight: "600",
-    marginTop: 2
+    marginTop: 2,
   },
   subText: {
     fontSize: 18,
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   },
   subTextExpense: { color: '#E11951' },
   subTextBalance: { color: '#19E18D' },
-  subTextIncome: { color: '#44677A' },
+  
   pageExpensesContent: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -85,10 +86,11 @@ const styles = StyleSheet.create({
 const HomeScreen = ({ navigation }) => {
   const [themeColors] = useCurrentTheme();
   const memoizedStyles = React.useMemo(() => ({
-    mainHeader: [styles.mainHeader, { backgroundColor: "#EDF0F7" }],
-    mainHeaderText: [styles.mainHeaderText, { color: themeColors.textColor }],
+    mainHeader: [styles.mainHeader, { backgroundColor: themeColors.mainHeaderBackgroundColor, borderColor: themeColors.mainHeaderBorderColor }],
+    mainHeaderText: [styles.mainHeaderText, { color: themeColors.mainHeaderLabelColor }],
     subTextBalance: {color: themeColors.textColor},
     headerText: [styles.headerText, { color: themeColors.textColor }],
+    subTextIncome: { color: themeColors.mainHeaderIncomeColor },
   }), [themeColors]);
   
   return (
@@ -111,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View style={styles.child}>
               <Text style={memoizedStyles.mainHeaderText}>Income</Text>
-              <Text style={[styles.subText, styles.subTextIncome]}>7200 PLN</Text>
+              <Text style={[styles.subText, memoizedStyles.subTextIncome]}>7200 PLN</Text>
             </View>
           </View>}>
         <LastOperations />

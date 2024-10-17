@@ -147,16 +147,18 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
       paddingVertical: 5.5,
       borderWidth: 1,
       borderRadius: 50,
-      borderColor: "#BBCBF4",
-      backgroundColor: "#D0DBF8"
+      borderColor: themeColors.headerSelectDateBorderColor,
+      backgroundColor: themeColors.headerSelectDateBackgroundColor,
     },
     selectDateBTNCalendarSVG: {
+      color: themeColors.headerSelectDateSVGColor || "gray",
       marginLeft: 6,
       marginRight: 6,
       height: 15,
       width: 20
     },
     selectDateBTNChevronSVG: {
+      color: themeColors.headerSelectDateSVGColor || "gray",
       marginLeft: 5,
       marginRight: 4,
       height: 10,
@@ -172,7 +174,7 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
     isGradient 
     ? <LinearGradient
         style={styles.gradient}
-        colors={['#EDF7FE', '#C7D4FE']}>
+        colors={[ themeColors.headerGradientStart || '#EDF7FE', themeColors.headerGradientEnd || '#C7D4FE']}>
         {children}
       </LinearGradient>
   : children

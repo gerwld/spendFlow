@@ -30,10 +30,17 @@ const THEMES_MASKS = {
 const THEMEV = {
   st_theme__light: {
     label: "light",
-    headerGradientStart: "#95f4cb",
-    headerGradientEnd: "#3cd0a4",
-    tabsGradientStart: "#4eaa90",
-    tabsGradientEnd: "#4eaa90",
+
+    headerGradientStart: "#EDF7FE",
+    headerGradientEnd: "#C7D4FE",
+    headerSelectDateSVGColor: "#4F5A78",
+    headerSelectDateBorderColor: "#BBCBF4",
+    headerSelectDateBackgroundColor: "#D0DBF8",
+    mainHeaderLabelColor: "#44677a",
+    mainHeaderBackgroundColor: "#EDF0F7",
+    mainHeaderBorderColor: "#EDF0F7",
+    mainHeaderIncomeColor: "#44677A",
+
     tabsColor: "#4e4e4f",
     tabsActiveColor: "#338fe4",
     background: "#ffffff",// f7fafe
@@ -73,10 +80,17 @@ const THEMEV = {
   },
   st_theme__dark: {
     label: "dark",
-    headerGradientStart: "#8ae4c0",
-    headerGradientEnd: "#35bea3",
-    tabsGradientStart: "#418e78",
-    tabsGradientEnd: "#418e78",
+    headerGradientStart: "#46494C",
+    headerGradientEnd: "#3B404C",
+
+    headerSelectDateSVGColor: "#ffffff",
+    headerSelectDateBorderColor: "#70778A",
+    headerSelectDateBackgroundColor: "#5D626F",
+    mainHeaderLabelColor: "#ffffff",
+    mainHeaderBackgroundColor: "#585D69",
+    mainHeaderBorderColor: "#868B9A",
+    mainHeaderIncomeColor: "#D9DEEC",
+
     tabsColor: "#585858",
     tabsActiveColor: "#2897cf",
     background: "#000000",
