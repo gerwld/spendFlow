@@ -31,23 +31,36 @@ const useInitializeApp = (lang) => {
         }
     };
 
-    const loadHabits = async () => {
+    const loadChunkFromStorage = async (name, actionType, actionInitType, isHashmap) => {
         try {
-            const storedHabits = await AsyncStorage.getItem('@spendings/items');
-            const storedHabitsIDs = await AsyncStorage.getItem('@spendings/itemsIdsArray');
-            if (storedHabitsIDs !== null && storedHabits !== null) {
-                d(habitsActions.initializeHabits(JSON.parse(storedHabits), JSON.parse(storedHabitsIDs)));
-            }
+            const storedItems = await AsyncStorage.getItem(`@${name}/items`);
+
+            if(isHashmap) {
+                const storedIDs = await AsyncStorage.getItem(`@${name}/itemsIdsArray`);
+                if (storedItems !== null && storedIDs !== null) 
+                    d({type: actionType, items: JSON.parse(storedItems), itemsIdsArray:JSON.parse(storedIDs)});
+            } 
+
+            else if (storedItems !== null) 
+                d({type: actionType, items: JSON.parse(storedItems)});
+            
         } catch (e) {
-            console.error('Failed to load habits from storage', e);
+            console.error(`Failed to load ${name} from storage`, e);
         }
-        d({ type: "SET_HABITS_INIT", payload: true });
+        actionInitType && d({ type: actionInitType, payload: true });
     };
+
+    const loadOperations = async () => loadChunkFromStorage("operations", "OPERATIONS_SATURATE_FROM_STORAGE", "SET_OPERATIONS_INIT", true);
+    const loadAccounts = async () => loadChunkFromStorage("accounts", "ACCOUNTS_SATURATE_FROM_STORAGE", "SET_ACCOUNTS_INIT", true);
+    const loadCategories = async () => loadChunkFromStorage("categories", "CATEGORIES_SATURATE_FROM_STORAGE", "SET_CATEGORIES_INIT", true);
+
 
     // STEP 2: call those functions
     useEffect(() => {
         loadBase();
-        loadHabits();
+        loadAccounts()
+        loadCategories()
+        loadOperations()
     }, []);
 
     // STEP 3: set i18n in with provider part of App

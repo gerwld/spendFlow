@@ -39,7 +39,7 @@ export const selectOperationsPortionMinMax = createSelector(
     if (isNaN(min) || isNaN(max)) return [];
 
     // only keys of those who's timestamp >= timestampMin and <= timestampMax
-    const filteredKeys = operationsArray.filter(operationID => {
+    const filteredKeys = operationsArray?.filter(operationID => {
       const itemTimestamp = operations[operationID].timestamp;      
       return (itemTimestamp >= min  && itemTimestamp <= max)
     })    

@@ -9,6 +9,7 @@ import { appSelectors, store } from "@redux";
 import i18n from "./i18n";
 
 import * as SplashScreen from "expo-splash-screen";
+import { useInitializeApp } from "hooks";
 
 
 // keeps the splash screen visible while app fetch resources
@@ -18,7 +19,7 @@ function AppWithProvider({ children }) {
   // useOrientationLock();
 
   const lang = useSelector(appSelectors.selectAppLang);
-  // useInitializeApp(lang);
+  useInitializeApp(lang);
   // useInitializeAppDemo(lang);
 
   useEffect(() => {

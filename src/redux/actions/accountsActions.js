@@ -20,9 +20,10 @@ const addAccount = (payload) => async (dispatch, getState) => {
 
 
 const setAccountsToAsyncStorage = async (getState) => {
-  const app = getState().app;
+  const { items, itemsIdsArray } = getState().accounts;
   try {
-      await AsyncStorage.setItem('@accounts', JSON.stringify(app));
+      await AsyncStorage.setItem('@accounts/items', JSON.stringify(items));
+      await AsyncStorage.setItem('@accounts/itemsIdsArray', JSON.stringify(itemsIdsArray));
   } catch (e) {
       console.error('Failed to save accounts state to storage', e);
   }

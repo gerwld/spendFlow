@@ -20,9 +20,10 @@ const addCatergory = (payload) => async (dispatch, getState) => {
 
 
 const setCategoriesToAsyncStorage = async (getState) => {
-  const app = getState().app;
+  const { items, itemsIdsArray } = getState().categories;
   try {
-      await AsyncStorage.setItem('@categories', JSON.stringify(app));
+      await AsyncStorage.setItem('@categories/items', JSON.stringify(items));
+      await AsyncStorage.setItem('@categories/itemsIdsArray', JSON.stringify(itemsIdsArray));
   } catch (e) {
       console.error('Failed to save categories state to storage', e);
   }

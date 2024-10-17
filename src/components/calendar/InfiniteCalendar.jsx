@@ -226,7 +226,7 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient,
         keyExtractor={(item) => item.toString()}
         pagingEnabled
         style={{maxHeight:"100%"}}
-        contentContainerStyle={{maxHeight:"100%", overflow: "scroll"}}
+        contentContainerStyle={{maxHeight:"100%"}}
         showsHorizontalScrollIndicator={false}
         getItemLayout={(data, index) => ({
           length: width,

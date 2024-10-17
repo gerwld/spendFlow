@@ -20,9 +20,10 @@ const addOperation = (payload) => async (dispatch, getState) => {
 
 
 const setOperationsToAsyncStorage = async (getState) => {
-  const app = getState().app;
+  const { items, itemsIdsArray } = getState().operations;
   try {
-      await AsyncStorage.setItem('@operations', JSON.stringify(app));
+      await AsyncStorage.setItem('@operations/items', JSON.stringify(items));
+      await AsyncStorage.setItem('@operations/itemsIdsArray', JSON.stringify(itemsIdsArray));
   } catch (e) {
       console.error('Failed to save operations state to storage', e);
   }

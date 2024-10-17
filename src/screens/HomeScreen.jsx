@@ -166,10 +166,10 @@ const LastOperations = ({ calendarDate, calendarIndex }) => {
     },
     noData: {
       flex: 1,
-      height: height - 340,
+      height: Math.min(height * 0.74 - 90, 200),
+      minHeight: Math.min(height * 0.74 - 90, 200),
       alignItems: 'center',
       justifyContent: 'center',
-  
     },
     noDataText: {
       fontSize: 17.5,

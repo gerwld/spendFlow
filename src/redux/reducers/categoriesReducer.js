@@ -2,6 +2,7 @@ import { produce } from "immer";
 import { ADD_CATEGORY } from "@actions/categoriesActions";
 
 const initialState = {
+    isInit: false,
     items: {
         "95a6885b-64ab-468c-9334-62c4095df459": { title: 'Entertainment', icon: "Popcorn", color: '#ff3939', type: "CATEGORY_TYPE_EXPENSES" },
         "b592f039-b4d6-420a-b731-0964172ed142": { title: 'Groceries', icon: "Apple", color: '#3988ff', type: "CATEGORY_TYPE_EXPENSES" },
@@ -31,6 +32,13 @@ const initialState = {
 export default function categories(state = initialState, action) {
     return produce(state, draft => {
         switch (action.type) {
+            case "SET_CATEGORIES_INIT":
+                draft.isInit = action.payload;
+                break;
+            case "CATEGORIES_SATURATE_FROM_STORAGE":
+                draft.items = action.items;
+                draft.itemsIdsArray = action.itemsIdsArray;
+                break;
             case ADD_CATEGORY:
                 draft.items[action.payload.id] = action.payload;
                 draft.itemsIdsArray.push(action.payload.id);

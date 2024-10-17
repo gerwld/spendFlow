@@ -2,6 +2,7 @@ import { produce } from "immer";
 import { ADD_ACCOUNT } from "@actions/accountsActions";
 
 const initialState = {
+        isInit: false,
         items: {
           '11ca139d-f3f7-4adf-b45f-a37d27e716f2': {
             title: 'ING Account',
@@ -45,6 +46,13 @@ const initialState = {
 export default function accounts(state = initialState, action) {
     return produce(state, draft => {
         switch (action.type) {
+          case "SET_ACCOUNTS_INIT":
+            draft.isInit = action.payload;
+            break;
+          case "ACCOUNTS_SATURATE_FROM_STORAGE":
+              draft.items = action.items;
+              draft.itemsIdsArray = action.itemsIdsArray;
+              break;
             case ADD_ACCOUNT:
                 draft.items[action.payload.id] = action.payload;
                 draft.itemsIdsArray.push(action.payload.id);

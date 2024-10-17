@@ -64,10 +64,10 @@ function MyTabs() {
                 {...props}
                 style={{
                     elevation: 0,
-                    height: insets.bottom + 55 + bottomGap
+                    height: insets.bottom + 55 + bottomGap + (Platform.OS === "web" ? 10 : 0)
                 }}
-            />
-            <StatusBar translucent style={themeColors.label === "light" ? "dark" : "light"} />
+             />
+             <StatusBar translucent style={themeColors.label === "light" ? "dark" : "light"} />
             </>)
            
     }
