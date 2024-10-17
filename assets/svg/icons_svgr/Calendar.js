@@ -12,7 +12,7 @@ const SvgCalendar = (props) => {
     {...props}
   >
     <Rect width={13} height={10} x={0.5} y={0.5} stroke={color} rx={2.5} />
-    <Path fill={color} stroke={color} d="M1.5 1.5h11v2h-11z" />
+    <Path fill={color} stroke={color} strokeWidth={1.4} d="M1.5 1.5h11v2h-11z" />
   </Svg>
 )};
 export default SvgCalendar;

@@ -11,20 +11,19 @@ import { operationsSelectors } from "@redux";
 import { shallowEqual, useSelector } from "react-redux";
 import { getWeekdays } from "@constants";
 
-const width = Dimensions.get('window').width;
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   mainHeader: {
-    width: Math.min(width - 40, 1000),
+    width: Math.min(width - 30, 1000),
     alignSelf: "center",
     flexDirection: 'row',
     gap: 2,
-    minHeight: 60,
-    // maxWidth: 360,
-    marginTop: 4,
-    // marginHorizontal: 19,
-    // marginBottom: 10,
-    padding: 7,
+    minHeight: 55,
+    marginTop: 2,
+    marginBottom: 5,
+    paddingVertical: 7,
+    paddingHorizontal: 12,
     borderRadius: 12,
     shadowColor: "#343A48",
     zIndex: 100,
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.26,
+    shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 2,
     borderWidth: 1
@@ -57,14 +56,12 @@ const styles = StyleSheet.create({
   mainHeaderText: {
     fontSize: 15,
     fontWeight: "600",
-    marginTop: 2,
   },
   subText: {
-    fontSize: 18,
-    lineHeight: 18,
-    marginTop: 1,
+    fontSize: 16.5,
+    lineHeight: 16.5,
     fontWeight: '400',
-    paddingTop: 2,
+    paddingTop: 3,
     
   },
   subTextExpense: { color: '#E11951' },
@@ -169,15 +166,15 @@ const LastOperations = ({ calendarDate, calendarIndex }) => {
     },
     noData: {
       flex: 1,
-      height: 100,
+      height: height - 340,
       alignItems: 'center',
       justifyContent: 'center',
   
     },
     noDataText: {
-      fontSize: 18,
-      fontWeight: "400",
-      color: themeColors.textColor,
+      fontSize: 17.5,
+      fontWeight: "600",
+      color: themeColors.chevronText,
       textAlign: "center"
     }
   });

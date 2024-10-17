@@ -16,12 +16,18 @@ function ReportScreen({ navigation }) {
 
   return (
       <BaseView>
-        <HomeHeader navigation={navigation} />
-        <InfiniteCalendar>
+        <InfiniteCalendar 
+          {...{
+            // shortGradient: true,
+            // isGradient: true, 
+            renderTopHeader: () =>
+              <HomeHeader 
+                navigation={navigation} />
+          }}>
           <MonthReport />
         </InfiniteCalendar>
 
-      <StatusBar translucent style={statusBarStyle.split("-")[0]} />
+        <StatusBar translucent style={statusBarStyle.split("-")[0]} />
       </BaseView>
   );
 }

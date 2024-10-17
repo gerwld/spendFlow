@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   pageExpensesContent: {
     width: "100%",
     maxHeight:"100%",
+    marginTop: 5,
     flex: 1,
     paddingHorizontal: 6
   },

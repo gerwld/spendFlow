@@ -14,7 +14,7 @@ const getCurrentDate = () => new Date();
 const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).setHours(0,0,0,0);
 const firstDayOfTheMonth = getFirstDayOfTheMonth(getCurrentDate());
 
-const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient }) => {
+const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient, shortGradient }) => {
   const flatListRef = useRef(null);
   const [themeColors] = useCurrentTheme();
 
@@ -93,9 +93,9 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
 
   const styles = StyleSheet.create({
     gradient: {
-      paddingBottom: 10,
-      borderBottomLeftRadius: 18,
-      borderBottomRightRadius: 18,
+      paddingBottom: 3,
+      borderBottomLeftRadius: shortGradient ? 10 : 22,
+      borderBottomRightRadius: shortGradient ? 10 : 22,
     },
     container: {
       flex: 1,
@@ -143,8 +143,8 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
       flexDirection: "row",
       alignItems: 'center',
       justifyContent: 'center',
-      paddingHorizontal: 6,
-      paddingVertical: 5.5,
+      paddingHorizontal: 4,
+      paddingVertical: 5,
       borderWidth: 1,
       borderRadius: 50,
       borderColor: themeColors.headerSelectDateBorderColor,
@@ -152,17 +152,22 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
     },
     selectDateBTNCalendarSVG: {
       color: themeColors.headerSelectDateSVGColor || "gray",
-      marginLeft: 6,
-      marginRight: 6,
-      height: 15,
+      marginLeft: 5,
+      marginRight: 4,
+      height: 13.8,
       width: 20
     },
     selectDateBTNChevronSVG: {
       color: themeColors.headerSelectDateSVGColor || "gray",
-      marginLeft: 5,
+      marginLeft: 6,
+      marginTop: 1,
       marginRight: 4,
       height: 10,
       width: 11
+    },
+    selectDateBTNHeader: {
+      fontSize: 15.5,
+      fontWeight: "600"
     }
   });
 
@@ -170,14 +175,19 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
     alert("Date Select Click")
   }
 
-  const renderGradient = (children, isGradient) => 
-    isGradient 
-    ? <LinearGradient
-        style={styles.gradient}
-        colors={[ themeColors.headerGradientStart || '#EDF7FE', themeColors.headerGradientEnd || '#C7D4FE']}>
-        {children}
-      </LinearGradient>
-  : children
+  const renderGradient = (children, isGradient) => {
+    let gradient = [ themeColors.headerGradientStart,  themeColors.headerGradientEnd];
+    if(shortGradient)
+      gradient.unshift(themeColors.headerGradientStart);
+    
+    return isGradient 
+      ? <LinearGradient
+          style={styles.gradient}
+          colors={gradient}>
+          {children}
+        </LinearGradient>
+      : children
+  }
 
   return (
     <View style={styles.container}>
@@ -195,7 +205,7 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient 
           onPress={onSelectDate} 
           style={styles.selectDateBTN}>
           <SVGCalendar style={styles.selectDateBTNCalendarSVG}/>
-          <Text style={styles.headerText}>{formatDate(currentDate)}</Text>
+          <Text style={[styles.headerText, styles.selectDateBTNHeader]}>{formatDate(currentDate)}</Text>
           <SVGChevronBottom style={styles.selectDateBTNChevronSVG}/>
         </Pressable>
         <Pressable 
