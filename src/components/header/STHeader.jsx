@@ -17,6 +17,7 @@ const STHeader = React.memo(({
     rightText,
     rightPress,
     rightPressDisabled,
+    dimmed,
     bgColor,
     ...rest
 }) => {
@@ -29,7 +30,7 @@ const STHeader = React.memo(({
     const s = {
         textColor: { color: bgColor ? "#ffffff" : themeColors.textColorHighlight },
         activeTextColor: { color: bgColor ? "#ffffff" : themeColors.tabsActiveColor },
-        backgroundColor: bgColor ? bgColor : themeColors.bac
+        backgroundColor: dimmed ? themeColors.bgSettings : bgColor ? bgColor : themeColors.bac
     }
 
     return (<>

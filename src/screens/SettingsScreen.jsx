@@ -28,7 +28,7 @@ const SettingsScreen = ({ navigation }) => {
       height: "max-height"
     },
     scrollViewContent: {
-      backgroundColor: themeColors.background,
+      backgroundColor: themeColors.bgSettings,
     },
     t: {
       fontSize: 17,
@@ -68,7 +68,7 @@ const SettingsScreen = ({ navigation }) => {
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: themeColors.background }}>
+    <View style={{ flex: 1, backgroundColor: themeColors.bgSettings }}>
       <STHeader
         navigation={navigation}
         // title={t("st_screen")}

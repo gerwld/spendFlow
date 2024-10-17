@@ -8,8 +8,10 @@ import { LANG_MASKS } from '@constants';
 import { useTranslation } from 'react-i18next';
 import { appActions } from "@actions";
 import { appSelectors } from '@redux';
+import { useCurrentTheme } from 'hooks';
 
 const STLanguage = ({ navigation }) => {
+    const [themeColors] = useCurrentTheme();
     const { t } = useTranslation();
     const d = useDispatch();
     const { lang, theme } = useSelector(appSelectors.selectAppThemeAndLang);
@@ -26,11 +28,12 @@ const STLanguage = ({ navigation }) => {
 
         <BaseView>
             <STHeader
+                dimmed
                 navigation={navigation}
                 title={t("st_lang")}
             />
 
-            <View style={{ paddingTop: 14, flex: 1 }}>
+            <View style={{ paddingTop: 14, flex: 1, backgroundColor: themeColors.bgSettings }}>
                 <SelectList
                     showFetch
                     theme={theme}
