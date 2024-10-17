@@ -5,7 +5,7 @@ import { AlignJustify } from "lucide-react-native";
 import { PencilIcon } from "lucide-react-native";
 
 export const HomeHeader = React.memo(
-  ({ navigation, leftChild, rightChild }) => {
+  ({ navigation, leftChild, rightChild, onRightPress }) => {
     const [themeColors] = useCurrentTheme();
     const { headerStyles, HEADER_HEIGHT_SAFE } = useHeaderStyles();
 
@@ -65,7 +65,7 @@ export const HomeHeader = React.memo(
             ) : (
               <Pressable
                 style={headerStyles.headerButton}
-                onPress={() => navigation.navigate("addhabit")}
+                onPress={onRightPress ? onRightPress : null}
               >
                 <PencilIcon
                   style={{ marginLeft: 1, marginTop: 0, alignSelf: "center" }}

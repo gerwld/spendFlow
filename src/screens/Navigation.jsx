@@ -33,6 +33,7 @@ import SCOperationType from './subsreens/SCOperationType';
 import SetAccountScreen from './SetAccountScreen';
 import SCAccountType from './subsreens/SCAccountType';
 import { StatusBar } from 'expo-status-bar';
+import EditCategoriesScreen from './EditCategoriesScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -162,7 +163,7 @@ export const Navigation = () => {
 
     const addEditSubdirectories = (
         <>
-            <Stack.Screen name="addhabit" component={SetHabitScreen} options={{ title: t("addt_screen") }} />
+            {/* <Stack.Screen name="addhabit" component={SetHabitScreen} options={{ title: t("addt_screen") }} /> */}
             <Stack.Screen name="edithabit" component={EditHabitScreen} options={{ title: t("addt_screen") }} />
             <Stack.Screen name="sethabit/repeat" component={AHSRepeat} options={{ title: "Repeat" }} />
         </>
@@ -179,6 +180,7 @@ export const Navigation = () => {
 
     const addEditCategories = (
         <>
+            <Stack.Screen name="edit_categories" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
             <Stack.Screen name="setcategory" component={SetCategoryScreen} options={{ title: t("home_screen") }} />
             <Stack.Screen name="setcategory/icon" component={SCIcon} options={{ title: "Icon" }} />
             <Stack.Screen name="setcategory/color" component={SCColor} options={{ title: "Color" }} />

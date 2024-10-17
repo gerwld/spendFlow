@@ -24,12 +24,14 @@ const SelectCategoryItem = ({ icon, iconColor, title, isAddNew, onPress, isCurre
     block__addnew: {
       marginTop: 10,
       marginHorizontal: 10,
-      maxWidth: 140,
+      width: "100%",
+      height: 45,
+      maxHeight: 45,
+
       paddingVertical: 2,
       justifyContent: "center",
       borderRadius: 50,
       backgroundColor: themeColors.tabsActiveColor,
-      minHeight: 45,
       borderWidth: 0,
       borderColor: "none",
       opacity: 0.9

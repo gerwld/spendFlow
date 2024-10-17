@@ -166,8 +166,8 @@ const LastOperations = ({ calendarDate, calendarIndex }) => {
     },
     noData: {
       flex: 1,
-      height: Math.min(height * 0.74 - 90, 200),
-      minHeight: Math.min(height * 0.74 - 90, 200),
+      height: Math.max(height * 0.74 - 110, 200),
+      minHeight: Math.max(height * 0.74 - 110, 200),
       alignItems: 'center',
       justifyContent: 'center',
     },

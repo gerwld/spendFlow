@@ -22,6 +22,7 @@ function ReportScreen({ navigation }) {
             // isGradient: true, 
             renderTopHeader: () =>
               <HomeHeader 
+                onRightPress={() => navigation.navigate("edit_categories")}
                 navigation={navigation} />
           }}>
           <MonthReport />
