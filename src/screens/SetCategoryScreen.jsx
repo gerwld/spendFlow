@@ -40,7 +40,7 @@ const SetCategoryScreen = ({ navigation }) => {
     d(categoriesActions.addCatergory(cleanObj));
 
     setState(initialState);
-    navigation.navigate('report_tab')
+    navigation.goBack()
   }
 
   const dispatchLocalAction = (key, value) => {

@@ -13,7 +13,7 @@ import { useInitializeApp } from "hooks";
 
 
 // keeps the splash screen visible while app fetch resources
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 function AppWithProvider({ children }) {
   // useOrientationLock();

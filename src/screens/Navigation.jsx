@@ -180,7 +180,7 @@ export const Navigation = () => {
 
     const addEditCategories = (
         <>
-            <Stack.Screen name="edit_categories" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
+            <Stack.Screen name="edit_categories2" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
             <Stack.Screen name="setcategory" component={SetCategoryScreen} options={{ title: t("home_screen") }} />
             <Stack.Screen name="setcategory/icon" component={SCIcon} options={{ title: "Icon" }} />
             <Stack.Screen name="setcategory/color" component={SCColor} options={{ title: "Color" }} />
@@ -217,6 +217,7 @@ export const Navigation = () => {
                     gestureEnabled: true,
                     navigationBarColor: getNavigationBarColor(route)
                 })}>
+                    <Stack.Screen name="edit_categories" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
                     <Stack.Screen name="home" component={MyTabs} options={{ title: t("home_screen") }} />
 
                     {settingsSubdirectories}
