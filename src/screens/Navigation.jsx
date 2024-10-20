@@ -210,7 +210,7 @@ export const Navigation = () => {
                     gestureEnabled: true,
                     navigationBarColor: getNavigationBarColor(route)
                 })}>
-                    <Stack.Screen name="edit_categories__tests" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
+                    {/* <Stack.Screen name="edit_categories__tests" component={EditCategoriesScreen} options={{ title: t("home_screen") }} /> */}
                     <Stack.Screen name="home" component={MyTabs} options={{ title: t("home_screen") }} />
 
                     {settingsSubdirectories}

@@ -116,7 +116,7 @@ const ActionSheetExperimental = ({ value, title, isOpen, toggleSheet,  options, 
       on
       onPress={(label) => console.log(label)}
       dialogProps={{ modalProps: { supportedOrientations: ['portrait', 'landscape'] }, overlayBackgroundColor: "rgba(0, 0, 0, 0.5)" }}
-      message={'Message goes here'}
+      // message={'Message goes here'}
       visible={isOpen}
       onDismiss={toggleSheet}
       options={options}

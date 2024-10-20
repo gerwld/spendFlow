@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const { width, height } = Dimensions.get("window")
 
 
-const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, leftButton, title, setHeight, maxHeightMultiplier = 0.86, setFullWidth = false  }) => {
+const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, leftButton, title, setHeight, maxHeightMultiplier = 0.86, setFullWidth = false, hideHeader  }) => {
   const [themeColors] = useCurrentTheme();
   const insets = useSafeAreaInsets()
 
@@ -88,6 +88,35 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, l
     }
   });
 
+  const renderHeader = (
+    <View style={styles.header}>
+
+    {leftButton  
+   ? <View style={styles.leftButton}>
+        <Pressable style={styles.cancelBTN} onPress={leftButton.onPress}>
+          <Text style={styles.cancelBTNText}>{leftButton.title}</Text>
+        </Pressable>
+      </View>
+
+    : <View style={styles.leftButton}>
+        <Pressable style={styles.cancelBTN} onPress={closeModal}>
+          <Text style={styles.cancelBTNText}>Cancel</Text>
+        </Pressable>
+      </View>
+    }
+
+    {title &&  <Text style={styles.headerTitle}>{title}</Text>}
+
+    <View style={styles.rightButton}>
+      {rightButton &&
+        <Pressable style={[styles.cancelBTN, styles.rightBtn]} onPress={rightButton.onPress}>
+        <Text style={[[styles.cancelBTNText, !rightButton.onPress && styles.disabled]]}>{rightButton.title}</Text>
+      </Pressable>
+      }
+    </View>
+    </View>
+  )
+
   if(width) return (
     <Incubator.Dialog
       useSafeArea
@@ -105,32 +134,7 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, l
     >
       <View style={{alignItems: "center", flex: 1,}}>
         <View style={styles.topNotch} />
-        <View style={styles.header}>
-
-        {leftButton  
-       ? <View style={styles.leftButton}>
-            <Pressable style={styles.cancelBTN} onPress={leftButton.onPress}>
-              <Text style={styles.cancelBTNText}>{leftButton.title}</Text>
-            </Pressable>
-          </View>
-
-        : <View style={styles.leftButton}>
-            <Pressable style={styles.cancelBTN} onPress={closeModal}>
-              <Text style={styles.cancelBTNText}>Cancel</Text>
-            </Pressable>
-          </View>
-        }
-
-        {title &&  <Text style={styles.headerTitle}>{title}</Text>}
-
-        <View style={styles.rightButton}>
-          {rightButton &&
-            <Pressable style={[styles.cancelBTN, styles.rightBtn]} onPress={rightButton.onPress}>
-            <Text style={[[styles.cancelBTNText, !rightButton.onPress && styles.disabled]]}>{rightButton.title}</Text>
-          </Pressable>
-          }
-        </View>
-        </View>
+        {!hideHeader ? renderHeader : null}
         {children}
       </View>
     </Incubator.Dialog>

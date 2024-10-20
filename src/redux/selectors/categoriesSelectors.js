@@ -16,9 +16,9 @@ export const selectCategoriesAndIDs = createSelector(
   let prevCategoriesArrayLength = null;  
   let prevResult = null;  
   return createSelector(
-    [selectCategoriesArray],
-    (categoriesArray) => {      
-      if (prevCategoriesArrayLength !== categoriesArray.length) {        
+    [selectCategoriesArray, (_, forceUpdate) => forceUpdate],
+    (categoriesArray, forceUpdate) => {      
+      if (forceUpdate || prevCategoriesArrayLength !== categoriesArray.length) {        
         prevCategoriesArrayLength = categoriesArray.length;        
         prevResult = categoriesArray.slice(); // slice to avoid direct reference
       }      

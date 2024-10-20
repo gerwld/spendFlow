@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BaseView, IconGlob, STHeader } from '@components'
 import SelectCategoryItem from 'src/components/items/SelectCategoryItem'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import { appSelectors, categoriesSelectors } from '@redux'
 import { useCurrentTheme } from 'hooks'
 import { LucideGripVertical } from 'lucide-react-native'
@@ -16,7 +16,24 @@ const EditCategoriesScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
   const isInit = useSelector(appSelectors.isCategoriesInit)
-  const categoriesArray = useSelector(categoriesSelectors.selectCategoriesArrayMemoizedStrict)
+
+
+
+
+  // gets itemsIDs from state only once (on componentDidMount)
+  const store = useStore();
+  let [items, setItems] = useState(null);
+
+  useEffect(() => {
+    const state = store.getState();
+    itemsIDs = categoriesSelectors.selectCategoriesArray(state);
+    setItems(itemsIDs)
+  }, [])
+
+  if(!items) return null;
+
+
+
   
   const styles = StyleSheet.create({
     addNewButton: {
@@ -79,18 +96,18 @@ const EditCategoriesScreen = ({ navigation }) => {
   )
 
   const onSort = (IDsArray) => {
-    if(Array.isArray(IDsArray) && IDsArray.length === categoriesArray.length)
+    if(Array.isArray(IDsArray) && IDsArray.length === items.length)
       dispatch(categoriesActions.swapCategoriesIDs(IDsArray))
   }
 
-  if(!isInit) return null;
+  if(!isInit || !items) return null;
   return (
     <BaseView>
       <STHeader {...{ navigation, title: "Manage categories" }} />
 
       <DragList
-        key={categoriesArray[0]}
-        data={categoriesArray}
+        key={items[0]}
+        data={items}
         itemsGap={5}
         style={styles.itemsList}
         contentContainerStyle={{ paddingBottom: 200 }}
@@ -110,7 +127,7 @@ const EditCategoriesScreen = ({ navigation }) => {
 }
 
 
-const RenderCategoryBlock = ({ itemID, pressableProps, isDragging }) => {
+const RenderCategoryBlock = ({ itemID }) => {
   const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({

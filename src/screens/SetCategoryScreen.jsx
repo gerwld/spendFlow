@@ -13,11 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { categoriesActions } from "@actions";;
 import uuid from 'react-native-uuid';
 import { categoriesSelectors } from '@redux';
+import ConfirmDeleteSheet from 'src/components/sheets/ConfirmDeleteSheet';
 
 const SetCategoryScreen = ({ navigation, route, isEdit }) => {
   // focus on ref
   const focusInputRef = React.useRef(null);
-  useInputFocusOnInit(focusInputRef);
+  !isEdit && useInputFocusOnInit(focusInputRef);
 
 
   const d = useDispatch();
@@ -31,14 +32,14 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
     color: "#4DB3FF",
     type: CATEGORY_TYPES_MASKS[Object.keys(CATEGORY_TYPES_MASKS)[0]].type
   }
-  const [state, setState] = React.useState({...initialState})
+  const [state, setState] = React.useState({ ...initialState })
 
-  const onSubmit =() => {
+  const onSubmit = () => {
     // ~65ms in assign benchmark (removes Object.proto)
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
 
-    if(isEdit) {
+    if (isEdit) {
       Object.assign(cleanObj, { id: route.params.itemID });
       d(categoriesActions.editCatergory(cleanObj, route.params.itemID));
     }
@@ -75,9 +76,9 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
   const navigateToSubscreenColor = () => navigateWithState("setcategory/color")
   const navigateToSubscreenType = () => navigateWithState("setcategory/type")
 
-   // state "form" validation
-   React.useEffect(() => {
-    if(state.title.length && !!state.icon && !!state.type) 
+  // state "form" validation
+  React.useEffect(() => {
+    if (state.title.length && !!state.icon && !!state.type)
       setValid(true)
     else setValid(false)
   }, [state])
@@ -90,7 +91,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
       paddingBottom: 30,
     },
     segment: {
-      
+
       marginBottom: 10,
     },
     input: {
@@ -135,7 +136,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
       marginLeft: "auto",
       marginRight: 5,
 
-   
+
     },
     selectedColor: {
       width: 40,
@@ -149,19 +150,48 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
     },
     preview: {
       maxWidth: 200
+    },
+    deleteBTNParent: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 40
+    },
+    deleteBTN: {
+      padding: 10,
+      fontSize: 17,
+      color: themeColors.red
     }
   });
 
   const categoryItem = useSelector(((s) => categoriesSelectors.selectCategoryByID(s, route.params.itemID)))
 
   React.useEffect(() => {
-    setState({...state, ...categoryItem})
+    setState({ ...state, ...categoryItem })
   }, [categoryItem])
 
-  
-  
-  
-  if(!categoryItem?.type) return null;
+
+  const DeleteBtn = () => {
+    const [isOpen, setOpenSheet] = useState(false);
+    const toggleSheet = () => setOpenSheet(!isOpen);
+
+    const onDelete = () => {
+      setOpenSheet(true)
+    }
+
+    return (
+      <View style={styles.deleteBTNParent}>
+        <Pressable onPress={onDelete}>
+          <Text style={styles.deleteBTN}>Delete Category</Text>
+        </Pressable>
+        <ConfirmDeleteSheet {...{ toggleSheet, isOpen }} />
+      </View>
+    )
+  }
+
+
+
+
+  if (!categoryItem?.type) return null;
   return (
     <View>
       <STHeader
@@ -255,6 +285,10 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
           <CategoryItem iconColor={state.color || themeColors.tabsActiveColor} icon={<IconGlob color={state.color || themeColors.tabsActiveColor} name={state.icon} />} title={(state.title || "Category").toProperCase()} value={100} isRow />
         </View>
 
+
+        {isEdit
+          ? <DeleteBtn />
+          : null}
 
       </ScrollView>
 
