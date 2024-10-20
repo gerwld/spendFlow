@@ -150,7 +150,7 @@ export const Navigation = () => {
     SystemUI.setBackgroundColorAsync(themeColors.background || "white");
 
 
-    const EditHabitScreen = (props) => <SetHabitScreen isEdit {...props} />
+    const EditCategoryScreen = (props) => <SetCategoryScreen isEdit {...props} />
 
     const getNavigationBarColor = (route) => {
         let color = "black";
@@ -161,17 +161,9 @@ export const Navigation = () => {
         return color;
     }
 
-    const addEditSubdirectories = (
-        <>
-            {/* <Stack.Screen name="addhabit" component={SetHabitScreen} options={{ title: t("addt_screen") }} /> */}
-            <Stack.Screen name="edithabit" component={EditHabitScreen} options={{ title: t("addt_screen") }} />
-            <Stack.Screen name="sethabit/repeat" component={AHSRepeat} options={{ title: "Repeat" }} />
-        </>
-    )
-
     const addEditAccounts = (
         <>
-            <Stack.Screen name="setaccount" component={SetAccountScreen} options={{ title: t("home_screen") }} />
+            <Stack.Screen name="setaccount_screen" component={SetAccountScreen} options={{ title: t("home_screen") }} />
             <Stack.Screen name="setaccount/icon" component={SCIcon} options={{ title: "Icon" }} />
             <Stack.Screen name="setaccount/color" component={SCColor} options={{ title: "Color" }} />
             <Stack.Screen name="setaccount/type" component={SCAccountType} options={{ title: "Type" }} />
@@ -180,8 +172,9 @@ export const Navigation = () => {
 
     const addEditCategories = (
         <>
-            <Stack.Screen name="edit_categories2" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
-            <Stack.Screen name="setcategory" component={SetCategoryScreen} options={{ title: t("home_screen") }} />
+            <Stack.Screen name="edit_categories_screen" component={EditCategoriesScreen} options={{ title: "Edit Categories" }} />
+            <Stack.Screen name="editcategory" component={EditCategoryScreen} options={{ title: "Edit Category" }} />
+            <Stack.Screen name="addcategory" component={SetCategoryScreen} options={{ title: "Add Category" }} />
             <Stack.Screen name="setcategory/icon" component={SCIcon} options={{ title: "Icon" }} />
             <Stack.Screen name="setcategory/color" component={SCColor} options={{ title: "Color" }} />
             <Stack.Screen name="setcategory/type" component={SCOperationType} options={{ title: "Type" }} />
@@ -217,11 +210,10 @@ export const Navigation = () => {
                     gestureEnabled: true,
                     navigationBarColor: getNavigationBarColor(route)
                 })}>
-                    <Stack.Screen name="edit_categories" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
+                    <Stack.Screen name="edit_categories__tests" component={EditCategoriesScreen} options={{ title: t("home_screen") }} />
                     <Stack.Screen name="home" component={MyTabs} options={{ title: t("home_screen") }} />
 
                     {settingsSubdirectories}
-                    {addEditSubdirectories}
 
                     {addEditAccounts}
                     {addEditCategories}

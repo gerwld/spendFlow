@@ -56,7 +56,7 @@ const SelectCategory = React.memo(({currentType, onPress, currentItem}) => {
 
   const renderAddNew = (
     <SelectCategoryItem  {...{  
-      onPress: () => navigation.navigate("setcategory"),
+      onPress: () => navigation.navigate("addcategory"),
       icon: <IconGlob {...{name: "Plus", color: "#ffffff", stroke: 2, size: 22,}} />,
       iconColor: "#ffffff",
       title: "Add New",

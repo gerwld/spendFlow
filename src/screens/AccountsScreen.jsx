@@ -63,7 +63,7 @@ const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
   const {accounts, accountsArray} = useSelector(state => accountsSelectors.selectAccountsAndIDs(state), shallowEqual)
 
   const onAddNewPress = () => {
-    navigation.navigate("setaccount")
+    navigation.navigate("setaccount_screen")
   }
 
   const renderAddNew = (

@@ -8,6 +8,7 @@ import { useCurrentTheme } from 'hooks'
 import { LucideGripVertical } from 'lucide-react-native'
 import DragList from 'react-native-drag-n-drop-everywhere'
 import { categoriesActions } from '@actions'
+import { useNavigation } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get("window")
 
@@ -54,7 +55,7 @@ const EditCategoriesScreen = ({ navigation }) => {
   const renderAddNew = (
     <View style={styles.addNewButton}>
       <SelectCategoryItem  {...{
-        onPress: () => navigation.navigate("setcategory"),
+        onPress: () => navigation.navigate("addcategory"),
         icon: <IconGlob {...{ name: "Plus", color: "#ffffff", stroke: 2.4, size: 25, }} />,
         iconColor: "#ffffff",
         title: "Add New Category",
@@ -108,6 +109,7 @@ const EditCategoriesScreen = ({ navigation }) => {
 
 
 const RenderCategoryBlock = ({ itemID, pressableProps, isDragging }) => {
+  const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     item: {
@@ -147,7 +149,13 @@ const RenderCategoryBlock = ({ itemID, pressableProps, isDragging }) => {
   const item = useSelector((state) => categoriesSelectors.selectCategoryByID(state, itemID))
 
   const onEditPress = () => {
-    alert(itemID)
+    navigateWithState("editcategory")
+  }
+
+  const navigateWithState = (route) => {
+    navigation.navigate(route, {
+      itemID,
+    });
   }
 
   return (

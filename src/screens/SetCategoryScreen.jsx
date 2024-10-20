@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Pressable } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { produce } from 'immer';
 
@@ -9,11 +9,12 @@ import { ItemViewIcon } from 'src/components/sheets/AddOperationSheet';
 import { LucideArrowDownUp, LucideBrush, LucideImage } from 'lucide-react-native';
 import CategoryItem from 'src/components/items/CategoryItem';
 import { CATEGORY_TYPES_MASKS } from '@constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { categoriesActions } from "@actions";;
 import uuid from 'react-native-uuid';
+import { categoriesSelectors } from '@redux';
 
-const SetCategoryScreen = ({ navigation }) => {
+const SetCategoryScreen = ({ navigation, route, isEdit }) => {
   // focus on ref
   const focusInputRef = React.useRef(null);
   useInputFocusOnInit(focusInputRef);
@@ -144,11 +145,23 @@ const SetCategoryScreen = ({ navigation }) => {
     }
   });
 
+  const categoryItem = useSelector(((s) => categoriesSelectors.selectCategoryByID(s, route.params.itemID)))
+
+  React.useEffect(() => {
+    setState({...state, ...categoryItem})
+    
+  }, [categoryItem])
+  
+
+  
+  
+  
+  if(!categoryItem?.type) return null;
   return (
     <View>
       <STHeader
         navigation={navigation}
-        title="Add Category"
+        title={(isEdit ? "Edit" : "Add") + " Category"}
         rightText="Save"
         rightPressDisabled={!isValid}
         rightPress={onSubmit}
