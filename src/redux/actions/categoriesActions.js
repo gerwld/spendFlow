@@ -1,6 +1,7 @@
 const { default: AsyncStorage } = require("@react-native-async-storage/async-storage");
 
 const ADD_CATEGORY = 'categories/ADD_CATEGORY';
+const EDIT_CATEGORY = 'categories/EDIT_CATEGORY';
 const SWAP_CATEGORIES_IDS = 'categories/SWAP_CATEGORIES_IDS';
 
 
@@ -11,6 +12,16 @@ const addCatergory = (payload) => async (dispatch, getState) => {
   });
 
   await setCategoriesToAsyncStorage(getState);
+};
+
+const editCatergory = (payload, itemID) => async (dispatch, getState) => {
+  await dispatch({
+    type: EDIT_CATEGORY,
+    payload,
+    itemID
+});
+
+await setCategoriesToAsyncStorage(getState);
 };
 
 const swapCategoriesIDs = (payload) => async (dispatch, getState) => {
@@ -35,7 +46,9 @@ const setCategoriesToAsyncStorage = async (getState) => {
 
 module.exports = {
   ADD_CATEGORY,
+  EDIT_CATEGORY,
   SWAP_CATEGORIES_IDS,
   addCatergory,
+  editCatergory,
   swapCategoriesIDs
 } 

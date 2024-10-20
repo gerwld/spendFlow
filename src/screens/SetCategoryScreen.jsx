@@ -37,8 +37,15 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
     // ~65ms in assign benchmark (removes Object.proto)
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
-    Object.assign(cleanObj, { id: uuid.v4() });
-    d(categoriesActions.addCatergory(cleanObj));
+
+    if(isEdit) {
+      Object.assign(cleanObj, { id: route.params.itemID });
+      d(categoriesActions.editCatergory(cleanObj, route.params.itemID));
+    }
+    else {
+      Object.assign(cleanObj, { id: uuid.v4() });
+      d(categoriesActions.addCatergory(cleanObj));
+    }
 
     setState(initialState);
     navigation.goBack()
@@ -149,9 +156,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
 
   React.useEffect(() => {
     setState({...state, ...categoryItem})
-    
   }, [categoryItem])
-  
 
   
   

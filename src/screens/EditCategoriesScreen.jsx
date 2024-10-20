@@ -3,7 +3,7 @@ import React from 'react'
 import { BaseView, IconGlob, STHeader } from '@components'
 import SelectCategoryItem from 'src/components/items/SelectCategoryItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { categoriesSelectors } from '@redux'
+import { appSelectors, categoriesSelectors } from '@redux'
 import { useCurrentTheme } from 'hooks'
 import { LucideGripVertical } from 'lucide-react-native'
 import DragList from 'react-native-drag-n-drop-everywhere'
@@ -15,6 +15,7 @@ const { width, height } = Dimensions.get("window")
 const EditCategoriesScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
+  const isInit = useSelector(appSelectors.isCategoriesInit)
   const categoriesArray = useSelector(categoriesSelectors.selectCategoriesArrayMemoizedStrict)
   
   const styles = StyleSheet.create({
@@ -82,6 +83,7 @@ const EditCategoriesScreen = ({ navigation }) => {
       dispatch(categoriesActions.swapCategoriesIDs(IDsArray))
   }
 
+  if(!isInit) return null;
   return (
     <BaseView>
       <STHeader {...{ navigation, title: "Manage categories" }} />
@@ -146,6 +148,7 @@ const RenderCategoryBlock = ({ itemID, pressableProps, isDragging }) => {
       paddingHorizontal: 6,
     },
   });
+
   const item = useSelector((state) => categoriesSelectors.selectCategoryByID(state, itemID))
 
   const onEditPress = () => {
@@ -158,6 +161,7 @@ const RenderCategoryBlock = ({ itemID, pressableProps, isDragging }) => {
     });
   }
 
+  
   return (
     <View style={styles.item} key={itemID}>
 
