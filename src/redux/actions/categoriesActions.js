@@ -35,6 +35,7 @@ const setCategoriesToAsyncStorage = async (getState) => {
 
 module.exports = {
   ADD_CATEGORY,
+  SWAP_CATEGORIES_IDS,
   addCatergory,
   swapCategoriesIDs
 } 

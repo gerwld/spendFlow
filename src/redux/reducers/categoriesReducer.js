@@ -47,7 +47,8 @@ export default function categories(state = initialState, action) {
                 draft.itemsIdsArray.push(action.payload.id);
                 break;
             case SWAP_CATEGORIES_IDS:
-                draft.itemsIdsArray = action.payload
+                draft.itemsIdsArray = action.payload;
+                break;
             default:
                 return state;
                 break;

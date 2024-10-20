@@ -14,7 +14,7 @@ const { width, height } = Dimensions.get("window")
 const EditCategoriesScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
-  const { categoriesArray } = useSelector(categoriesSelectors.selectCategoriesAndIDs)
+  const categoriesArray = useSelector(categoriesSelectors.selectCategoriesArrayMemoizedStrict)
   
   const styles = StyleSheet.create({
     addNewButton: {
