@@ -21,7 +21,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
   !isEdit && useInputFocusOnInit(focusInputRef);
 
 
-  const d = useDispatch();
+  const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
 
 
@@ -41,11 +41,11 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
 
     if (isEdit) {
       Object.assign(cleanObj, { id: route.params.itemID });
-      d(categoriesActions.editCatergory(cleanObj, route.params.itemID));
+      dispatch(categoriesActions.editCategory(cleanObj, route.params.itemID));
     }
     else {
       Object.assign(cleanObj, { id: uuid.v4() });
-      d(categoriesActions.addCatergory(cleanObj));
+      dispatch(categoriesActions.addCategory(cleanObj));
     }
 
     setState(initialState);
@@ -163,10 +163,11 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
     }
   });
 
-  const categoryItem = useSelector(((s) => categoriesSelectors.selectCategoryByID(s, route.params.itemID)))
+  const categoryItem = useSelector(((s) => categoriesSelectors.selectCategoryByID(s, route?.params?.itemID)))
 
   React.useEffect(() => {
-    setState({ ...state, ...categoryItem })
+    if(categoryItem && isEdit)
+      setState({ ...state, ...categoryItem })
   }, [categoryItem])
 
 
@@ -175,15 +176,17 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
     const toggleSheet = () => setOpenSheet(!isOpen);
 
     const onDelete = () => {
-      setOpenSheet(true)
+      setOpenSheet(false);
+      dispatch(categoriesActions.deleteCategory(route.params.itemID))
+      navigation.goBack()
     }
 
     return (
       <View style={styles.deleteBTNParent}>
-        <Pressable onPress={onDelete}>
+        <Pressable onPress={toggleSheet}>
           <Text style={styles.deleteBTN}>Delete Category</Text>
         </Pressable>
-        <ConfirmDeleteSheet {...{ toggleSheet, isOpen }} />
+        <ConfirmDeleteSheet {...{ toggleSheet, isOpen, title: state.title, callbackAction: onDelete }} />
       </View>
     )
   }
@@ -191,7 +194,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
 
 
 
-  if (!categoryItem?.type) return null;
+  if (!categoryItem?.type && isEdit) return null;
   return (
     <View>
       <STHeader
@@ -286,7 +289,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
         </View>
 
 
-        {isEdit
+        {isEdit && route.params.itemID
           ? <DeleteBtn />
           : null}
 

@@ -2,7 +2,8 @@ import { produce } from "immer";
 import { 
     ADD_CATEGORY,
     EDIT_CATEGORY, 
-    SWAP_CATEGORIES_IDS
+    DELETE_CATEGORY,
+    SWAP_CATEGORIES_IDS,
  } from "@actions/categoriesActions";
 
 const initialState = {
@@ -47,10 +48,13 @@ export default function categories(state = initialState, action) {
                 draft.items[action.payload.id] = action.payload;
                 draft.itemsIdsArray.push(action.payload.id);
                 break;
-            case EDIT_CATEGORY:
-                console.log(action);
-                
+            case EDIT_CATEGORY:                
                 draft.items[action.itemID] = action.payload;
+                break;
+            case DELETE_CATEGORY:
+                const index = draft.itemsIdsArray.indexOf(action.itemID);
+                if (index !== -1) 
+                    draft.itemsIdsArray.splice(index, 1);
                 break;
             case SWAP_CATEGORIES_IDS:
                 draft.itemsIdsArray = action.payload;

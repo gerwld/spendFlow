@@ -1,21 +1,22 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
-import React from 'react'
-import { ActionSheet } from 'react-native-ui-lib'
+import { View, Text, StyleSheet, Pressable, ActivityIndicator, Platform } from 'react-native'
+import React, { useState } from 'react'
 import { useCurrentTheme } from 'hooks';
-import { LucideCheck } from 'lucide-react-native';
 import BottomSheetExperimental from './BottomSheetExperimental';
+import { produce } from 'immer';
+import { LucideCheck } from 'lucide-react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
-const ConfirmDeleteSheet = ({ value, title, isOpen, toggleSheet, callbackAction, options, onSelect }) => {
+const ConfirmDeleteSheet = ({  title, isOpen, toggleSheet, callbackAction }) => {
   const [themeColors] = useCurrentTheme();
 
   const styles = StyleSheet.create({
     buttons: {
       flexDirection: "row",
-      gap: 18,
+      gap: 16,
       maxWidth: 370,
       borderTopWidth: 1.4,
       borderTopColor: themeColors.borderColorTh,
-      paddingVertical: 20,
+      paddingVertical: 22,
       paddingHorizontal: 1
     },
     btn_pressable: {
@@ -51,32 +52,97 @@ const ConfirmDeleteSheet = ({ value, title, isOpen, toggleSheet, callbackAction,
     },
     desc: {
       color: themeColors.textColor,
-      marginBottom: 25,
+      marginBottom: 20,
       maxWidth: 370,
       lineHeight: 30,
       fontSize: 18,
+    },
+    progressScreen: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: "100%",
+      minHeight: 320,
+      paddingBottom: 20
+    },
+    checkmark: {
+      width: 70,
+      height: 70,
+      borderRadius: 10,
+      textAlign: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: themeColors.tabsActiveColor,
+      backgroundColor: themeColors.borderColor
     }
   });
 
+  const [state, setState] = useState({
+    isSpinner: false,
+    isDone: false
+  });
 
-  return (
-    <BottomSheetExperimental
-      {...{ toggleSheet, isOpen, maxHeightMultiplier: 0.35, hideHeader: true, setHeight: 370 }}
-    >
+  const onConfirm = () => {
+    setState(produce((draft) => {
+      draft.isSpinner = true
+    }));
+    if (callbackAction) {
+      setTimeout(() => {
+        setState(produce((draft) => {
+          draft.isSpinner = false
+          draft.isDone = true
+        }))
+        setTimeout(() => {
+          setState(produce((draft) => {
+            draft.isSpinner = false
+            draft.isDone = false
+          }))
+        }, 700)
+        setTimeout(callbackAction, 500)
+      }, 700)
+    }
+  }
+
+  const renderContent = (
+    <>
       <Text style={styles.title}>Delete Category</Text>
       <Text style={styles.desc}>
-        Are you sure you want to delete the category{title ? ` "${title}"` : ""}? 
+        Are you sure you want to delete the category{title ? ` "${title}"` : ""}?
         This action cannot be undone. The category will remain visible in past transactions.
       </Text>
       <View style={styles.buttons}>
         <Pressable onPress={toggleSheet} style={styles.btn_pressable}>
           <Text style={styles.btn}>Cancel</Text>
         </Pressable>
-        <Pressable style={[styles.btn_pressable, styles.btn_confirm]}>
+        <Pressable onPress={onConfirm} style={[styles.btn_pressable, styles.btn_confirm]}>
           <Text style={[styles.btn, styles.btn_confirm]}>Delete</Text>
         </Pressable>
       </View>
+    </>
+  )
 
+  const renderSpinner = (
+    <Animated.View entering={FadeIn.duration(300)} style={styles.progressScreen}>
+      <View style={styles.checkmark}>
+        <ActivityIndicator style={Platform.OS === "ios" && {marginLeft: 4, marginTop: 4}} size="large" color={themeColors.tabsActiveColor} />
+      </View>
+    </Animated.View>
+  )
+  const renderCheckmark = (
+    <Animated.View entering={FadeIn.duration(300)} style={styles.progressScreen}>
+      <View style={styles.checkmark}>
+        <LucideCheck size={40} strokeWidth={3} color={themeColors.tabsActiveColor} stroke={themeColors.tabsActiveColor}  />
+      </View>
+    </Animated.View>
+  )
+
+  return (
+    <BottomSheetExperimental
+      {...{ toggleSheet, isOpen, maxHeightMultiplier: 0.37, hideHeader: true, setHeight: 360 }}
+    >
+
+      {!state.isSpinner && !state.isDone && renderContent}
+      {state.isSpinner && renderSpinner}
+      {state.isDone && renderCheckmark}
     </BottomSheetExperimental>
   )
 }

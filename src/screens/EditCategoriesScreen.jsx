@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { BaseView, IconGlob, STHeader } from '@components'
 import SelectCategoryItem from 'src/components/items/SelectCategoryItem'
 import { useDispatch, useSelector, useStore } from 'react-redux'
@@ -8,7 +8,7 @@ import { useCurrentTheme } from 'hooks'
 import { LucideGripVertical } from 'lucide-react-native'
 import DragList from 'react-native-drag-n-drop-everywhere'
 import { categoriesActions } from '@actions'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get("window")
 
@@ -24,11 +24,11 @@ const EditCategoriesScreen = ({ navigation }) => {
   const store = useStore();
   let [items, setItems] = useState(null);
 
-  useEffect(() => {
+  useFocusEffect(() => {
     const state = store.getState();
     itemsIDs = categoriesSelectors.selectCategoriesArray(state);
     setItems(itemsIDs)
-  }, [])
+  })
 
   if(!items) return null;
 
