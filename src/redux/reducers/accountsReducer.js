@@ -1,5 +1,9 @@
 import { produce } from "immer";
-import { ADD_ACCOUNT } from "@actions/accountsActions";
+import { 
+  ADD_ACCOUNT, 
+  EDIT_ACCOUNT, 
+  DELETE_ACCOUNT, 
+  SWAP_ACCOUNTS_IDS } from "@actions/accountsActions";
 
 const initialState = {
         isInit: false,
@@ -56,6 +60,17 @@ export default function accounts(state = initialState, action) {
             case ADD_ACCOUNT:
                 draft.items[action.payload.id] = action.payload;
                 draft.itemsIdsArray.push(action.payload.id);
+                break;
+            case EDIT_ACCOUNT:                
+                draft.items[action.itemID] = action.payload;
+                break;
+            case DELETE_ACCOUNT:
+                const index = draft.itemsIdsArray.indexOf(action.itemID);
+                if (index !== -1) 
+                    draft.itemsIdsArray.splice(index, 1);
+                break;
+            case SWAP_ACCOUNTS_IDS:
+                draft.itemsIdsArray = action.payload;
                 break;
             default:
                 return state;

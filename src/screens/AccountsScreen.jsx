@@ -52,7 +52,9 @@ const styles = StyleSheet.create({
 
 const AccountsScreen = ({ navigation }) => (
   <BaseView>
-    <HomeHeader navigation={navigation} />
+    <HomeHeader 
+    navigation={navigation} 
+    onRightPress={() => navigation.navigate("edit_accounts_screen")} />
     <AccountsOrTotalTabs />
   </BaseView>
 );
@@ -63,7 +65,7 @@ const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
   const {accounts, accountsArray} = useSelector(state => accountsSelectors.selectAccountsAndIDs(state), shallowEqual)
 
   const onAddNewPress = () => {
-    navigation.navigate("setaccount_screen")
+    navigation.navigate("addaccount")
   }
 
   const renderAddNew = (
@@ -84,6 +86,7 @@ const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
           ? accountsArray.map(itemID => 
             <AccountItem {...{
               key: itemID,
+              item: accounts[itemID],
               title: accounts[itemID].title,
               iconColor: accounts[itemID].color,
               icon: <IconGlob name={accounts[itemID].icon} color={accounts[itemID].color} size={24}/>
@@ -142,8 +145,8 @@ const AccountsOrTotalTabs = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "accounts", title: "Savings" },
-    { key: "total", title: "Debts" },
+    { key: "accounts", title: "Accounts" },
+    { key: "total", title: "Statistics" },
   ]);
 
   return (

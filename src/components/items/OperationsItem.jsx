@@ -1,12 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useCurrentTheme } from "hooks";
-import { getGreenRedOrGray } from "@constants";
+import { getGreenRedOrGray, navigateWithState } from "@constants";
 import { useSelector } from "react-redux";
 import { categoriesSelectors } from "@redux";
 import { IconGlob } from "@components";
+import { useNavigation } from "@react-navigation/native";
 
 const OperationsItem = ({ item }) => {
+  const navigation = useNavigation();
   let iconColor, icon, categoryItem, accountItem = null;
   const {
 accountID,
@@ -69,8 +71,13 @@ value
     },
   });
 
+  // "details_screen"
+  const onNavigateToDetails = () => {
+    navigateWithState("transaction_details_screen", item, navigation)
+  }
+
   return (
-    <View style={styles.block}>
+    <Pressable onPress={onNavigateToDetails} style={styles.block}>
       <View style={styles.icon}>
         {categoryItem?.icon ? <IconGlob name={categoryItem?.icon} color={categoryItem?.color}/> : null}
         <View style={styles.icon_bg} />
@@ -80,7 +87,7 @@ value
         <Text style={styles.text_account}>card</Text>
       </View>
       <Text style={styles.text_operationPrice}>{getCurrentWithPrefix(value) || "no data"} {currency}</Text>
-    </View>
+    </Pressable>
   );
 };
 

@@ -186,7 +186,13 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
         <Pressable onPress={toggleSheet}>
           <Text style={styles.deleteBTN}>Delete Category</Text>
         </Pressable>
-        <ConfirmDeleteSheet {...{ toggleSheet, isOpen, title: state.title, callbackAction: onDelete }} />
+        <ConfirmDeleteSheet {...{ 
+          toggleSheet, 
+          isOpen,
+          title: "Delete Category",
+          desc: `Are you sure you want to delete the category${state.title ? " \"" + state.title + "\"" : ""}? This action cannot be undone. The category will remain visible in past transactions.`,
+          desctiption: "",
+          callbackAction: onDelete }} />
       </View>
     )
   }

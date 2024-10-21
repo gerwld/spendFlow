@@ -6,7 +6,7 @@ import { produce } from 'immer';
 import { LucideCheck } from 'lucide-react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
-const ConfirmDeleteSheet = ({  title, isOpen, toggleSheet, callbackAction }) => {
+const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction }) => {
   const [themeColors] = useCurrentTheme();
 
   const styles = StyleSheet.create({
@@ -104,10 +104,9 @@ const ConfirmDeleteSheet = ({  title, isOpen, toggleSheet, callbackAction }) => 
 
   const renderContent = (
     <>
-      <Text style={styles.title}>Delete Category</Text>
+      <Text style={styles.title}>{title}</Text>
       <Text style={styles.desc}>
-        Are you sure you want to delete the category{title ? ` "${title}"` : ""}?
-        This action cannot be undone. The category will remain visible in past transactions.
+        {desc}
       </Text>
       <View style={styles.buttons}>
         <Pressable onPress={toggleSheet} style={styles.btn_pressable}>
@@ -123,14 +122,14 @@ const ConfirmDeleteSheet = ({  title, isOpen, toggleSheet, callbackAction }) => 
   const renderSpinner = (
     <Animated.View entering={FadeIn.duration(300)} style={styles.progressScreen}>
       <View style={styles.checkmark}>
-        <ActivityIndicator style={Platform.OS === "ios" && {marginLeft: 4, marginTop: 4}} size="large" color={themeColors.tabsActiveColor} />
+        <ActivityIndicator style={Platform.OS === "ios" && { marginLeft: 4, marginTop: 4 }} size="large" color={themeColors.tabsActiveColor} />
       </View>
     </Animated.View>
   )
   const renderCheckmark = (
     <Animated.View entering={FadeIn.duration(300)} style={styles.progressScreen}>
       <View style={styles.checkmark}>
-        <LucideCheck size={40} strokeWidth={3} color={themeColors.tabsActiveColor} stroke={themeColors.tabsActiveColor}  />
+        <LucideCheck size={40} strokeWidth={3} color={themeColors.tabsActiveColor} stroke={themeColors.tabsActiveColor} />
       </View>
     </Animated.View>
   )

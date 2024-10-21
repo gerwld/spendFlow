@@ -421,6 +421,12 @@ const getGreenRedOrGray =(val, styles) => {
   );
 }
 
+const navigateWithState = (route, state, navigation) => {
+  navigation.navigate(route, {
+    ...state
+  });
+}
+
 module.exports = {
   PLATFORM,
   WEEKDAYS,
@@ -453,5 +459,6 @@ module.exports = {
   convertTo12HourFormat,
   isFirstDayOfWeekMonday,
   getGreenRedOrGray,
+  navigateWithState,
   toTitleCase
 };

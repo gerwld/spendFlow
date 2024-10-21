@@ -4,10 +4,8 @@ import ReportScreen from "./ReportScreen";
 import { useTranslation } from "react-i18next";
 import TutorialScreen from "./TutorialScreen";
 import SettingsScreen from "./SettingsScreen";
-import AHSRepeat from "./subsreens/AHSRepeat";
 import STLanguage from "./subsreens/STLanguage";
 import STTheme from "./subsreens/STTheme";
-import SetHabitScreen from "./SetHabitScreen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
 import { useCurrentTheme } from "hooks";
@@ -34,6 +32,11 @@ import SetAccountScreen from './SetAccountScreen';
 import SCAccountType from './subsreens/SCAccountType';
 import { StatusBar } from 'expo-status-bar';
 import EditCategoriesScreen from './EditCategoriesScreen';
+import EditAccountsScreen from './EditAccountsScreen';
+
+import TransactionDetailsScreen from './details/TransactionDetailsScreen';
+import CategoryDetailsScreen from './details/CategoryDetailsScreen';
+import AccountDetailsScreen from './details/AccountDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -151,6 +154,7 @@ export const Navigation = () => {
 
 
     const EditCategoryScreen = (props) => <SetCategoryScreen isEdit {...props} />
+    const EditAccountScreen = (props) => <SetAccountScreen isEdit {...props} />
 
     const getNavigationBarColor = (route) => {
         let color = "black";
@@ -161,9 +165,19 @@ export const Navigation = () => {
         return color;
     }
 
+    const detailsScreens =(
+        <>
+            <Stack.Screen name="transaction_details_screen" component={TransactionDetailsScreen} options={{ title: "Transaction Details" }} />
+            <Stack.Screen name="category_details_screen" component={CategoryDetailsScreen} options={{ title: "Category Transactions" }} />
+            <Stack.Screen name="account_details_screen" component={AccountDetailsScreen} options={{ title: "Account Transactions" }} />
+        </>
+    )
+
     const addEditAccounts = (
         <>
-            <Stack.Screen name="setaccount_screen" component={SetAccountScreen} options={{ title: t("home_screen") }} />
+            <Stack.Screen name="edit_accounts_screen" component={EditAccountsScreen} options={{ title: "Edit Accounts" }} />
+            <Stack.Screen name="editaccount" component={EditAccountScreen} options={{ title: "Edit Account" }} />
+            <Stack.Screen name="addaccount" component={SetAccountScreen} options={{ title: "Add Account" }} />
             <Stack.Screen name="setaccount/icon" component={SCIcon} options={{ title: "Icon" }} />
             <Stack.Screen name="setaccount/color" component={SCColor} options={{ title: "Color" }} />
             <Stack.Screen name="setaccount/type" component={SCAccountType} options={{ title: "Type" }} />
@@ -210,13 +224,12 @@ export const Navigation = () => {
                     gestureEnabled: true,
                     navigationBarColor: getNavigationBarColor(route)
                 })}>
-                    {/* <Stack.Screen name="edit_categories__tests" component={EditCategoriesScreen} options={{ title: t("home_screen") }} /> */}
+
                     <Stack.Screen name="home" component={MyTabs} options={{ title: t("home_screen") }} />
-
                     {settingsSubdirectories}
-
                     {addEditAccounts}
                     {addEditCategories}
+                    {detailsScreens}
 
                     <Stack.Screen
                         name="tutorial"

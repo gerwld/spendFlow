@@ -1,8 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useCurrentTheme } from "hooks";
+import { navigateWithState } from "@constants";
+import { useNavigation } from "@react-navigation/native";
 
-const AccountItem = ({id, icon, iconColor, title, value, isAddNew, onPress }) => {
+const AccountItem = ({id, item, icon, iconColor, title, value, isAddNew, onPress }) => {
+  const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
@@ -43,12 +46,13 @@ const AccountItem = ({id, icon, iconColor, title, value, isAddNew, onPress }) =>
     },
   });
 
-  const onAccountPress = () => {
-    onPress && onPress(id)
-  }
+    // "details_screen"
+    const onNavigateToDetails = () => {
+      navigateWithState("account_details_screen", item, navigation)
+    }
 
   return (
-    <Pressable style={styles.block} onPress={onAccountPress}>
+    <Pressable style={styles.block} onPress={onNavigateToDetails}>
       <View style={styles.icon}>
         {icon}
         <View style={styles.icon_bg} />

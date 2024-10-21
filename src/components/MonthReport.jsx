@@ -5,6 +5,8 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { categoriesSelectors } from '@redux';
 
 import ReportItem from './items/ReportItem';
+import { navigateWithState } from '@constants';
+import { useNavigation } from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 
@@ -48,10 +50,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const MonthReport = React.memo(({currentType, onPress, currentItem, isCurrentPage}) => {
+export const MonthReport = React.memo(({currentType, currentItem, isCurrentPage}) => {
+  const navigation = useNavigation()
   const {categories, categoriesArray} = useSelector(state => categoriesSelectors.selectCategoriesAndIDs(state), shallowEqual)
-  const onCategoryPress = (itemID) => {
-    onPress && onPress(itemID) 
+  
+  // "details_screen"
+  const onCategoryPress = (item, id) => {
+    const category = {...item, id};
+    navigateWithState("category_details_screen", category, navigation)
+    // alert(JSON.stringify(category))
   }
 
  return (
@@ -61,11 +68,12 @@ export const MonthReport = React.memo(({currentType, onPress, currentItem, isCur
       // filter by currentType if specified
        if(categories[item].type === currentType || !currentType) return (
         <ReportItem {...{
-          onPress: () => onCategoryPress(item),
+          onPress: () => onCategoryPress(categories[item], item),
           isCurrent: currentItem === item,
           title: categories[item].title,
           iconColor: categories[item].color,
           key: item,
+          item: categories[item],
           icon: <IconGlob {...{name: categories[item].icon, color: categories[item].color}} />,
           size: 24,
           isRow: true,

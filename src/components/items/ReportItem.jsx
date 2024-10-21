@@ -6,7 +6,7 @@ import Animated, { FadeIn } from "react-native-reanimated";
 
 const DELAY = 50;
 
-const ReportItem = ({index, isCurrentPage, icon, iconColor, title, value = -20, isAddNew, onPress, isCurrent, isSelect }) => {
+const ReportItem = ({ index, isCurrentPage, icon, iconColor, title, value = -20, isAddNew, onPress, isCurrent, isSelect }) => {
   const inNoAnimationGap = index < 2;
   const [isInit, setInit] = useState(inNoAnimationGap);
 
