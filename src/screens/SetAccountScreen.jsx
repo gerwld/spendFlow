@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Pressable } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { produce } from 'immer';
 
@@ -8,18 +8,20 @@ import { IconGlob, LineItemView, STHeader } from '@components'
 import { ItemViewIcon } from 'src/components/sheets/AddOperationSheet';
 import { LucideArrowDownUp, LucideBrush, LucideImage } from 'lucide-react-native';
 import { ACCOUNT_TYPES_MASKS } from '@constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-native-uuid';
 import AccountItem from 'src/components/items/AccountItem';
 import { accountsActions } from '@actions';
+import { accountsSelectors } from '@redux';
+import ConfirmDeleteSheet from 'src/components/sheets/ConfirmDeleteSheet';
 
-const SetAccountScreen = ({ navigation }) => {
+const SetAccountScreen = ({ navigation, route, isEdit }) => {
   // focus on ref
   const focusInputRef = React.useRef(null);
-  useInputFocusOnInit(focusInputRef);
+  !isEdit && useInputFocusOnInit(focusInputRef);
 
 
-  const d = useDispatch();
+  const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
 
 
@@ -32,15 +34,22 @@ const SetAccountScreen = ({ navigation }) => {
   }
   const [state, setState] = React.useState({...initialState})
 
-  const onSubmit =() => {
+  const onSubmit = () => {
     // ~65ms in assign benchmark (removes Object.proto)
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
-    Object.assign(cleanObj, { id: uuid.v4() });
-    d(accountsActions.addAccount(cleanObj));
+
+    if (isEdit) {
+      Object.assign(cleanObj, { id: route.params.itemID });
+      dispatch(accountsActions.editAccount(cleanObj, route.params.itemID));
+    }
+    else {
+      Object.assign(cleanObj, { id: uuid.v4() });
+      dispatch(accountsActions.addAccount(cleanObj));
+    }
 
     setState(initialState);
-    navigation.navigate('accounts_tab')
+    navigation.goBack()
   }
 
   const dispatchLocalAction = (key, value) => {
@@ -141,14 +150,61 @@ const SetAccountScreen = ({ navigation }) => {
     },
     preview: {
       // maxWidth: 200
+    },
+    deleteBTNParent: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 40
+    },
+    deleteBTN: {
+      padding: 10,
+      fontSize: 17,
+      color: themeColors.red
     }
   });
 
+
+
+  const DeleteBtn = () => {
+    const [isOpen, setOpenSheet] = useState(false);
+    const toggleSheet = () => setOpenSheet(!isOpen);
+
+    const onDelete = () => {
+      setOpenSheet(false);
+      dispatch(accountsActions.deleteAccount(route.params.itemID))
+      navigation.goBack()
+    }
+
+    return (
+      <View style={styles.deleteBTNParent}>
+        <Pressable onPress={toggleSheet}>
+          <Text style={styles.deleteBTN}>Delete Account</Text>
+        </Pressable>
+        <ConfirmDeleteSheet {...{ 
+          toggleSheet, 
+          isOpen,
+          title: "Delete Account",
+          desc: `Are you sure you want to delete the account${state.title ? " \"" + state.title + "\"" : ""}? This action cannot be undone. The category will remain visible in past transactions.`,
+          callbackAction: onDelete }} />
+      </View>
+    )
+  }
+
+
+
+  const accountItem = useSelector(((s) => accountsSelectors.selectAccountByID(s, route?.params?.itemID)))
+
+  React.useEffect(() => {
+    if(accountItem && isEdit)
+      setState({ ...state, ...accountItem })
+  }, [accountItem])
+
+  if (!accountItem?.type && isEdit) return null;
   return (
     <View>
       <STHeader
         navigation={navigation}
-        title="Add Account"
+        title={(isEdit ? "Edit" : "Add") + " Account"}
         rightText="Save"
         rightPressDisabled={!isValid}
         rightPress={onSubmit}
@@ -244,6 +300,10 @@ const SetAccountScreen = ({ navigation }) => {
             }
           }/>
         </View>
+
+        {isEdit && route.params.itemID
+          ? <DeleteBtn />
+          : null}
 
 
       </ScrollView>
