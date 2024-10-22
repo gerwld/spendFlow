@@ -3,10 +3,10 @@ import React from 'react'
 import { BaseView, STHeader } from '@components'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { ScrollView } from 'react-native-gesture-handler';
-import { RenderCategoryOrAccount } from './AccountDetailsScreen';
+import { RenderCategoryOrAccount } from './TransactionDetailsScreen';
 import ValueMask from 'src/components/styling/ValueMask';
 import { useSelector } from 'react-redux';
-import { categoriesSelectors, operationsSelectors } from '@redux';
+import { accountsSelectors, operationsSelectors } from '@redux';
 import OperationsItem from 'src/components/items/OperationsItem';
 import { navigateWithState } from '@constants';
 import { PencilIcon } from 'lucide-react-native';
@@ -16,7 +16,7 @@ const timestampMonthAgo = timestampNow - (86400000 * 31);
 const AccountDetailsScreen = ({ navigation, route }) => {
   const [themeColors] = useCurrentTheme();
   const { headerStyles } = useHeaderStyles();
-  const item = useSelector((s) => categoriesSelectors.selectCategoryByID(s, route.params.item.id)) || route.params.item;
+  const item = useSelector((s) => accountsSelectors.selectAccountByID(s, route.params.item.id)) || route.params.item;
   const { operations } = useSelector(operationsSelectors.selectOperationsAndIDs)
   const lastOperationsIDs = useSelector((s) => operationsSelectors.selectOperationsPortionMinMax(s, timestampMonthAgo, timestampNow))
 
@@ -90,7 +90,7 @@ const AccountDetailsScreen = ({ navigation, route }) => {
       alert(item.id)
   }
   const onCategoryEdit = () => {
-    navigateWithState("editcategory", { itemID: item.id }, navigation)
+    navigateWithState("editaccount", { itemID: item.id }, navigation)
   }
 
   const renderHeaderButton = (
@@ -114,8 +114,8 @@ const AccountDetailsScreen = ({ navigation, route }) => {
     <BaseView>
       <STHeader
 
-        title="Category Details"
-        onRightPress={() => navigation.navigate("edit_categories_screen")}
+        title="Account Details"
+        onRightPress={() => navigation.navigate("edit_account_screen")}
         rightComponent={renderHeaderButton}
         navigation={navigation} />
 
