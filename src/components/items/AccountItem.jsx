@@ -48,7 +48,7 @@ const AccountItem = ({id, item, icon, iconColor, title, value, isAddNew, onPress
 
     // "details_screen"
     const onNavigateToDetails = () => {
-      navigateWithState("account_details_screen", item, navigation)
+      navigateWithState("account_details_screen", {item: item}, navigation)
     }
 
   return (

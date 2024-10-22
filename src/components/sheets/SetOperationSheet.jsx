@@ -56,7 +56,7 @@ const accStyles = StyleSheet.create({
 });
 
 
-const AddOperationSheet = ({ isOpen, toggleSheet }) => {
+const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
@@ -79,28 +79,35 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
     title: null,
   }
 
+
+
   const [sheetState, setSheetState] = React.useState({
     ...initialSheetState
   })
 
   const [state, setState] = React.useState({
-    ...initialDataState
+    ...initialDataState, ...(item || {})
   })
 
+
+
   const onOperationSubmit =() => {
-    // ~65ms in assign benchmark (removes Object.proto & less garbage)
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
-    Object.assign(cleanObj, { id: uuid.v4(), type: OPERATION_TYPES[sheetState.tab], value: Math.abs(state.value * 1) });
 
+    if(isEdit) {
+      Object.assign(cleanObj, { id: item.id, type: OPERATION_TYPES[sheetState.tab], value: Math.abs(state.value * 1) });
+      dispatch(operationsActions.editOperation(cleanObj, item.id));
+    }
+    else {
+        Object.assign(cleanObj, { id: uuid.v4(), type: OPERATION_TYPES[sheetState.tab], value: Math.abs(state.value * 1) });
+        dispatch(operationsActions.addOperation(cleanObj));
+        setSheetState(initialSheetState);
+        setState(initialDataState);
+    }
 
-
-    dispatch(operationsActions.addOperation(cleanObj));
-
-    setSheetState(initialSheetState);
-    setState(initialDataState);
+ 
     toggleSheet();
-    // navigation.navigate('home_tab');
   }
 
 
@@ -432,7 +439,7 @@ const AddOperationSheet = ({ isOpen, toggleSheet }) => {
 
     ? <BottomSheetExperimental
       {...{
-        title: "Add operation",
+        title: (isEdit ? "Edit" : "Add") + " operation",
         isOpen, toggleSheet,
         setHeight: Platform.OS === "android" ? screenHeight - 50 : screenHeight - 100,
         rightButton: { title: "Save", onPress: onOperationSubmit },
@@ -676,4 +683,4 @@ export const ItemViewIcon = ({ icon, iconColor, defBackground, theme }) => {
 }
 
 
-export default AddOperationSheet
+export default SetOperationSheet

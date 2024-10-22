@@ -6,7 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import InfiniteCalendar from "src/components/calendar/InfiniteCalendar";
 import { LucidePlus } from "lucide-react-native";
 import OperationsItem from "src/components/items/OperationsItem";
-import AddOperationSheet from "src/components/sheets/AddOperationSheet";
+import SetOperationSheet from "src/components/sheets/SetOperationSheet";
 import { operationsSelectors } from "@redux";
 import { shallowEqual, useSelector } from "react-redux";
 import { getWeekdays } from "@constants";
@@ -134,7 +134,7 @@ const HeaderSaturated = ({ navigation }) => {
 
   return <>
     <HomeHeader navigation={navigation} rightChild={RightPress} />
-    <AddOperationSheet isOpen={isSheetOpen} toggleSheet={toggleSheet} />
+    <SetOperationSheet isOpen={isSheetOpen} toggleSheet={toggleSheet} />
   </>
 }
 

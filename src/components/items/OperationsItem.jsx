@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const OperationsItem = ({ item }) => {
   const navigation = useNavigation();
-  let iconColor, icon, categoryItem, accountItem = null;
+  let iconColor, icon, accountItem = null;
   const {
 accountID,
 categoryID,
@@ -21,8 +21,8 @@ type,
 value
   } = item;
 
-  if(categoryID)
-    categoryItem = useSelector((state) => categoriesSelectors.selectCategoryByID(state, categoryID))
+  
+  const categoryItem = useSelector((state) => categoriesSelectors.selectCategoryByID(state, categoryID))
 
   function getCurrentWithPrefix() {
     return (type === "OPERATION_TYPE_INCOME") ? ("+" + value) : ("-" + value)
@@ -73,7 +73,7 @@ value
 
   // "details_screen"
   const onNavigateToDetails = () => {
-    navigateWithState("transaction_details_screen", item, navigation)
+    navigateWithState("transaction_details_screen", {item}, navigation)
   }
 
   return (

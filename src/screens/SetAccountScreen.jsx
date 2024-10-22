@@ -5,7 +5,7 @@ import { produce } from 'immer';
 
 import { useCurrentTheme, useInputFocusOnInit } from 'hooks';
 import { IconGlob, LineItemView, STHeader } from '@components'
-import { ItemViewIcon } from 'src/components/sheets/AddOperationSheet';
+import { ItemViewIcon } from 'src/components/sheets/SetOperationSheet';
 import { LucideArrowDownUp, LucideBrush, LucideImage } from 'lucide-react-native';
 import { ACCOUNT_TYPES_MASKS } from '@constants';
 import { useDispatch, useSelector } from 'react-redux';

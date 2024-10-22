@@ -12,7 +12,7 @@ export const selectOperationsAndIDs = createSelector(
   })
  )
 
-export const selectCategoryByID = createSelector(
+export const selectOperationByID = createSelector(
   [selectOperations, (_, operationID) => operationID],
   (items, operationID) => items[operationID]
 )
