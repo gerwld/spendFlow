@@ -1,0 +1,71 @@
+diff --git a/index.js b/index.js
+index 610beae08e02fd27b8cf80f34fefb9b8ba4dbc48..ba5a30c39155844b5623f02f86a064f488e6c123 100644
+--- a/index.js
++++ b/index.js
+@@ -23,9 +23,9 @@ const toString = (props) => {
+ /** @type {Record<string, string>} */
+ const chachedResults = {}
+ 
+-const DEFAULT_HEIGHT = 10
+-const DEFAULT_JAG_BOTTOM = 0
+-const DEFAULT_JAG_WIDTH = 15
++const DEFAULT_HEIGHT = 14
++const DEFAULT_JAG_BOTTOM = 4
++const DEFAULT_JAG_WIDTH = 25
+ const DEFAULT_BACKGROUND_COLOR = '#CCCCCC'
+ const DEFAULT_COLOR = '#FFFFFF'
+ const DEFAULT_POSITION = 'top'
+@@ -46,21 +46,23 @@ export const createZigzagPath = (props) => {
+     jagBottom: bottom = DEFAULT_JAG_BOTTOM,
+     jagWidth = DEFAULT_JAG_WIDTH,
+   } = props
++
+   const count = Math.floor(width / jagWidth) || 1
+   const iWidth = width / count
+   const step = iWidth / 2
+-  let lines = ''
+-  for (let i = 0, next = step; i < count; ++i) {
+-    lines += `L${toFixed(width - next, 2)} ${bottom}`
++  let lines = `M0 ${height}` // Start at bottom-left corner
++  let next = step
++
++  for (let i = 0; i < count; ++i) {
++    lines += ` L${toFixed(next, 2)} ${bottom}`  // Draw zigzag downward
+     next += step
+-    if (count == i + 1) {
+-      lines += `L0 ${height}`
+-    } else {
+-      lines += `L${toFixed(width - next, 2)} ${height}`
++    if (i + 1 < count) {  // Ensure no extra line at the last point
++      lines += ` L${toFixed(next, 2)} ${height}` // Draw zigzag upward
+       next += step
+     }
+   }
+-  chachedResults[key] = `M0 ${height}V0 H${width} V${height} ${lines}Z`
++
++  chachedResults[key] = lines  // Don't add Z to avoid closing
+   return chachedResults[key]
+ }
+ 
+@@ -101,7 +103,7 @@ const ZigzagLines = (props) => {
+     height={height}
+     viewBox={`0 0 ${layout.width} ${layout.height}`}
+     style={[
+-      { backgroundColor },
++      // { backgroundColor },
+       position == 'top' ? { transform: [{ rotate: '180deg' }] } : null,
+       style,
+     ]}
+@@ -109,7 +111,11 @@ const ZigzagLines = (props) => {
+     <Path
+       {...pathProps}
+       d={createZigzagPath({ width, height, jagWidth, jagBottom })}
+-      fill={color}
++      stroke={color}
++      fill="none"
++      strokeOpacity={1}
++      strokeWidth={2.5}
++      backgroundColor={"red"}
+     />
+   </Svg>
+ }
