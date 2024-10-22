@@ -3,7 +3,7 @@ import React from 'react'
 import { BaseView, STHeader } from '@components'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { ScrollView } from 'react-native-gesture-handler';
-import { RenderCategoryOrAccount } from './TransactionDetailsScreen';
+import { RenderCategoryOrAccount } from './OperationDetailsScreen';
 import ValueMask from 'src/components/styling/ValueMask';
 import { useSelector } from 'react-redux';
 import { categoriesSelectors, operationsSelectors } from '@redux';
@@ -19,9 +19,6 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
   const item = useSelector((s) => categoriesSelectors.selectCategoryByID(s, route.params.item.id)) || route.params.item;
   const { operations } = useSelector(operationsSelectors.selectOperationsAndIDs)
   const lastOperationsIDs = useSelector((s) => operationsSelectors.selectOperationsPortionMinMax(s, timestampMonthAgo, timestampNow))
-
-  console.log(item);
-
 
 
   const styles = StyleSheet.create({
@@ -92,6 +89,7 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
   const onCategoryEdit = () => {
     navigateWithState("editcategory", { itemID: item.id }, navigation)
   }
+  
 
   const renderHeaderButton = (
     <View style={[headerStyles.rightComponent]}>

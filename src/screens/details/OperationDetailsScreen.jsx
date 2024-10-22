@@ -3,13 +3,16 @@ import React, { useState } from 'react'
 import { BaseView, IconGlob, STHeader } from '@components'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { PencilIcon } from 'lucide-react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { accountsSelectors, categoriesSelectors, operationsSelectors } from '@redux';
 import SetOperationSheet from 'src/components/sheets/SetOperationSheet';
 import ValueMask from 'src/components/styling/ValueMask';
 import ZigzagLines from "react-native-zigzag-lines"
+import DeleteBtnSheet from 'src/components/sheets/DeleteBtnSheet';
+import { operationsActions } from '@actions';
 
-const TransactionDetailsScreen = ({ navigation, route }) => {
+const OperationDetailsScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch()
   const [themeColors] = useCurrentTheme();
   const { headerStyles } = useHeaderStyles();
   const [width, setWidth] = useState()
@@ -87,8 +90,16 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
       fontSize: 15,
       fontWeight: "500",
       color: themeColors.textColorHighlight
+    },
+    deleteBtn: {
+      padding: 10,
+      fontWeight: "500",
+      fontSize: 16,
+      color: themeColors.red,
+      alignSelf:"center"
     }
   });
+
 
 
   const renderHeaderButton = (
@@ -172,6 +183,15 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
           />}
           </View>
 
+
+          <DeleteBtnSheet
+            marginTop={0}
+            itemTitle={item.title || ""}
+            sheetTitle="Delete Operation"
+            actionTitle="operation"
+            action={() => {dispatch(operationsActions.deleteOperation(item.id)); navigation.goBack()}}
+          />
+
         </View>
       </ScrollView>
 
@@ -196,4 +216,4 @@ export const RenderCategoryOrAccount = ({ icon, color, title, styles }) => (
   </View>
 )
 
-export default TransactionDetailsScreen
+export default OperationDetailsScreen

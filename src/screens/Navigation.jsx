@@ -34,7 +34,7 @@ import { StatusBar } from 'expo-status-bar';
 import EditCategoriesScreen from './EditCategoriesScreen';
 import EditAccountsScreen from './EditAccountsScreen';
 
-import TransactionDetailsScreen from './details/TransactionDetailsScreen';
+import OperationDetailsScreen from './details/OperationDetailsScreen';
 import CategoryDetailsScreen from './details/CategoryDetailsScreen';
 import AccountDetailsScreen from './details/AccountDetailsScreen';
 
@@ -167,7 +167,7 @@ export const Navigation = () => {
 
     const detailsScreens =(
         <>
-            <Stack.Screen name="transaction_details_screen" component={TransactionDetailsScreen} options={{ title: "Transaction Details" }} />
+            <Stack.Screen name="transaction_details_screen" component={OperationDetailsScreen} options={{ title: "Transaction Details" }} />
             <Stack.Screen name="category_details_screen" component={CategoryDetailsScreen} options={{ title: "Category Transactions" }} />
             <Stack.Screen name="account_details_screen" component={AccountDetailsScreen} options={{ title: "Account Transactions" }} />
         </>

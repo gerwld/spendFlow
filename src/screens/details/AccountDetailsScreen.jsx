@@ -3,7 +3,7 @@ import React from 'react'
 import { BaseView, STHeader } from '@components'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { ScrollView } from 'react-native-gesture-handler';
-import { RenderCategoryOrAccount } from './TransactionDetailsScreen';
+import { RenderCategoryOrAccount } from './OperationDetailsScreen';
 import ValueMask from 'src/components/styling/ValueMask';
 import { useSelector } from 'react-redux';
 import { accountsSelectors, operationsSelectors } from '@redux';

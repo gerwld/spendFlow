@@ -6,7 +6,7 @@ import { produce } from 'immer';
 import { LucideCheck } from 'lucide-react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
-const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction }) => {
+const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction, setHeight = 380 }) => {
   const [themeColors] = useCurrentTheme();
 
   const styles = StyleSheet.create({
@@ -55,7 +55,7 @@ const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction }
       marginBottom: 20,
       maxWidth: 370,
       lineHeight: 30,
-      fontSize: 18,
+      fontSize: 16.5,
     },
     progressScreen: {
       alignItems: 'center',
@@ -136,7 +136,7 @@ const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction }
 
   return (
     <BottomSheetExperimental
-      {...{ toggleSheet, isOpen, maxHeightMultiplier: 0.37, hideHeader: true, setHeight: 360 }}
+      {...{ toggleSheet, isOpen, maxHeightMultiplier: 0.2, setHeight, hideHeader: true, withGap: true, setHeight }}
     >
 
       {!state.isSpinner && !state.isDone && renderContent}

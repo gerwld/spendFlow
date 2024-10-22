@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const { width, height } = Dimensions.get("window")
 
 
-const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, leftButton, title, setHeight, maxHeightMultiplier = 0.86, setFullWidth = false, hideHeader  }) => {
+const BottomSheetExperimental = ({ isOpen, withGap, children, toggleSheet, rightButton, leftButton, title, setHeight, maxHeightMultiplier = 0.86, setFullWidth = false, hideHeader  }) => {
   const [themeColors] = useCurrentTheme();
   const insets = useSafeAreaInsets()
 
@@ -29,8 +29,8 @@ const BottomSheetExperimental = ({ isOpen, children, toggleSheet, rightButton, l
 
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
-      borderTopLeftRadius: 16,
-      borderTopRightRadius: 16,
+      borderTopLeftRadius:  withGap ? 40 : 16,
+      borderTopRightRadius:  withGap ? 40 : 16,
       overflow: "hidden"
     },
     topNotch: {

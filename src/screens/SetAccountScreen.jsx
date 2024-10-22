@@ -14,6 +14,7 @@ import AccountItem from 'src/components/items/AccountItem';
 import { accountsActions } from '@actions';
 import { accountsSelectors } from '@redux';
 import ConfirmDeleteSheet from 'src/components/sheets/ConfirmDeleteSheet';
+import DeleteBtnSheet from 'src/components/sheets/DeleteBtnSheet';
 
 const SetAccountScreen = ({ navigation, route, isEdit }) => {
   // focus on ref
@@ -32,7 +33,7 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
     color: "#1AB399",
     type: ACCOUNT_TYPES_MASKS[Object.keys(ACCOUNT_TYPES_MASKS)[0]].type
   }
-  const [state, setState] = React.useState({...initialState})
+  const [state, setState] = React.useState({ ...initialState })
 
   const onSubmit = () => {
     // ~65ms in assign benchmark (removes Object.proto)
@@ -76,9 +77,9 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
   const navigateToSubscreenColor = () => navigateWithState("setaccount/color")
   const navigateToSubscreenType = () => navigateWithState("setaccount/type")
 
-   // state "form" validation
-   React.useEffect(() => {
-    if(state.title.length && !!state.icon && !!state.type) 
+  // state "form" validation
+  React.useEffect(() => {
+    if (state.title.length && !!state.icon && !!state.type)
       setValid(true)
     else setValid(false)
   }, [state])
@@ -91,7 +92,7 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
       paddingBottom: 30,
     },
     segment: {
-      
+
       marginBottom: 10,
     },
     input: {
@@ -136,7 +137,7 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
       marginLeft: "auto",
       marginRight: 5,
 
-   
+
     },
     selectedColor: {
       width: 40,
@@ -165,37 +166,10 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
 
 
 
-  const DeleteBtn = () => {
-    const [isOpen, setOpenSheet] = useState(false);
-    const toggleSheet = () => setOpenSheet(!isOpen);
-
-    const onDelete = () => {
-      setOpenSheet(false);
-      dispatch(accountsActions.deleteAccount(route.params.itemID))
-      navigation.goBack()
-    }
-
-    return (
-      <View style={styles.deleteBTNParent}>
-        <Pressable onPress={toggleSheet}>
-          <Text style={styles.deleteBTN}>Delete Account</Text>
-        </Pressable>
-        <ConfirmDeleteSheet {...{ 
-          toggleSheet, 
-          isOpen,
-          title: "Delete Account",
-          desc: `Are you sure you want to delete the account${state.title ? " \"" + state.title + "\"" : ""}? This action cannot be undone. The category will remain visible in past transactions.`,
-          callbackAction: onDelete }} />
-      </View>
-    )
-  }
-
-
-
   const accountItem = useSelector(((s) => accountsSelectors.selectAccountByID(s, route?.params?.itemID)))
 
   React.useEffect(() => {
-    if(accountItem && isEdit)
+    if (accountItem && isEdit)
       setState({ ...state, ...accountItem })
   }, [accountItem])
 
@@ -298,11 +272,16 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
               value: state.type === "ACCOUNT_TYPE_DEBT" ? "-100" : 100,
               isRow: true,
             }
-          }/>
+          } />
         </View>
 
         {isEdit && route.params.itemID
-          ? <DeleteBtn />
+          ? <DeleteBtnSheet
+            itemTitle={state.title}
+            setHeight={400}
+            actionTitle={"account"}
+            sheetTitle="Delete Account"
+            action={() => {dispatch(accountsActions.deleteAccount(route.params.itemID)); navigation.navigate("accounts_tab")}} />
           : null}
 
 

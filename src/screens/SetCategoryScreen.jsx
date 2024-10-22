@@ -14,6 +14,7 @@ import { categoriesActions } from "@actions";;
 import uuid from 'react-native-uuid';
 import { categoriesSelectors } from '@redux';
 import ConfirmDeleteSheet from 'src/components/sheets/ConfirmDeleteSheet';
+import DeleteBtnSheet from 'src/components/sheets/DeleteBtnSheet';
 
 const SetCategoryScreen = ({ navigation, route, isEdit }) => {
   // focus on ref
@@ -163,6 +164,8 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
     }
   });
 
+  
+
   const categoryItem = useSelector(((s) => categoriesSelectors.selectCategoryByID(s, route?.params?.itemID)))
 
   React.useEffect(() => {
@@ -171,35 +174,11 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
   }, [categoryItem])
 
 
-  const DeleteBtn = () => {
-    const [isOpen, setOpenSheet] = useState(false);
-    const toggleSheet = () => setOpenSheet(!isOpen);
-
-    const onDelete = () => {
-      setOpenSheet(false);
-      dispatch(categoriesActions.deleteCategory(route.params.itemID))
-      navigation.goBack()
-    }
-
-    return (
-      <View style={styles.deleteBTNParent}>
-        <Pressable onPress={toggleSheet}>
-          <Text style={styles.deleteBTN}>Delete Category</Text>
-        </Pressable>
-        <ConfirmDeleteSheet {...{ 
-          toggleSheet, 
-          isOpen,
-          title: "Delete Category",
-          desc: `Are you sure you want to delete the category${state.title ? " \"" + state.title + "\"" : ""}? This action cannot be undone. The category will remain visible in past transactions.`,
-          desctiption: "",
-          callbackAction: onDelete }} />
-      </View>
-    )
-  }
 
 
 
 
+  
   if (!categoryItem?.type && isEdit) return null;
   return (
     <View>
@@ -296,7 +275,12 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
 
 
         {isEdit && route.params.itemID
-          ? <DeleteBtn />
+          ? <DeleteBtnSheet 
+          itemTitle={state.title}
+          setHeight={420}
+          actionTitle={"category"}
+          sheetTitle="Delete Category"
+          action={() => {dispatch(categoriesActions.deleteCategory(route.params.itemID)); navigation.pop(2)}} />
           : null}
 
       </ScrollView>
