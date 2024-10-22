@@ -139,7 +139,7 @@ const HeaderSaturated = ({ navigation }) => {
 }
 
 
-const LastOperations = ({ calendarDate, calendarIndex }) => {
+export const LastOperations = ({ calendarDate, calendarIndex }) => {
   const date = new Date(calendarDate)
   const Month = date.getMonth()
   const Year = date.getFullYear()

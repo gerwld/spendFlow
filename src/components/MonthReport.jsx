@@ -57,8 +57,7 @@ export const MonthReport = React.memo(({currentType, currentItem, isCurrentPage}
   // "details_screen"
   const onCategoryPress = (item, id) => {
     const category = {...item, id};
-    navigateWithState("category_details_screen", category, navigation)
-    // alert(JSON.stringify(category))
+    navigateWithState("category_details_screen", {item: category}, navigation)
   }
 
  return (

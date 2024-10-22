@@ -26,7 +26,7 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
   };
 
 
-  const RenderCategoryOrAccount = ({ icon, color, title }) => (
+   const RenderCategoryOrAccount = ({ icon, color, title, styles }) => (
     <View style={styles.categoryBlock}>
       <View style={styles.icon}>
         <IconGlob name={icon} color={color} size={20} />
@@ -40,14 +40,14 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
 
   const styles = StyleSheet.create({
     content: {
-      paddingHorizontal: 22,
+      paddingHorizontal: 20,
       paddingTop: 5,
       paddingBottom: 20
     },
     content_wrapper: {
-      marginHorizontal: 12,
+      marginHorizontal: 10,
       marginVertical: 20,
-      borderWidth: 2.5,
+      borderWidth: 2.2,
       borderColor: themeColors.borderColorSec,
       borderBottomWidth: 0,
       borderTopWidth: 0,
@@ -155,12 +155,12 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
 
             <View style={styles.item}>
               <Text style={styles.contentText}>Category</Text>
-              <RenderCategoryOrAccount {...{ icon: categoryItem?.icon, color: categoryItem?.color, title: categoryItem?.title || "No category" }} />
+              <RenderCategoryOrAccount {...{ icon: categoryItem?.icon, styles, color: categoryItem?.color, title: categoryItem?.title || "No category" }} />
             </View>
 
             <View style={styles.item}>
               <Text style={styles.contentText}>Accout</Text>
-              <RenderCategoryOrAccount {...{ icon: accountItem?.icon, color: accountItem?.color, title: accountItem?.title || "No account" }} />
+              <RenderCategoryOrAccount {...{ icon: accountItem?.icon, styles, color: accountItem?.color, title: accountItem?.title || "No account" }} />
             </View>
           </View>
 
@@ -184,5 +184,16 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
     </BaseView>
   )
 }
+
+export const RenderCategoryOrAccount = ({ icon, color, title, styles }) => (
+  <View style={styles.categoryBlock}>
+    <View style={styles.icon}>
+      <IconGlob name={icon} color={color} size={20} />
+      <View style={[styles.icon_bg, { backgroundColor: color || themeColors.thumbBackground }]} />
+    </View>
+
+    <Text style={styles.valueText}>{title}</Text>
+  </View>
+)
 
 export default TransactionDetailsScreen
