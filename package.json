@@ -67,6 +67,7 @@
     "react-native-uuid": "^2.0.2",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.10",
+    "react-native-zigzag-lines": "^0.2.0",
     "react-redux": "^9.1.2",
     "reselect": "^5.1.1",
     "styled-components": "^6.1.13",
@@ -79,7 +80,8 @@
   "pnpm": {
     "patchedDependencies": {
       "react-native-ui-lib": "patches/react-native-ui-lib.patch",
-      "react-native-segmented-control-2": "patches/react-native-segmented-control-2.patch"
+      "react-native-segmented-control-2": "patches/react-native-segmented-control-2.patch",
+      "react-native-zigzag-lines": "patches/react-native-zigzag-lines.patch"
     }
   }
 }

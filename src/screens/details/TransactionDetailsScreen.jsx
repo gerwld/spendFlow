@@ -1,27 +1,66 @@
 import { Text, StyleSheet, Pressable, View, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { BaseView, IconGlob, STHeader } from '@components'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { PencilIcon } from 'lucide-react-native';
 import { useSelector } from 'react-redux';
-import { categoriesSelectors, operationsSelectors } from '@redux';
-import { navigateWithState } from '@constants';
+import { accountsSelectors, categoriesSelectors, operationsSelectors } from '@redux';
 import SetOperationSheet from 'src/components/sheets/SetOperationSheet';
+import ValueMask from 'src/components/styling/ValueMask';
+import ZigzagLines from "react-native-zigzag-lines"
 
 const TransactionDetailsScreen = ({ navigation, route }) => {
   const [themeColors] = useCurrentTheme();
   const { headerStyles } = useHeaderStyles();
-  // const item = route.params.item || {};
+  const [width, setWidth] = useState()
+
+
   const item = useSelector((s) => operationsSelectors.selectOperationByID(s, route.params.item.id))
   const categoryItem = useSelector((s) => categoriesSelectors.selectCategoryByID(s, item.categoryID))
+  const accountItem = useSelector((s) => accountsSelectors.selectAccountByID(s, item.accoutID))
+
+
+  const [isSheetOpen, toggleSheetOpen] = React.useState(false);
+  const toggleSheet = () => {
+    toggleSheetOpen(!isSheetOpen);
+  };
+
+
+  const RenderCategoryOrAccount = ({ icon, color, title }) => (
+    <View style={styles.categoryBlock}>
+      <View style={styles.icon}>
+        <IconGlob name={icon} color={color} size={20} />
+        <View style={[styles.icon_bg, { backgroundColor: color || themeColors.thumbBackground }]} />
+      </View>
+
+      <Text style={styles.valueText}>{title}</Text>
+    </View>
+  )
+
 
   const styles = StyleSheet.create({
+    content: {
+      paddingHorizontal: 22,
+      paddingTop: 5,
+      paddingBottom: 20
+    },
+    content_wrapper: {
+      marginHorizontal: 12,
+      marginVertical: 20,
+      borderWidth: 2.5,
+      borderColor: themeColors.borderColorSec,
+      borderBottomWidth: 0,
+      borderTopWidth: 0,
+    },
     text: {
       color: themeColors.textColorHighlight
     },
+    valueText: {
+      color: themeColors.chevronText
+    },
     icon: {
-      width: 35,
-      height: 35,
+      width: 30,
+      height: 30,
       marginRight: 8,
       justifyContent: "center",
       alignItems: "center",
@@ -31,31 +70,26 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
     icon_bg: {
       position: "absolute",
       ...StyleSheet.absoluteFill,
-      backgroundColor: categoryItem?.color || themeColors.bgHighlightSec,
       zIndex: -1,
       opacity: categoryItem?.color ? (themeColors.label === "dark" ? 0.2 : 0.1) : 1,
     },
     categoryBlock: {
       flexDirection: "row",
       alignItems: 'center',
+    },
+    item: {
+      flexDirection: "row",
+      alignItems: "center",
+      height: 48,
+    },
+    contentText: {
+      flex: 1,
+      fontSize: 15,
+      fontWeight: "500",
+      color: themeColors.textColorHighlight
     }
   });
 
-  
-
-
-
-  const navigateToEdit = () => {
-    navigateWithState("edittransaction", {itemID: item.id}, navigation)
-  }
-
-  const [isSheetOpen, toggleSheetOpen] = React.useState(false);
-
-  const toggleSheet = () => {
-    toggleSheetOpen(!isSheetOpen);
-  };
-  
-  
 
   const renderHeaderButton = (
     <View style={[headerStyles.rightComponent]}>
@@ -75,36 +109,78 @@ const TransactionDetailsScreen = ({ navigation, route }) => {
   )
 
   return (
-    <BaseView style={styles.content}>
+    <BaseView>
       <STHeader
-        title="Transaction Details"
+        title="Operation Details"
         rightComponent={renderHeaderButton}
         navigation={navigation} />
 
 
-    <ScrollView>
-      <Text style={styles.text}>{item.title || "No title"}</Text>
-      <Text style={styles.text}>{((item.value || "0") + " " + item.currency)}</Text>
+      <ScrollView>
+        <View onLayout={e => setWidth(e.nativeEvent.layout.width)}>
 
-      <Text style={styles.text}>{item.type}</Text>
 
-      
-      <View style={styles.categoryBlock}>
-        <View style={styles.icon}>
-          <IconGlob name={categoryItem?.icon} color={categoryItem?.color}/>
-          <View style={styles.icon_bg} />
+        <View style={styles.content_wrapper}>
+          {typeof width == 'number' && <ZigzagLines
+            width={width}
+            color={themeColors.borderColorSec}
+          />}
+
+          <View style={styles.content} >
+            <View style={styles.item}>
+              <Text style={styles.contentText}>Title</Text>
+              <Text style={styles.valueText}>{item.title || "Operation"}</Text>
+            </View>
+
+            <View style={styles.item}>
+              <Text style={styles.contentText}>Desctiption</Text>
+              <Text style={styles.valueText}>{item.desc || "No desctiption"}</Text>
+            </View>
+
+            <View style={styles.item}>
+              <Text style={styles.contentText}>Value</Text>
+              <ValueMask {...{ value: (item.value || "0") + " " + item.currency, type: item.type, style: {fontSize: 18, fontWeight: "500"} }} />
+            </View>
+
+            <View style={styles.item}>
+              <Text style={styles.contentText}>Operation type</Text>
+              <Text style={styles.valueText}>{item.type}</Text>
+            </View>
+
+            <View style={styles.item}>
+              <Text style={styles.contentText}>Date</Text>
+              <Text style={styles.valueText}>{item.timestamp}</Text>
+            </View>
+
+
+            <View style={styles.item}>
+              <Text style={styles.contentText}>Category</Text>
+              <RenderCategoryOrAccount {...{ icon: categoryItem?.icon, color: categoryItem?.color, title: categoryItem?.title || "No category" }} />
+            </View>
+
+            <View style={styles.item}>
+              <Text style={styles.contentText}>Accout</Text>
+              <RenderCategoryOrAccount {...{ icon: accountItem?.icon, color: accountItem?.color, title: accountItem?.title || "No account" }} />
+            </View>
+          </View>
+
+
+          {typeof width == 'number' && <ZigzagLines
+            position="bottom"
+            width={width}
+            color={themeColors.borderColorSec}
+          />}
+          </View>
+
         </View>
+      </ScrollView>
 
-        <Text style={styles.text}>{categoryItem?.title || "No category"}</Text>
-      </View>
-    </ScrollView>
-
-    <SetOperationSheet {...{
-      isOpen: isSheetOpen,
-      toggleSheet,
-      isEdit: true,
-      item
-    }}/>
+      <SetOperationSheet {...{
+        isOpen: isSheetOpen,
+        toggleSheet,
+        isEdit: true,
+        item
+      }} />
     </BaseView>
   )
 }
