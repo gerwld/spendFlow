@@ -6,9 +6,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 const width = Dimensions.get("window").width
+const itemsPerRow = (width > 768 ? 3 : 2)
 const marginHorizontal = (width * 0.065)
-const blockWidth = Math.min(width / 2 - marginHorizontal, 300)
-const gap = (width * 0.04);
+const blockWidth = Math.min(width / 2 - marginHorizontal, 180)
+const gap = itemsPerRow === 3 ? (width * 0.028) : (width * 0.04);
 const MoreScreen = ({ navigation }) => {
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
@@ -18,7 +19,7 @@ const MoreScreen = ({ navigation }) => {
       flexWrap: "wrap",
       alignSelf: "center",
       justifyContent: "space-between",
-      maxWidth: blockWidth * 2 + gap,
+      maxWidth: blockWidth * itemsPerRow + (itemsPerRow === 3 ?  gap * 2 : gap),
       marginTop: gap
     },
     grid_item: {
@@ -44,11 +45,15 @@ const MoreScreen = ({ navigation }) => {
       marginTop: 14,
       fontSize: 15
     },
+    last_item: {
+      marginLeft: gap,
+      marginRight: "auto"
+    }
   });
 
 
   const RenderItem = (props) => {
-    const { title, icon, iconColor, color, route } = props;
+    const { title, icon, iconColor, color, route, style } = props;
     const scale = useSharedValue(1)
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ scale: scale.value }],
@@ -60,6 +65,7 @@ const MoreScreen = ({ navigation }) => {
 
     return (
       <Pressable
+        style={style}
         onPress={onNavigate}
         onPressIn={() => scale.value = withSpring(0.9, { stiffness: 300 })}
         onPressOut={() => scale.value = withSpring(1, { stiffness: 300 })}
@@ -119,6 +125,7 @@ const MoreScreen = ({ navigation }) => {
             icon: "Globe"
           }} />
           <RenderItem route="addcategory" {...{
+            style: styles.last_item,
             title: "Help",
             color: "#dbb132",
             icon: "MessageCircleQuestion"
