@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { produce } from 'immer';
 
@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { categoriesActions } from "@actions";;
 import uuid from 'react-native-uuid';
 import { categoriesSelectors } from '@redux';
-import ConfirmDeleteSheet from 'src/components/sheets/ConfirmDeleteSheet';
 import DeleteBtnSheet from 'src/components/sheets/DeleteBtnSheet';
 
 const SetCategoryScreen = ({ navigation, route, isEdit }) => {

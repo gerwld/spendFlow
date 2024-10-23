@@ -16,7 +16,7 @@ const timestampMonthAgo = timestampNow - (86400000 * 31);
 const AccountDetailsScreen = ({ navigation, route }) => {
   const [themeColors] = useCurrentTheme();
   const { headerStyles } = useHeaderStyles();
-  const item = useSelector((s) => accountsSelectors.selectAccountByID(s, route.params.item.id)) || route.params.item;
+  const item = useSelector((s) => accountsSelectors.selectAccountByID(s, route.params.item?.id)) || route.params.item;
   const { operations } = useSelector(operationsSelectors.selectOperationsAndIDs)
   const lastOperationsIDs = useSelector((s) => operationsSelectors.selectOperationsPortionMinMax(s, timestampMonthAgo, timestampNow))
 
@@ -83,6 +83,13 @@ const AccountDetailsScreen = ({ navigation, route }) => {
     },
     scroll: {
       height: "100%"
+    },
+    no_last: {
+      color: themeColors.textColor,
+      fontSize: 15,
+      height: 100,
+      alignSelf:"center",
+      lineHeight: 100
     }
   });
   const showID = () => {
@@ -109,6 +116,8 @@ const AccountDetailsScreen = ({ navigation, route }) => {
       </Pressable>
     </View>
   )
+
+  if (!item) return null;
 
   return (
     <BaseView>
@@ -138,11 +147,11 @@ const AccountDetailsScreen = ({ navigation, route }) => {
           <Text style={styles.title}>Last operations:</Text>
 
           <ScrollView style={styles.scroll}>
-          {operations && lastOperationsIDs ?
+          {operations && lastOperationsIDs?.length ?
             lastOperationsIDs.map(item =>
               <OperationsItem key={item} item={operations[item]} />
             )
-            : <Text style={styles.text}>No last operations</Text>
+            : <Text style={styles.no_last}>No operations to display</Text>
           }
           </ScrollView>
         </View>

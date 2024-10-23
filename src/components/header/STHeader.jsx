@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, Text, Pressable, SafeAreaView } from 'react-native'
+import { View, Text, Pressable, SafeAreaView, StyleSheet } from 'react-native'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { useTranslation } from 'react-i18next';
 import { SvgBack } from '@icons';
-import { LucideCheck } from 'lucide-react-native';
+import { AlignJustify, LucideCheck } from 'lucide-react-native';
 
 
 const STHeader = React.memo(({
@@ -19,10 +19,11 @@ const STHeader = React.memo(({
     rightPressDisabled,
     dimmed,
     bgColor,
+    renderMenu,
     ...rest
 }) => {
     const { t } = useTranslation();
-    const {headerStyles} = useHeaderStyles(theme, isWhite = true);
+    const {headerStyles, HEADER_HEIGHT_SAFE} = useHeaderStyles(theme, isWhite = true);
     const [themeColors] = useCurrentTheme();
 
     // header styles based on it's background color. if duotone then 
@@ -33,11 +34,40 @@ const STHeader = React.memo(({
         backgroundColor: dimmed ? themeColors.bgSettings : bgColor ? bgColor : themeColors.bac
     }
 
+    const styles = StyleSheet.create({
+        headerButton: {
+            flexShrink: 0,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            height: HEADER_HEIGHT_SAFE,
+            minHeight: 55,
+            width: 55,
+          },
+    })
+
+    const renderMenuBtn = (
+        <Pressable
+        style={styles.headerButton}
+        onPress={() => navigation.navigate("settings")}
+      >
+        <AlignJustify
+          style={{ marginLeft: 1, marginTop: 1, alignSelf: "center" }}
+          width={31}
+          height={55}
+          strokeWidth={2.1}
+          stroke={themeColors.textColorHighlight}
+        />
+      </Pressable>
+      )
+
     return (<>
         <View style={[headerStyles.header, { backgroundColor: s.backgroundColor }]}>
             <SafeAreaView style={headerStyles.headerContent}>
 
-                {leftComponent ? leftComponent :
+                {renderMenu 
+                    ? <View style={[headerStyles.leftComponent]}>{renderMenuBtn}</View> 
+                    : leftComponent ? leftComponent :
                 <View style={[headerStyles.leftComponent]}>
                     <Pressable
                         style={headerStyles.componentPressable}

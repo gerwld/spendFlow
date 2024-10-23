@@ -52,7 +52,7 @@ const AccountItem = ({id, item, icon, iconColor, title, value, isAddNew, onPress
     }
 
   return (
-    <Pressable style={styles.block} onPress={onNavigateToDetails}>
+    <Pressable style={styles.block} onPress={onPress ? onPress : onNavigateToDetails}>
       <View style={styles.icon}>
         {icon}
         <View style={styles.icon_bg} />

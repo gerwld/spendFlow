@@ -29,6 +29,7 @@ const SettingsScreen = ({ navigation }) => {
     },
     scrollViewContent: {
       backgroundColor: themeColors.bgSettings,
+      marginTop: 10
     },
     t: {
       fontSize: 17,

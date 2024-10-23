@@ -34,26 +34,26 @@ export const HomeHeader = React.memo(
       },
     });
 
+    const renderMenuBtn = (
+      <Pressable
+      style={styles.headerButton}
+      onPress={() => navigation.navigate("settings")}
+    >
+      <AlignJustify
+        style={{ marginLeft: 1, marginTop: 1, alignSelf: "center" }}
+        width={31}
+        height={55}
+        strokeWidth={2.1}
+        stroke={themeColors.textColorHighlight}
+      />
+    </Pressable>
+    )
+
     return (
       <View style={headerStyles.header}>
         <View style={headerStyles.headerContent}>
           <View style={headerStyles.leftComponent}>
-            {leftChild ? (
-              leftChild
-            ) : (
-              <Pressable
-                style={styles.headerButton}
-                onPress={() => navigation.navigate("settings")}
-              >
-                <AlignJustify
-                  style={{ marginLeft: 1, marginTop: 1, alignSelf: "center" }}
-                  width={31}
-                  height={55}
-                  strokeWidth={2.1}
-                  stroke={themeColors.textColorHighlight}
-                />
-              </Pressable>
-            )}
+            {leftChild ? leftChild : renderMenuBtn}
           </View>
           <View style={headerStyles.centerComponent}>
             <Text style={styles.headerBalanceSup}>Total balance</Text>

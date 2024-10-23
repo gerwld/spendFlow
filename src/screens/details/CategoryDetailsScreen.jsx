@@ -20,6 +20,8 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
   const { operations } = useSelector(operationsSelectors.selectOperationsAndIDs)
   const lastOperationsIDs = useSelector((s) => operationsSelectors.selectOperationsPortionMinMax(s, timestampMonthAgo, timestampNow))
 
+  console.log(item);
+  
 
   const styles = StyleSheet.create({
     content: {
@@ -126,6 +128,11 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
           <Pressable onPress={onCategoryEdit} style={styles.item}>
             <Text style={styles.contentText}>Preview</Text>
             <RenderCategoryOrAccount {...{ icon: item?.icon, styles, color: item?.color, title: item?.title || "No category" }} />
+          </Pressable>
+
+          <Pressable style={styles.item}>
+            <Text style={styles.contentText}>Type</Text>
+            <Text style={styles.valueText}>{item.type || "Expenses"}</Text>
           </Pressable>
 
           <Pressable onPress={showID} style={styles.item}>

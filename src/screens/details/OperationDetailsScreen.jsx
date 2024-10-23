@@ -19,8 +19,8 @@ const OperationDetailsScreen = ({ navigation, route }) => {
 
 
   const item = useSelector((s) => operationsSelectors.selectOperationByID(s, route.params.item.id))
-  const categoryItem = useSelector((s) => categoriesSelectors.selectCategoryByID(s, item.categoryID))
-  const accountItem = useSelector((s) => accountsSelectors.selectAccountByID(s, item.accoutID))
+  const categoryItem = useSelector((s) => categoriesSelectors.selectCategoryByID(s, item?.categoryID))
+  const accountItem = useSelector((s) => accountsSelectors.selectAccountByID(s, item?.accoutID))
 
 
   const [isSheetOpen, toggleSheetOpen] = React.useState(false);
@@ -101,7 +101,8 @@ const OperationDetailsScreen = ({ navigation, route }) => {
   });
 
 
-
+  if(!item) return null;
+  
   const renderHeaderButton = (
     <View style={[headerStyles.rightComponent]}>
       <Pressable

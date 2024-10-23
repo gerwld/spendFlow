@@ -129,7 +129,7 @@ function MyTabs() {
                 <Tab.Screen name="home_tab" component={HomeScreen} options={{ title: "Home" }} />
                 <Tab.Screen name="report_tab" component={ReportScreen} options={{ title: "Report" }} />
                 <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ title: "Accounts" }} />
-                <Tab.Screen name="more_tab" component={MoreScreen} options={{ title: "More" }} />
+                <Tab.Screen name="more_tab" component={MoreScreen} options={{ title: "More" }} />            
 
             </Tab.Navigator>
         </AnimatedAppLoader>
@@ -211,6 +211,7 @@ export const Navigation = () => {
                     //TransitionPresets.ModalPresentationIOS,
                 }}
             />
+            <Stack.Screen name="settings__fromright" component={SettingsScreen} options={{ title: t("st_screen"), }} />
             <Stack.Screen name="settings/language" component={STLanguage} options={{ title: t("st_screen"), }} />
             <Stack.Screen name="settings/theme" component={STTheme} options={{ title: t("st_screen") }} />
         </>
