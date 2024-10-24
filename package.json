@@ -52,6 +52,7 @@
     "react-dom": "18.2.0",
     "react-i18next": "^15.0.1",
     "react-native": "0.74.5",
+    "react-native-collapsible": "^1.6.1",
     "react-native-drag-n-drop-everywhere": "file:/Users/apple/Desktop/prog/projects/react-native-drag-n-drop-everywhere",
     "react-native-draglist": "^3.6.2",
     "react-native-gesture-handler": "~2.16.2",

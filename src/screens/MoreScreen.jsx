@@ -124,7 +124,7 @@ const MoreScreen = ({ navigation }) => {
             color: "#278cc2",
             icon: "Globe"
           }} />
-          <RenderItem route="addcategory" {...{
+          <RenderItem route="faq_screen" {...{
             style: styles.last_item,
             title: "Help",
             color: "#dbb132",

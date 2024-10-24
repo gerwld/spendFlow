@@ -37,6 +37,7 @@ import EditAccountsScreen from './EditAccountsScreen';
 import OperationDetailsScreen from './details/OperationDetailsScreen';
 import CategoryDetailsScreen from './details/CategoryDetailsScreen';
 import AccountDetailsScreen from './details/AccountDetailsScreen';
+import FAQScreen from './FAQScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -125,6 +126,7 @@ function MyTabs() {
                         <View style={[StyleSheet.absoluteFill, { backgroundColor: themeColors.bgHighlightSec }]} />,
                     tabBarIcon: (prop) => renderIcon(prop.focused, route)
                 })}>
+                {/* <Tab.Screen name="faq_screen" component={FAQScreen} options={{ title: "Frequently Asked Questions" }} /> */}
 
                 <Tab.Screen name="home_tab" component={HomeScreen} options={{ title: "Home" }} />
                 <Tab.Screen name="report_tab" component={ReportScreen} options={{ title: "Report" }} />
@@ -196,6 +198,12 @@ export const Navigation = () => {
     )
 
 
+    const moreScreens = (
+        <>
+            <Stack.Screen name="faq_screen" component={FAQScreen} options={{ title: "Frequently Asked Questions" }} />
+        </>
+    )
+
     const settingsSubdirectories = (
         <>
             <Stack.Screen
@@ -231,6 +239,7 @@ export const Navigation = () => {
                     {addEditAccounts}
                     {addEditCategories}
                     {detailsScreens}
+                    {moreScreens}
 
                     <Stack.Screen
                         name="tutorial"
