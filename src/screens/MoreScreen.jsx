@@ -22,7 +22,7 @@ const MoreScreen = ({ navigation }) => {
       alignSelf: "center",
       justifyContent: "space-between",
       maxWidth: blockWidth * itemsPerRow + (itemsPerRow === 3 ?  gap * 2 : gap),
-      marginTop: gap
+      marginVertical: gap
     },
     grid_item: {
       backgroundColor: themeColors.bgHighlight,
@@ -90,7 +90,7 @@ const MoreScreen = ({ navigation }) => {
     <BaseView>
       <STHeader {...{
         navigation,
-        title: "More",
+        title: t("more_tab"),
         renderMenu: true
       }} />
       <ScrollView>
