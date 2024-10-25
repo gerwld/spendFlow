@@ -4,16 +4,17 @@ import { BaseView, STHeader } from '@components'
 import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { ScrollView } from 'react-native-gesture-handler';
 import { RenderCategoryOrAccount } from './OperationDetailsScreen';
-import ValueMask from 'src/components/styling/ValueMask';
 import { useSelector } from 'react-redux';
 import { categoriesSelectors, operationsSelectors } from '@redux';
 import OperationsItem from 'src/components/items/OperationsItem';
 import { navigateWithState } from '@constants';
 import { PencilIcon } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 
 const timestampNow = new Date().setHours(0, 0, 0, 0)
 const timestampMonthAgo = timestampNow - (86400000 * 31);
 const CategoryDetailsScreen = ({ navigation, route }) => {
+  const {t} = useTranslation()
   const [themeColors] = useCurrentTheme();
   const { headerStyles } = useHeaderStyles();
   const item = useSelector((s) => categoriesSelectors.selectCategoryByID(s, route.params.item.id)) || route.params.item;
@@ -132,7 +133,7 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
 
           <Pressable style={styles.item}>
             <Text style={styles.contentText}>Type</Text>
-            <Text style={styles.valueText}>{item.type || "Expenses"}</Text>
+            <Text style={styles.valueText}>{t(item.type).toUpperCase() || "Expenses"}</Text>
           </Pressable>
 
           <Pressable onPress={showID} style={styles.item}>

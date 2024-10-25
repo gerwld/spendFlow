@@ -46,6 +46,7 @@ const Tab = createBottomTabNavigator();
 
 
 function MyTabs() {
+    const {t} = useTranslation();
     const [themeColors] = useCurrentTheme();
     const insets = useSafeAreaInsets()
 
@@ -68,6 +69,7 @@ function MyTabs() {
              <BottomTabBar
                 {...props}
                 style={{
+                    
                     elevation: 0,
                     height: insets.bottom + 55 + bottomGap + (Platform.OS === "web" ? 10 : 0)
                 }}
@@ -123,15 +125,18 @@ function MyTabs() {
                         height: 55,
                     },
                     tabBarBackground: () =>
-                        <View style={[StyleSheet.absoluteFill, { backgroundColor: themeColors.bgHighlightSec }]} />,
+                        <View style={[StyleSheet.absoluteFill, { 
+                            borderTopWidth: 1,
+                            borderTopColor: themeColors.borderColor, 
+                            backgroundColor: themeColors.bgHighlightSec 
+                        }]} />,
                     tabBarIcon: (prop) => renderIcon(prop.focused, route)
                 })}>
-                {/* <Tab.Screen name="faq_screen" component={FAQScreen} options={{ title: "Frequently Asked Questions" }} /> */}
 
-                <Tab.Screen name="home_tab" component={HomeScreen} options={{ title: "Home" }} />
-                <Tab.Screen name="report_tab" component={ReportScreen} options={{ title: "Report" }} />
-                <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ title: "Accounts" }} />
-                <Tab.Screen name="more_tab" component={MoreScreen} options={{ title: "More" }} />            
+                <Tab.Screen name="home_tab" component={HomeScreen} options={{ title: t("home_tab") }} />
+                <Tab.Screen name="report_tab" component={ReportScreen} options={{ title:  t("report_tab") }} />
+                <Tab.Screen name="accounts_tab" component={AccountsScreen} options={{ title:  t("accounts_tab") }} />
+                <Tab.Screen name="more_tab" component={MoreScreen} options={{ title:  t("more_tab")}} />            
 
             </Tab.Navigator>
         </AnimatedAppLoader>

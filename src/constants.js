@@ -43,13 +43,14 @@ const THEMEV = {
 
     tabsColor: "#888c93",
     tabsActiveColor: "#6d9ce1",
-    background: "#f7fbfd",// f7fafe
+    background: "#f8fbff",// f7fafe
     bgHighlight: "#ffffff",
+    bgHeader: "#ffffff",
     bgSettings: "#f4f8fb",
     bgHighlightSec: "#ffffff",
     bgHighlightTh: "#eef6ff",
     borderColor: "#ebeef4",
-    borderColorSec: "#dee4f0",
+    borderColorSec: "#e2e9f5",
     borderColorTh: "#c9d0dd",
     borderColorFt: "#c9d0dd",
     textColor: "#44677a",
@@ -96,7 +97,7 @@ const THEMEV = {
     tabsColor: "#585858",
     tabsActiveColor: "#2897cf",
     background: "#000000",
-    bgHighlight: "#17171a",
+    bgHighlight: "#121214",
     bgSettings: "#000000",
     bgHighlightSec: "#09090a",
     bgHighlightTh: "#222228",

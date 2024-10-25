@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { produce } from 'immer';
 
@@ -13,20 +13,20 @@ import uuid from 'react-native-uuid';
 import AccountItem from 'src/components/items/AccountItem';
 import { accountsActions } from '@actions';
 import { accountsSelectors } from '@redux';
-import ConfirmDeleteSheet from 'src/components/sheets/ConfirmDeleteSheet';
 import DeleteBtnSheet from 'src/components/sheets/DeleteBtnSheet';
+import { useTranslation } from 'react-i18next';
 
 const SetAccountScreen = ({ navigation, route, isEdit }) => {
+  const dispatch = useDispatch();
+  const {t} = useTranslation();
+  const [themeColors] = useCurrentTheme();
+  const [isValid, setValid] = React.useState(false)
+
   // focus on ref
   const focusInputRef = React.useRef(null);
   !isEdit && useInputFocusOnInit(focusInputRef);
 
 
-  const dispatch = useDispatch();
-  const [themeColors] = useCurrentTheme();
-
-
-  const [isValid, setValid] = React.useState(false)
   const initialState = {
     title: "",
     icon: "Calculator",
@@ -256,7 +256,7 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
                 }} />
 
               <Text style={styles.selectItemText}>Account Type</Text>
-              <Text style={styles.selectItemTextValue}>{state.type}</Text>
+              <Text style={styles.selectItemTextValue}>{t(state.type)}</Text>
             </LineItemView>
           </Pressable>
         </View>

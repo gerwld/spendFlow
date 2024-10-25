@@ -14,8 +14,10 @@ import { categoriesActions } from "@actions";;
 import uuid from 'react-native-uuid';
 import { categoriesSelectors } from '@redux';
 import DeleteBtnSheet from 'src/components/sheets/DeleteBtnSheet';
+import { useTranslation } from 'react-i18next';
 
 const SetCategoryScreen = ({ navigation, route, isEdit }) => {
+  const {t} = useTranslation();
   // focus on ref
   const focusInputRef = React.useRef(null);
   !isEdit && useInputFocusOnInit(focusInputRef);
@@ -261,7 +263,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
                 }} />
 
               <Text style={styles.selectItemText}>Operation Type</Text>
-              <Text style={styles.selectItemTextValue}>{state.type}</Text>
+              <Text style={styles.selectItemTextValue}>{t(state.type)}</Text>
             </LineItemView>
           </Pressable>
         </View>

@@ -79,5 +79,40 @@
   "wednesday": "Śr",
   "thursday": "Czw",
   "friday": "Pt",
-  "saturday": "Sob"
-}
+  "saturday": "Sob",
+
+    "OPERATION_TYPE_EXPENSE": "Wydatek",
+    "OPERATION_TYPE_INCOME": "Przychód",
+    "OPERATION_TYPE_TRANSFER": "Przelew",
+    "CATEGORY_TYPE_EXPENSES": "Wydatki",
+    "CATEGORY_TYPE_INCOMES": "Przychody",
+    "ACCOUNT_TYPE_DEBIT": "Debet",
+    "ACCOUNT_TYPE_SAVINGS": "Oszczędności",
+    "ACCOUNT_TYPE_DEBT": "Zadłużenie (Kredyt)",
+    "label_type": "Określ typ",
+    "home_tab": "Ogląd",
+    "report_tab": "Raport",
+    "accounts_tab": "Konta",
+    "more_tab": "Więcej",
+  
+    "act_addaccount": "Dodaj Konto",
+    "ms_tab_accounts": "Konta",
+    "ms_tab_stats": "Statystyki",
+  
+    "ms__premium": "Odkryj Premium",
+    "ms__payments": "Regularne Płatności",
+    "ms__statistics": "Statystyki",
+    "ms__settings": "Ustawienia",
+    "ms__darkmode": "Tryb Ciemny",
+    "ms__aboutus": "O SpendFlow",
+    "ms__language": "Zmień Język",
+    "ms__help": "Pomoc",
+  
+    "as__general": "Ogólne",
+    "as__savings": "Oszczędności",
+  
+    "hs__expenses": "Wydatki",
+    "hs__balance": "Bilans",
+    "hs__income": "Przychód"
+  }
+  

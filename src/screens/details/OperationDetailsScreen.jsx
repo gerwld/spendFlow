@@ -10,9 +10,11 @@ import ValueMask from 'src/components/styling/ValueMask';
 import ZigzagLines from "react-native-zigzag-lines"
 import DeleteBtnSheet from 'src/components/sheets/DeleteBtnSheet';
 import { operationsActions } from '@actions';
+import { useTranslation } from 'react-i18next';
 
 const OperationDetailsScreen = ({ navigation, route }) => {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const [themeColors] = useCurrentTheme();
   const { headerStyles } = useHeaderStyles();
   const [width, setWidth] = useState()
@@ -102,7 +104,7 @@ const OperationDetailsScreen = ({ navigation, route }) => {
 
 
   if(!item) return null;
-  
+
   const renderHeaderButton = (
     <View style={[headerStyles.rightComponent]}>
       <Pressable
@@ -156,7 +158,7 @@ const OperationDetailsScreen = ({ navigation, route }) => {
 
             <View style={styles.item}>
               <Text style={styles.contentText}>Operation type</Text>
-              <Text style={styles.valueText}>{item.type}</Text>
+              <Text style={styles.valueText}>{t(item.type).toUpperCase()}</Text>
             </View>
 
             <View style={styles.item}>

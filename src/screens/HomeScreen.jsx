@@ -10,6 +10,7 @@ import SetOperationSheet from "src/components/sheets/SetOperationSheet";
 import { operationsSelectors } from "@redux";
 import { shallowEqual, useSelector } from "react-redux";
 import { getWeekdays } from "@constants";
+import { useTranslation } from "react-i18next";
 
 const {width, height} = Dimensions.get('window');
 
@@ -81,6 +82,7 @@ const styles = StyleSheet.create({
 
 
 const HomeScreen = ({ navigation }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const memoizedStyles = React.useMemo(() => ({
     mainHeader: [styles.mainHeader, { backgroundColor: themeColors.mainHeaderBackgroundColor, borderColor: themeColors.mainHeaderBorderColor }],
@@ -94,6 +96,7 @@ const HomeScreen = ({ navigation }) => {
     <>
       
       <InfiniteCalendar
+        transparent={true}
         isGradient={true}
         renderTopHeader={() =>
           <HeaderSaturated navigation={navigation} />
@@ -101,15 +104,15 @@ const HomeScreen = ({ navigation }) => {
         renderHeader={() => 
           <View style={memoizedStyles.mainHeader}>
             <View style={styles.child}>
-              <Text style={memoizedStyles.mainHeaderText}>Expenses</Text>
+              <Text style={memoizedStyles.mainHeaderText}>{t("hs__expenses")}</Text>
               <Text style={[styles.subText, styles.subTextExpense]}>-240 PLN</Text>
             </View>
             <View style={styles.child}>
-              <Text style={memoizedStyles.mainHeaderText}>Balance</Text>
+              <Text style={memoizedStyles.mainHeaderText}>{t("hs__balance")}</Text>
               <Text style={[styles.subText, styles.subTextBalance]}>240 PLN</Text>
             </View>
             <View style={styles.child}>
-              <Text style={memoizedStyles.mainHeaderText}>Income</Text>
+              <Text style={memoizedStyles.mainHeaderText}>{t("hs__income")}</Text>
               <Text style={[styles.subText, memoizedStyles.subTextIncome]}>7200 PLN</Text>
             </View>
           </View>}>
@@ -133,7 +136,7 @@ const HeaderSaturated = ({ navigation }) => {
     </Pressable>)
 
   return <>
-    <HomeHeader navigation={navigation} rightChild={RightPress} />
+    <HomeHeader navigation={navigation} rightChild={RightPress} transparent />
     <SetOperationSheet isOpen={isSheetOpen} toggleSheet={toggleSheet} />
   </>
 }

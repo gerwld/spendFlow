@@ -75,5 +75,41 @@
   "wednesday": "Ср",
   "thursday": "Чт",
   "friday": "Пт",
-  "saturday": "Сб"
-}
+  "saturday": "Сб",
+
+  
+    "OPERATION_TYPE_EXPENSE": "Витрати",
+    "OPERATION_TYPE_INCOME": "Дохід",
+    "OPERATION_TYPE_TRANSFER": "Переказ",
+    "CATEGORY_TYPE_EXPENSES": "Витрати",
+    "CATEGORY_TYPE_INCOMES": "Доходи",
+    "ACCOUNT_TYPE_DEBIT": "Дебетовий",
+    "ACCOUNT_TYPE_SAVINGS": "Заощадження",
+    "ACCOUNT_TYPE_DEBT": "Борг (Кредит)",
+    "label_type": "Вкажіть тип",
+    "home_tab": "Головна",
+    "report_tab": "Звіт",
+    "accounts_tab": "Рахунки",
+    "more_tab": "Інше",
+    
+    "act_addaccount": "Додати рахунок",
+    "ms_tab_accounts": "Рахунки",
+    "ms_tab_stats": "Статистика",
+    
+    "ms__premium": "Дослідити Преміум",
+    "ms__payments": "Регулярні платежі",
+    "ms__statistics": "Статистика",
+    "ms__settings": "Налаштування",
+    "ms__darkmode": "Темний режим",
+    "ms__aboutus": "Про SpendFlow",
+    "ms__language": "Змінити мову",
+    "ms__help": "Допомога",
+    
+    "as__general": "Загальні",
+    "as__savings": "Заощадження",
+    
+    "hs__expenses": "Витрати",
+    "hs__balance": "Баланс",
+    "hs__income": "Дохід"
+  }
+  

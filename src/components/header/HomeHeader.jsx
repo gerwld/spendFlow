@@ -5,7 +5,7 @@ import { AlignJustify } from "lucide-react-native";
 import { PencilIcon } from "lucide-react-native";
 
 export const HomeHeader = React.memo(
-  ({ navigation, leftChild, rightChild, onRightPress }) => {
+  ({ navigation, leftChild, rightChild, onRightPress, transparent }) => {
     const [themeColors] = useCurrentTheme();
     const { headerStyles, HEADER_HEIGHT_SAFE } = useHeaderStyles();
 
@@ -50,7 +50,7 @@ export const HomeHeader = React.memo(
     )
 
     return (
-      <View style={headerStyles.header}>
+      <View style={[headerStyles.header, transparent && {backgroundColor: "transparent"}]}>
         <View style={headerStyles.headerContent}>
           <View style={headerStyles.leftComponent}>
             {leftChild ? leftChild : renderMenuBtn}

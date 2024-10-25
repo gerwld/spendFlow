@@ -10,17 +10,17 @@ import { accountsSelectors, operationsSelectors } from '@redux';
 import OperationsItem from 'src/components/items/OperationsItem';
 import { navigateWithState } from '@constants';
 import { PencilIcon } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 
 const timestampNow = new Date().setHours(0, 0, 0, 0)
 const timestampMonthAgo = timestampNow - (86400000 * 31);
 const AccountDetailsScreen = ({ navigation, route }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const { headerStyles } = useHeaderStyles();
   const item = useSelector((s) => accountsSelectors.selectAccountByID(s, route.params.item?.id)) || route.params.item;
   const { operations } = useSelector(operationsSelectors.selectOperationsAndIDs)
   const lastOperationsIDs = useSelector((s) => operationsSelectors.selectOperationsPortionMinMax(s, timestampMonthAgo, timestampNow))
-
-  console.log(item);
 
 
 
@@ -137,6 +137,11 @@ const AccountDetailsScreen = ({ navigation, route }) => {
           <Pressable onPress={onCategoryEdit} style={styles.item}>
             <Text style={styles.contentText}>Preview</Text>
             <RenderCategoryOrAccount {...{ icon: item?.icon, styles, color: item?.color, title: item?.title || "No category" }} />
+          </Pressable>
+
+          <Pressable onPress={showID} style={styles.item}>
+            <Text style={styles.contentText}>Type</Text>
+            <Text style={styles.valueText}>{t(item.type).toUpperCase() || "Debit"}</Text>
           </Pressable>
 
           <Pressable onPress={showID} style={styles.item}>

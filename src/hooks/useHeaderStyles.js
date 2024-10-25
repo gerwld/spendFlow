@@ -34,6 +34,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
       alignItems: "center",
       justifyContent: "flex-end",
       borderBottomWidth: 0,
+      backgroundColor: themeColors.bgHeader
     },
     headerContent: {
       width: "100%",

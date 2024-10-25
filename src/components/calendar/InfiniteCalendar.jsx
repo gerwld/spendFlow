@@ -14,7 +14,7 @@ const getCurrentDate = () => new Date();
 const getFirstDayOfTheMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).setHours(0,0,0,0);
 const firstDayOfTheMonth = getFirstDayOfTheMonth(getCurrentDate());
 
-const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient, shortGradient }) => {
+const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient, shortGradient, transparent }) => {
   const flatListRef = useRef(null);
   const [themeColors] = useCurrentTheme();
 
@@ -110,6 +110,7 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient,
       marginBottom: 0,
       borderTopColor: themeColors.borderColorTh,
       borderBottomColor: themeColors.borderColorTh,
+      backgroundColor: transparent ? "transparent" : themeColors.bgHeader
     },
     headerText: {
       fontSize: 16.5,

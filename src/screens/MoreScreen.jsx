@@ -4,6 +4,7 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useCurrentTheme } from 'hooks';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { t } from 'i18next';
 
 const width = Dimensions.get("window").width
 const itemsPerRow = (width > 768 ? 3 : 2)
@@ -32,13 +33,17 @@ const MoreScreen = ({ navigation }) => {
       overflow: "hidden",
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: themeColors.borderColorSec,
+      backgroundColor: themeColors.bgHighlightSec,
     },
     icon: {
       height: blockWidth / 3.5,
       width: blockWidth / 3.5,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 10
+      borderRadius: 10,
+      opacity: 0.85
     },
     title: {
       color: themeColors.textColorHighlight,
@@ -88,45 +93,46 @@ const MoreScreen = ({ navigation }) => {
         renderMenu: true
       }} />
       <ScrollView>
+
         <View style={styles.grid}>
           <RenderItem route="addcategory" {...{
-            title: "Explore Premium",
+            title: t("ms__premium"),
             color: "#3278db",
             icon: "Star"
           }} />
           <RenderItem route="addcategory" {...{
-            title: "Regular Payments",
+            title: t("ms__payments"),
             color: "#27c281",
             icon: "RefreshCcwDot"
           }} />
           <RenderItem route="addcategory" {...{
-            title: "Statistics",
+            title: t("ms__statistics"),
             color: "#8c32db",
             icon: "ChartColumn"
           }} />
           <RenderItem route="settings__fromright" {...{
-            title: "Settings",
+            title: t("ms__settings"),
             color: "#6732db",
             icon: "Settings"
           }} />
           <RenderItem route="settings/theme" {...{
-            title: "Dark Mode",
+            title: t("ms__darkmode"),
             color: "#484a49",
             icon: "MoonStar"
           }} />
           <RenderItem route="addcategory" {...{
-            title: "About SpendFlow",
+            title: t("ms__aboutus"),
             color: "#32a5db",
             icon: "ShieldCheck"
           }} />
           <RenderItem route="settings/language" {...{
-            title: "Change Language",
+            title: t("ms__language"),
             color: "#278cc2",
             icon: "Globe"
           }} />
           <RenderItem route="faq_screen" {...{
             style: styles.last_item,
-            title: "Help",
+            title: t("ms__help"),
             color: "#dbb132",
             icon: "MessageCircleQuestion"
           }} />

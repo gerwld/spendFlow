@@ -77,5 +77,40 @@
 "wednesday": "Wed",
 "thursday": "Thu",
 "friday": "Fri",
-"saturday": "Sat"
+"saturday": "Sat",
+
+"OPERATION_TYPE_EXPENSE": "Expense",
+"OPERATION_TYPE_INCOME": "Income",
+"OPERATION_TYPE_TRANSFER": "Transfer",
+"CATEGORY_TYPE_EXPENSES": "Expenses",
+"CATEGORY_TYPE_INCOMES": "Incomes",
+"ACCOUNT_TYPE_DEBIT": "Debit",
+"ACCOUNT_TYPE_SAVINGS": "Savings",
+"ACCOUNT_TYPE_DEBT": "Debt (Credit)",
+"label_type": "Specify type",
+"home_tab": "Home",
+"report_tab": "Report",
+"accounts_tab": "Accounts",
+"more_tab": "More",
+
+"act_addaccount": "Add Account",
+"ms_tab_accounts": "Accounts",
+"ms_tab_stats": "Statistics",
+
+"ms__premium":"Explore Premium",
+"ms__payments":"Regular Payments",
+"ms__statistics":"Statistics",
+"ms__settings":"Settings",
+"ms__darkmode":"Dark Mode",
+"ms__aboutus":"About SpendFlow",
+"ms__language":"Change Language",
+"ms__help":"Help",
+
+"as__general": "General",
+"as__savings": "Savings",
+
+"hs__expenses": "Expenses",
+"hs__balance": "Balance",
+"hs__income": "Income"
+
 }

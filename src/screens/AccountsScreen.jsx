@@ -10,6 +10,7 @@ import { getGreenRedOrGray, HEADER_SHADOW } from "@constants";
 import { useNavigation } from "@react-navigation/native";
 import { shallowEqual, useSelector } from "react-redux";
 import { accountsSelectors } from "@redux";
+import { useTranslation } from "react-i18next";
 
 const styles = StyleSheet.create({
   header: {
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     // width: 10,
     height: 3,
+    marginBottom: -1,
     // marginBottom: 8,
   },
 });
@@ -60,6 +62,7 @@ const AccountsScreen = ({ navigation }) => (
 );
 
 const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
+  const {t} = useTranslation();
   const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const {accounts, accountsArray} = useSelector(state => accountsSelectors.selectAccountsAndIDs(state), shallowEqual)
@@ -74,13 +77,13 @@ const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
       onPress: onAddNewPress,  
       icon: <IconGlob size={28} {...{name: "Plus", color: "#ced2de"}} />,
       isAddNew: true,
-      title: "Add Account"
+      title: t("act_addaccount")
     }}/>
   )
 
   return (
     <ScrollView>
-      <SectionHeader title="Accounts" balance={balance} themeColors={themeColors} />
+      <SectionHeader title={t("as__general")} balance={balance} themeColors={themeColors} />
       <View style={styles.subitems}>
         {accountsArray.length  
           ? accountsArray.map(itemID => 
@@ -94,7 +97,7 @@ const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
           : null}
         {renderAddNew}
       </View>
-      <SectionHeader title="Savings" balance={balanceSavings} themeColors={themeColors} />
+      <SectionHeader title={t("as__savings")} balance={balanceSavings} themeColors={themeColors} />
       <View style={styles.subitems}>
         <AccountItem title="Lorem Item" />
        {renderAddNew}
@@ -142,11 +145,12 @@ const renderScene = SceneMap({
 });
 
 const AccountsOrTotalTabs = () => {
+  const {t} = useTranslation();
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "accounts", title: "Accounts" },
-    { key: "total", title: "Statistics" },
+    { key: "accounts", title: t("ms_tab_accounts") },
+    { key: "total", title: t("ms_tab_stats") },
   ]);
 
   return (
@@ -179,7 +183,7 @@ const renderTabBar = (props) => {
         </TouchableOpacity>
       )}
       indicatorStyle={[styles.indicatorStyle, { backgroundColor: themeColors.tabsActiveColor, }]}
-      style={[styles.tabBarStyle, { backgroundColor: themeColors.background, borderTopColor: themeColors.borderColorTh, borderBottomColor: themeColors.borderColorTh }]}
+      style={[styles.tabBarStyle, { backgroundColor: themeColors.bgHeader, borderTopColor: themeColors.borderColorTh, borderBottomColor: themeColors.borderColor, borderBottomWidth: 2 }]}
     />
   );
 };

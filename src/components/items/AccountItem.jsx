@@ -17,6 +17,7 @@ const AccountItem = ({id, item, icon, iconColor, title, value, isAddNew, onPress
       paddingVertical: isAddNew ? 8 : 6,
       borderWidth: 1,
       borderColor: themeColors.borderColorSec,
+      backgroundColor: themeColors.bgHighlightSec,
       borderRadius: isAddNew ? 50 : 12,
       maxHeight: 100,
     },
