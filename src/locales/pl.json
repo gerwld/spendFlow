@@ -113,6 +113,85 @@
   
     "hs__expenses": "Wydatki",
     "hs__balance": "Bilans",
-    "hs__income": "Przychód"
+    "hs__income": "Przychód",
+    "ods_title": "Szczegóły Operacji",
+    "ads_title": "Szczegóły Konta",
+    "cds_title": "Szczegóły Kategorii",
+  
+    "tt_title": "Tytuł",
+    "tt_description": "Opis",
+    "tt_value": "Wartość",
+    "tt_account": "Konto",
+    "tt_operationtype": "Typ Operacji",
+    "tt_date": "Data",
+    "tt_category": "Kategoria",
+    "tt_preview": "Podgląd",
+    "tt_type": "Typ",
+    "tt_id": "Identyfikator",
+    "tt_last_op": "Ostatnie operacje:",
+    "tt_last_op_none": "Brak ostatnich operacji",
+  
+    "tt_nodescription": "Brak opisu",
+  
+    "dt_title": "Usuń Operację",
+    "dt_operation": "operacja",
+    "tt_category__none": "Brak kategorii",
+    "tt_account__none": "Brak konta",
+    "tt_nodata": "Brak danych w określonym zakresie.",
+  
+    "sunday_long": "niedziela",
+    "monday_long": "poniedziałek",
+    "tuesday_long": "wtorek",
+    "wednesday_long": "środa",
+    "thursday_long": "czwartek",
+    "friday_long": "piątek",
+    "saturday_long": "sobota",
+    "tt_dateselect": "Wybierz datę",
+"tt_categoryselect": "Wybierz kategorię",
+"tt_accountselect": "Wybierz konto",
+
+"sd_not_selected": "Nie wybrano",
+"sd_not_required": "Nie wymagane",
+"tt_operation": "operacja",
+"tt_operations": "operacji",
+"tt_operations_more5": "operacji",
+
+"st_edit_category": "Edytuj kategorię",
+"st_add_category": "Dodaj kategorię",
+"st_del_category": "Usuń kategorię",
+
+"st_edit_operation": "Edytuj transakcję",
+"st_add_operation": "Dodaj transakcję",
+"st_del_operation": "Usuń transakcję",
+
+"st_edit_account": "Edytuj konto",
+"st_add_account": "Dodaj konto",
+"st_del_account": "Usuń konto",
+"ct_def_entertainment": "Rozrywka",
+"ct_def_groceries": "Zakupy spożywcze",
+"ct_def_education": "Edukacja",
+"ct_def_transport": "Transport",
+"ct_def_savings": "Oszczędności",
+"ct_def_pets": "Zwierzęta",
+"ct_def_debt": "Spłata długów",
+"ct_def_insurance": "Ubezpieczenie",
+"ct_def_subscriptions": "Subskrypcje",
+"ct_def_salary": "Wynagrodzenie",
+"deleteAccountMessage": "Czy na pewno chcesz usunąć konto \"{{itemName}}\"? Ta operacja jest nieodwracalna. Konto \"{{itemName}}\" pozostanie widoczne w przeszłych transakcjach.",
+"deleteOperationMessage": "Czy na pewno chcesz usunąć operację? Ta operacja jest nieodwracalna.",
+"deleteCategoryMessage": "Czy na pewno chcesz usunąć kategorię \"{{itemName}}\"? Ta operacja jest nieodwracalna. Kategoria \"{{itemName}}\" pozostanie widoczna w przeszłych transakcjach.",
+"ecs_title": "Zarządzaj kategoriami",
+
+"vt_sel_icon": "Wybierz ikonę",
+"vt_icon": "Ikona",
+
+"vt_sel_color": "Wybierz kolor",
+"vt_color": "Kolor",
+
+"vt_sel_type": "Wybierz typ",
+"vt_cat_type": "Typ kategorii",
+"vt_acc_type": "Typ konta",
+"vt_type": "Typ",
+"vt_provide_name": "Podaj nazwę"
   }
   

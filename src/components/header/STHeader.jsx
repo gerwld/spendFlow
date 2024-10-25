@@ -91,7 +91,7 @@ const STHeader = React.memo(({
                     style={[
                         headerStyles.headerTitle, 
                         s.textColor, 
-                        title?.length > 18 && {fontSize: 18}
+                        title?.length > 16 && {fontSize: 18}
                         ]}>{title}</Text>
                 </View>
 

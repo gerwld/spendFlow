@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 import { categoriesSelectors } from "@redux";
 import { IconGlob } from "@components";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const OperationsItem = ({ item }) => {
+  const {t} = useTranslation();
   const navigation = useNavigation();
   let iconColor, icon, accountItem = null;
   const {
@@ -83,7 +85,7 @@ value
         <View style={styles.icon_bg} />
       </View>
       <View>
-        <Text style={styles.text_title}>{categoryItem?.title || "no data"}</Text>
+        <Text style={styles.text_title}>{categoryItem?.title?.startsWith("ct_def_") ? t(categoryItem?.title) : categoryItem?.title || "no data"}</Text>
         <Text style={styles.text_account}>card</Text>
       </View>
       <Text style={styles.text_operationPrice}>{getCurrentWithPrefix(value) || "no data"} {currency}</Text>

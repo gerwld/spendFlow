@@ -170,8 +170,9 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
   const categoryItem = useSelector(((s) => categoriesSelectors.selectCategoryByID(s, route?.params?.itemID)))
 
   React.useEffect(() => {
+    // sets redux state as local, & translates def. values
     if(categoryItem && isEdit)
-      setState({ ...state, ...categoryItem })
+      setState({ ...state, ...categoryItem, title: categoryItem.title.startsWith("ct_def_") ? t(categoryItem.title) : categoryItem.title || "" })
   }, [categoryItem])
 
 
@@ -185,8 +186,8 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
     <View>
       <STHeader
         navigation={navigation}
-        title={(isEdit ? "Edit" : "Add") + " Category"}
-        rightText="Save"
+        title={isEdit ? t("st_edit_category") : t("st_add_category")}
+        rightText={t("act_save")}
         rightPressDisabled={!isValid}
         rightPress={onSubmit}
       />
@@ -194,11 +195,11 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
       <ScrollView style={styles.content}>
 
         <View style={styles.segment}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>{t("tt_title")}</Text>
           <TextInput
             {...{
               ref: focusInputRef,
-              placeholder: "Provide name",
+              placeholder: t("vt_provide_name"),
               placeholderTextColor: themeColors.placeholderColor,
               maxLength: 16,
               style: styles.input,
@@ -217,7 +218,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
                   theme: themeColors.label
                 }} />
 
-              <Text style={styles.selectItemText}>Select Icon</Text>
+              <Text style={styles.selectItemText}>{t("vt_icon")}</Text>
 
               {
                 state.icon
@@ -241,7 +242,7 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
 
 
 
-              <Text style={styles.selectItemText}>Select Color</Text>
+              <Text style={styles.selectItemText}>{t("vt_color")}</Text>
 
               {
                 state.color
@@ -262,14 +263,14 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
                   theme: themeColors.label
                 }} />
 
-              <Text style={styles.selectItemText}>Operation Type</Text>
+              <Text style={styles.selectItemText}>{t("vt_cat_type")}</Text>
               <Text style={styles.selectItemTextValue}>{t(state.type)}</Text>
             </LineItemView>
           </Pressable>
         </View>
 
 
-        <Text style={[styles.label, { marginTop: 10 }]}>Preview</Text>
+        <Text style={[styles.label, { marginTop: 10 }]}>{t("tt_preview")}</Text>
         <View style={[styles.segment, styles.preview]}>
           <CategoryItem iconColor={state.color || themeColors.tabsActiveColor} icon={<IconGlob color={state.color || themeColors.tabsActiveColor} name={state.icon} />} title={(state.title || "Category").toProperCase()} value={100} isRow />
         </View>
@@ -279,8 +280,8 @@ const SetCategoryScreen = ({ navigation, route, isEdit }) => {
           ? <DeleteBtnSheet 
           itemTitle={state.title}
           setHeight={420}
-          actionTitle={"category"}
-          sheetTitle="Delete Category"
+          tKey={"deleteCategoryMessage"}
+          sheetTitle={t("st_del_category")}
           action={() => {dispatch(categoriesActions.deleteCategory(route.params.itemID)); navigation.pop(2)}} />
           : null}
 

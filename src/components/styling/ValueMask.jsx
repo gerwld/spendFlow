@@ -16,7 +16,7 @@ const ValueMask = ({value, type, style}) => {
       color = themeColors.green;
       formattedValue = "+" + value;
       break;
-    case "OPERATION_TYPE_TRANSACTION":
+    case "OPERATION_TYPE_operation":
       color = themeColors.gray;
       break;
     default:

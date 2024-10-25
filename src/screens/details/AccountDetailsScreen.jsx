@@ -123,7 +123,7 @@ const AccountDetailsScreen = ({ navigation, route }) => {
     <BaseView>
       <STHeader
 
-        title="Account Details"
+        title={t("ads_title")}
         onRightPress={() => navigation.navigate("edit_account_screen")}
         rightComponent={renderHeaderButton}
         navigation={navigation} />
@@ -135,28 +135,28 @@ const AccountDetailsScreen = ({ navigation, route }) => {
         <View style={styles.content} >
 
           <Pressable onPress={onCategoryEdit} style={styles.item}>
-            <Text style={styles.contentText}>Preview</Text>
+            <Text style={styles.contentText}>{t("tt_preview")}</Text>
             <RenderCategoryOrAccount {...{ icon: item?.icon, styles, color: item?.color, title: item?.title || "No category" }} />
           </Pressable>
 
           <Pressable onPress={showID} style={styles.item}>
-            <Text style={styles.contentText}>Type</Text>
+            <Text style={styles.contentText}>{t("tt_type")}</Text>
             <Text style={styles.valueText}>{t(item.type).toUpperCase() || "Debit"}</Text>
           </Pressable>
 
           <Pressable onPress={showID} style={styles.item}>
-            <Text style={styles.contentText}>Identifier</Text>
+            <Text style={styles.contentText}>{t("tt_id")}</Text>
             <Text style={styles.valueText}>{item.id?.truncate(18) || "Operation"}</Text>
           </Pressable>
 
-          <Text style={styles.title}>Last operations:</Text>
+          <Text style={styles.title}>{t("tt_last_op")}</Text>
 
           <ScrollView style={styles.scroll}>
           {operations && lastOperationsIDs?.length ?
             lastOperationsIDs.map(item =>
               <OperationsItem key={item} item={operations[item]} />
             )
-            : <Text style={styles.no_last}>No operations to display</Text>
+            : <Text style={styles.no_last}>{t("tt_last_op_none")}</Text>
           }
           </ScrollView>
         </View>

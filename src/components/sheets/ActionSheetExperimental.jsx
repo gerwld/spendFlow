@@ -3,8 +3,10 @@ import React from 'react'
 import { ActionSheet } from 'react-native-ui-lib'
 import { useCurrentTheme } from 'hooks';
 import { LucideCheck } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 
 const ActionSheetExperimental = ({ value, title, isOpen, toggleSheet,  options, onSelect}) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
 
   const styles = StyleSheet.create({
@@ -88,7 +90,7 @@ const ActionSheetExperimental = ({ value, title, isOpen, toggleSheet,  options, 
     <View key="tab_header" style={styles.header}>
       <View style={styles.leftButton}>
         <Pressable style={styles.cancelBTN} onPress={closeModal}>
-          <Text style={styles.cancelBTNText}>Back</Text>
+          <Text style={styles.cancelBTNText}>{t("act_back")}</Text>
         </Pressable>
       </View>
       {title && <Text style={styles.headerTitle}>{title}</Text>}

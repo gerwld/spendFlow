@@ -111,6 +111,92 @@
 
 "hs__expenses": "Expenses",
 "hs__balance": "Balance",
-"hs__income": "Income"
+"hs__income": "Income",
+
+"ods_title": "Operation Details",
+"ads_title": "Account Details",
+"cds_title": "Category Details",
+
+
+"tt_title": "Title",
+"tt_description": "Description",
+"tt_value": "Value",
+"tt_account": "Account",
+"tt_operationtype": "Operation type",
+"tt_date": "Date",
+"tt_category": "Category",
+"tt_preview": "Preview",
+"tt_type": "Type",
+"tt_id": "Identifier",
+"tt_last_op": "Last operations:",
+"tt_last_op_none": "No last operations",
+"tt_nodescription": "No description",
+
+"dt_title": "Delete Operation",
+"dt_operation": "operation",
+"tt_category__none": "No category",
+"tt_account__none": "No account",
+"tt_nodata": "No data in specified range.",
+
+"sunday_long": "sunday",
+"monday_long": "monday",
+"tuesday_long": "tuesday",
+"wednesday_long": "wednesday",
+"thursday_long": "thursday",
+"friday_long": "friday",
+"saturday_long": "saturday",
+
+"tt_dateselect": "Select Date",
+"tt_categoryselect": "Select Category",
+"tt_accountselect": "Select Account",
+
+"sd_not_selected": "Not selected",
+"sd_not_required": "Not required",
+"tt_operation": "operation",
+"tt_operations": "operations",
+"tt_operations_more5": "operations",
+
+"st_edit_category": "Edit Category",
+"st_add_category": "Add Category",
+"st_addnew_category": "Add New Category",
+"st_del_category": "Delete Category",
+
+"st_edit_operation": "Edit Operation",
+"st_add_operation": "Add Operation",
+"st_addnew_operation": "Add New Operation",
+"st_del_operation": "Delete Operation",
+
+"st_edit_account": "Edit Account",
+"st_add_account": "Add Account",
+"st_addnew_account": "Add New Account",
+"st_del_account": "Delete Account",
+
+
+"ct_def_entertainment": "Entertainment",
+"ct_def_groceries": "Groceries",
+"ct_def_education": "Education",
+"ct_def_transport": "Transport",
+"ct_def_savings": "Savings",
+"ct_def_pets": "Pets",
+"ct_def_debt": "Debt Payments",
+"ct_def_insurance": "Insurance",
+"ct_def_subscriptions": "Subscriptions",
+"ct_def_salary": "Salary",
+"deleteAccountMessage": "Are you sure you want to delete the account \"{{itemName}}\"? This action cannot be undone. Account \"{{itemName}}\" will remain visible in past transactions.",
+"deleteOperationMessage": "Are you sure you want to delete operation? This action cannot be undone.",
+"deleteCategoryMessage": "Are you sure you want to delete the category \"{{itemName}}\"? This action cannot be undone. Category \"{{itemName}}\" will remain visible in past transactions.",
+"ecs_title": "Manage categories",
+
+"vt_sel_icon":"Select Icon",
+"vt_icon":"Icon",
+
+"vt_sel_color":"Select Color",
+"vt_color":"Color",
+
+"vt_sel_type":"Select Type",
+"vt_cat_type":"Category Type",
+"vt_acc_type": "Account Type",
+"vt_type":"Type",
+"vt_provide_name": "Provide name"
 
 }

@@ -148,6 +148,7 @@ export const LastOperations = ({ calendarDate, calendarIndex }) => {
   const Year = date.getFullYear()
   const FirstDay = new Date(Year, Month, 1);
   const LastDay = new Date(Year, Month + 1, 0);
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
 
   const MONTH_DAYS = Array.from({ length: LastDay.getUTCDate() }, (_, i) => i + 1).reverse()
@@ -215,7 +216,7 @@ export const LastOperations = ({ calendarDate, calendarIndex }) => {
           )
         })}
 
-        {operationsArray.length === 0 ? <View style={styles.noData}><Text style={styles.noDataText}>No data in specified range.</Text></View> : null}
+        {operationsArray.length === 0 ? <View style={styles.noData}><Text style={styles.noDataText}>{t("tt_nodata")}</Text></View> : null}
 
       </ScrollView>
     </View>
@@ -223,8 +224,12 @@ export const LastOperations = ({ calendarDate, calendarIndex }) => {
 };
 
 const DaySection = ({ children, timestamp }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const dayString = new Date(timestamp);
+  const dayDay = dayString.getDate();
+  const dayMonthIndex = dayString.getMonth();
+  const dayWeekIndex = dayString.toLocaleString('en-US', { weekday: 'long' }).toLowerCase();
 
   const styles = StyleSheet.create({
     block: {
@@ -256,12 +261,8 @@ const DaySection = ({ children, timestamp }) => {
   return (
     <View style={styles.block}>
       <View style={styles.header}>
-        <Text style={styles.t}>{dayString.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}</Text>
-        <Text style={styles.th}>({getWeekdays()[getWeekdays().indexOf(dayString.toLocaleString('en-US', { weekday: 'long' }).toLowerCase())]})</Text>
+        <Text style={styles.t}>{t("month_" + dayMonthIndex)} {dayDay}</Text>
+        <Text style={styles.th}>({t(dayWeekIndex + "_long")})</Text>
       </View>
 
       <View>{children}</View>

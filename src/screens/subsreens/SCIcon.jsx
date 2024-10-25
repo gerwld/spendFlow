@@ -5,6 +5,7 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import { BaseView, IconGlob, STHeader } from '@components';
 import { ICONS_SETS, ICONS_SETS_MASKS } from '@constants';
 import { useCurrentTheme } from 'hooks';
+import { t } from 'i18next';
 
 const SCIcon = ({ route, navigation }) => {
     const [themeColors] = useCurrentTheme();
@@ -96,7 +97,7 @@ const SCIcon = ({ route, navigation }) => {
             <STHeader
                 onGoBack={handleGoBack}
                 navigation={navigation}
-                title={"Icon"}
+                title={t("vt_icon")}
             />
 
             <ScrollView>

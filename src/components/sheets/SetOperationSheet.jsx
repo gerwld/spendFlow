@@ -19,6 +19,7 @@ import uuid from "react-native-uuid"
 import { OPERATION_TYPES } from '@constants';
 import { operationsActions } from "@actions";;
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const TIMESTAMP_TODAY = new Date().setHours(0,0,0,0);
 const { height: screenHeight } = Dimensions.get("screen")
@@ -57,7 +58,7 @@ const accStyles = StyleSheet.create({
 
 
 const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
-  const navigation = useNavigation();
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
 
@@ -306,7 +307,7 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
         tabStyle={styles.tab}
         selectedTabStyle={styles.selectedTab}
         style={styles.tabs}
-        tabs={["Expense", "Income", "Transfer"]}
+        tabs={[t("OPERATION_TYPE_EXPENSE"), t("OPERATION_TYPE_INCOME"), t("OPERATION_TYPE_TRANSFER")]}
         onChange={setIndex}
         value={sheetState.tab}
       />
@@ -335,7 +336,7 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
                 defBackground: themeColors.bgHighlightSec,
                 theme: themeColors.label
               }} />
-            <Text style={styles.selectItemText}>Account</Text>
+            <Text style={styles.selectItemText}>{t("tt_account")}</Text>
             <RenderValueCategory itemID={state.accountID} style={styles.selectItemTextValue}/>
         
           </LineItemView>
@@ -350,7 +351,7 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
                 defBackground: themeColors.bgHighlightSec,
                 theme: themeColors.label
               }} />
-            <Text style={styles.selectItemText}>Category</Text>
+            <Text style={styles.selectItemText}>{t("tt_category")}</Text>
             <RenderValueCategory itemID={state.categoryID} style={styles.selectItemTextValue}/>
           </LineItemView>
         </Pressable>
@@ -365,7 +366,7 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
                 theme: themeColors.label
               }} />
 
-            <Text style={styles.selectItemText}>Date</Text>
+            <Text style={styles.selectItemText}>{t("tt_date")}</Text>
             <ReanderValueCalendar timestamp={state.timestamp} style={styles.selectItemTextValue}/>
             
           </LineItemView>
@@ -382,8 +383,8 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
                 theme: themeColors.label
               }} />
 
-            <Text style={styles.selectItemText}>Description</Text>
-            <Text style={styles.selectItemTextValue}>{typeof state.title === "string" ? state.title.truncate(12) : "(not required)"}</Text>
+            <Text style={styles.selectItemText}>{t("tt_description")}</Text>
+            <Text style={styles.selectItemTextValue}>{typeof state.title === "string" ? state.title.truncate(12) : t("sd_not_required")}</Text>
           </LineItemView>
         </Pressable>
       </View>
@@ -439,10 +440,10 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
 
     ? <BottomSheetExperimental
       {...{
-        title: (isEdit ? "Edit" : "Add") + " operation",
+        title: isEdit ? t("st_edit_operation") : t("st_add_operation"),
         isOpen, toggleSheet,
         setHeight: Platform.OS === "android" ? screenHeight - 50 : screenHeight - 100,
-        rightButton: { title: "Save", onPress: onOperationSubmit },
+        rightButton: { title: t("act_save"), onPress: onOperationSubmit },
         backgroundColor: themeColors.bgHighlight
       }}>
       {renderContent}
@@ -455,19 +456,21 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
 }
 
 const RenderValueAccount = ({ itemID, style }) => {
+  const {t} = useTranslation();
   if (itemID) {
     const category = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
     return <Text style={style}>{category.title}</Text>
   }
-  return <Text style={style}>Not selected</Text>;
+  return <Text style={style}>{t("sd_not_selected")}</Text>;
 }
 
 const RenderValueCategory = ({ itemID, style }) => {
+  const {t} = useTranslation();
   if (itemID) {
-    const category = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
-    return <Text style={style}>{category?.title}</Text>
+    const categoryItem = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
+    return <Text style={style}>{categoryItem?.title?.startsWith("ct_def_") ? t(categoryItem?.title) : categoryItem?.title || t("tt_category__none")}</Text>
   }
-  return <Text style={style}>Not selected</Text>;
+  return <Text style={style}>{t("sd_not_selected")}</Text>;
 }
 
 const ReanderValueCalendar = ({timestamp, style}) => {
@@ -476,6 +479,7 @@ const ReanderValueCalendar = ({timestamp, style}) => {
 
 
 const TitleSheet = ({ isOpen, toggleSheet, onSubmit }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef(null);
@@ -527,13 +531,13 @@ const TitleSheet = ({ isOpen, toggleSheet, onSubmit }) => {
   return (
     <BottomSheetExperimental
       {...{
-        leftButton: { title: "Back", onPress: toggleSheet },
-        rightButton: { title: "Save", onPress: onTitleSubmit },
+        leftButton: { title: t("act_back"), onPress: toggleSheet },
+        rightButton: { title: t("act_save"), onPress: onTitleSubmit },
         setFullWidth: true,
         maxHeightMultiplier: Platform.OS === "android" ? 0.54 : 0.52,
         setHeight: 300,
         scrollable: true,
-        title: "Description",
+        title: t("tt_description"),
         isOpen,
         toggleSheet,
         backgroundColor: themeColors.bgHighlight
@@ -558,17 +562,18 @@ const TitleSheet = ({ isOpen, toggleSheet, onSubmit }) => {
 
 
 const AccountSheet = ({ isOpen, toggleSheet }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
 
   return (
     <BottomSheetExperimental
       {...{
-        leftButton: { title: "Back", onPress: toggleSheet },
+        leftButton: { title: t("act_back"), onPress: toggleSheet },
         setFullWidth: true,
         maxHeightMultiplier: 0.5,
         setHeight: 500,
         scrollable: true,
-        title: "Select Account",
+        title: t("tt_accountselect"),
         isOpen, toggleSheet,
         backgroundColor: themeColors.bgHighlight
       }}>
@@ -584,6 +589,7 @@ const AccountSheet = ({ isOpen, toggleSheet }) => {
 }
 
 const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const {bottom} = useSafeAreaInsets()
 
@@ -591,12 +597,12 @@ const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
   return (
     <BottomSheetExperimental
       {...{
-        leftButton: { title: "Back", onPress: toggleSheet },
+        leftButton: { title: t("act_back"), onPress: toggleSheet },
         setFullWidth: true,
         maxHeightMultiplier: 0.5,
         setHeight: 500,
         scrollable: true,
-        title: "Select Category",
+        title: t("tt_categoryselect"),
         isOpen, toggleSheet,
         backgroundColor: themeColors.bgHighlight
       }}>
@@ -610,6 +616,7 @@ const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
 }
 
 const CalendarSheet = ({ isOpen, toggleSheet, current, onPress }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const [value, setValue] = React.useState([current]);
 
@@ -633,13 +640,13 @@ const CalendarSheet = ({ isOpen, toggleSheet, current, onPress }) => {
   return (
     <BottomSheet
       {...{
-        leftButton: { title: "Back", onPress: toggleSheet },
-        rightButton: { title: "Save", onPress: toggleSheet },
+        leftButton: { title: t("act_back"), onPress: toggleSheet },
+        rightButton: { title: t("act_save"), onPress: toggleSheet },
         setFullWidth: true,
         maxHeightMultiplier: 0.50,
         setHeight: 410,
         scrollable: true,
-        title: "Select Date",
+        title: t("tt_dateselect"),
         isOpen, toggleSheet,
         backgroundColor: themeColors.bgHighlight
       }}>

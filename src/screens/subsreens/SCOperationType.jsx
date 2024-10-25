@@ -46,7 +46,7 @@ React.useEffect(() => {
       <STHeader
         onGoBack={handleGoBack}
         navigation={navigation}
-        title={"Type"}
+        title={t("vt_cat_type")}
       />
 
       <View style={{ paddingTop: 14, flex: 1 }}>

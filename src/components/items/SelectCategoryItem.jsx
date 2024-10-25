@@ -1,9 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useCurrentTheme } from "hooks";
+import { useTranslation } from "react-i18next";
 
 
 const SelectCategoryItem = ({ icon, iconColor, title, isAddNew, onPress, isCurrent }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     block: {
@@ -75,8 +77,7 @@ const SelectCategoryItem = ({ icon, iconColor, title, isAddNew, onPress, isCurre
         <View style={[!isAddNew && styles.icon_bg]} />
       </View>
 
-      <Text style={[styles.text_title, isAddNew && styles.text_title__addnew]}>{title || "no data"}</Text>
-
+      <Text style={[styles.text_title, isAddNew && styles.text_title__addnew]}>{title.startsWith("ct_def_") ? t(title) : title || "no data"}</Text>
     </Pressable>
   );
 };

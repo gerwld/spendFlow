@@ -4,7 +4,7 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useCurrentTheme } from 'hooks';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const width = Dimensions.get("window").width
 const itemsPerRow = (width > 768 ? 3 : 2)
@@ -12,6 +12,7 @@ const marginHorizontal = (width * 0.065)
 const blockWidth = Math.min(width / 2 - marginHorizontal, 180)
 const gap = itemsPerRow === 3 ? (width * 0.028) : (width * 0.04);
 const MoreScreen = ({ navigation }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const styles = StyleSheet.create({
     grid: {

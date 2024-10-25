@@ -9,6 +9,7 @@ import { LucideGripVertical } from 'lucide-react-native'
 import DragList from 'react-native-drag-n-drop-everywhere'
 import { categoriesActions } from '@actions'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { t } from 'i18next'
 
 const { width, height } = Dimensions.get("window")
 
@@ -76,7 +77,7 @@ const EditCategoriesScreen = ({ navigation }) => {
         onPress: () => navigation.navigate("addcategory"),
         icon: <IconGlob {...{ name: "Plus", color: "#ffffff", stroke: 2.4, size: 25, }} />,
         iconColor: "#ffffff",
-        title: "Add New Category",
+        title: t("st_addnew_category"),
         isRow: true,
         isAddNew: true,
       }} />
@@ -103,7 +104,7 @@ const EditCategoriesScreen = ({ navigation }) => {
   if(!isInit || !items) return null;
   return (
     <BaseView>
-      <STHeader {...{ navigation, title: "Manage categories" }} />
+      <STHeader {...{ navigation, title: t("ecs_title") }} />
 
       <DragList
         key={items[0]}
@@ -187,10 +188,10 @@ const RenderCategoryBlock = ({ itemID }) => {
         <View style={[styles.icon_bg, { backgroundColor: item.color }]} />
       </View>
 
-      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.title}>{item.title?.startsWith("ct_def_") ? t(item.title) : item.title}</Text>
 
       <Pressable onPress={onEditPress}>
-        <Text style={styles.btn_edit}>Edit</Text>
+        <Text style={styles.btn_edit}>{t("act_edit")}</Text>
       </Pressable>
 
     </View>

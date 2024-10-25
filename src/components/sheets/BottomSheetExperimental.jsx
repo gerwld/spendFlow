@@ -3,11 +3,13 @@ import { View, Dimensions, StyleSheet, Pressable, Text, Platform } from 'react-n
 import { useCurrentTheme } from 'hooks';
 import { Incubator } from 'react-native-ui-lib';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 const { width, height } = Dimensions.get("window")
 
 
 const BottomSheetExperimental = ({ isOpen, withGap, children, toggleSheet, rightButton, leftButton, title, setHeight, maxHeightMultiplier = 0.86, setFullWidth = false, hideHeader  }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const insets = useSafeAreaInsets()
 
@@ -63,10 +65,11 @@ const BottomSheetExperimental = ({ isOpen, withGap, children, toggleSheet, right
       alignItems:"center",
     },
     headerTitle: {
-      fontSize: 19,
+      fontSize: title?.length > 17 ? 15 : 19,
       fontWeight: "600",
       flexBasis: "50%",
-      lineHeight: 45,
+      lineHeight: 24,
+      paddingVertical: 8,
       textAlign: "center",
       color: themeColors.textColorHighlight
     },
@@ -100,7 +103,7 @@ const BottomSheetExperimental = ({ isOpen, withGap, children, toggleSheet, right
 
     : <View style={styles.leftButton}>
         <Pressable style={styles.cancelBTN} onPress={closeModal}>
-          <Text style={styles.cancelBTNText}>Cancel</Text>
+          <Text style={styles.cancelBTNText}>{t("act_cancel")}</Text>
         </Pressable>
       </View>
     }

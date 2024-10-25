@@ -6,6 +6,7 @@ import { BaseView, STHeader } from '@components';
 import { COLORS_ARRAY } from '@constants';
 import { useCurrentTheme } from 'hooks';
 import { LucideCheck } from 'lucide-react-native';
+import { t } from 'i18next';
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -104,14 +105,14 @@ const SCColor = ({ route, navigation }) => {
             <STHeader
                 onGoBack={handleGoBack}
                 navigation={navigation}
-                title={"Color"}
+                title={t("vt_color")}
             />
 
             <ScrollView>
 
                 <View style={styles.content}>
 
-                    <Text style={styles.categoryTitle}>Colors</Text>
+                    <Text style={styles.categoryTitle}>{t("vt_sel_color")}</Text>
                     <View style={styles.categoryColors}>
                         {COLORS_ARRAY.map((color, index) => {
                             return <CategoryBlock {...{

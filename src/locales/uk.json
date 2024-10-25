@@ -22,7 +22,7 @@
   "act_back": "Назад",
   "act_edit": "Змінити",
   "act_cancel": "Назад",
-  "act_save": "Зберегти",
+  "act_save": "Збер...",
   "act_delete": "Видалити",
   "act_skip": "Пропустити",
   "act_begin": "Почати",
@@ -96,7 +96,7 @@
     "ms_tab_accounts": "Рахунки",
     "ms_tab_stats": "Статистика",
     
-    "ms__premium": "Дослідити Преміум",
+    "ms__premium": "Преміум",
     "ms__payments": "Регулярні платежі",
     "ms__statistics": "Статистика",
     "ms__settings": "Налаштування",
@@ -110,6 +110,87 @@
     
     "hs__expenses": "Витрати",
     "hs__balance": "Баланс",
-    "hs__income": "Дохід"
-  }
+    "hs__income": "Дохід",
+
+
+    "ods_title": "Деталі операції",
+  "ads_title": "Деталі рахунку",
+  "cds_title": "Деталі категорії",
+
+  "tt_title": "Назва",
+  "tt_description": "Опис",
+  "tt_value": "Значення",
+  "tt_account": "Рахунок",
+  "tt_operationtype": "Тип операції",
+  "tt_date": "Дата",
+  "tt_category": "Категорія",
+  "tt_preview": "Превью",
+  "tt_type": "Тип",
+  "tt_id": "Ідентифікатор",
+  "tt_last_op": "Останні операції:",
+  "tt_last_op_none": "Немає останніх операцій",
+
+  "tt_nodescription": "Без опису",
+
+  "dt_title": "Видалити операцію",
+  "dt_operation": "операція",
+  "tt_category__none": "Без категорії",
+  "tt_account__none": "Без рахунку",
+  "tt_nodata": "Немає даних за вказаний період.",
+  
+  "sunday_long": "неділя",
+  "monday_long": "понеділок",
+  "tuesday_long": "вівторок",
+  "wednesday_long": "середа",
+  "thursday_long": "четвер",
+  "friday_long": "п’ятниця",
+  "saturday_long": "субота",
+  "tt_dateselect": "Виберіть дату",
+  "tt_categoryselect": "Виберіть категорію",
+  "tt_accountselect": "Виберіть рахунок",
+
+  "sd_not_selected": "Не вибрано",
+  "sd_not_required": "Не обов'язково",
+  "tt_operation": "операція",
+  "tt_operations": "операції",
+  "tt_operations_more5": "операцій",
+
+  "st_edit_category": "Редагувати категорію",
+  "st_add_category": "Додати категорію",
+  "st_del_category": "Видалити категорію",
+
+  "st_edit_operation": "Редагувати операцію",
+  "st_add_operation": "Додати операцію",
+  "st_del_operation": "Видалити операцію",
+
+  "st_edit_account": "Редагувати рахунок",
+  "st_add_account": "Додати рахунок",
+  "st_del_account": "Видалити рахунок",
+  "ct_def_entertainment": "Розваги",
+  "ct_def_groceries": "Продукти",
+  "ct_def_education": "Освіта",
+  "ct_def_transport": "Транспорт",
+  "ct_def_savings": "Заощадження",
+  "ct_def_pets": "Домашні тварини",
+  "ct_def_debt": "Заборгованість",
+  "ct_def_insurance": "Страхування",
+  "ct_def_subscriptions": "Підписки",
+  "ct_def_salary": "Зарплата",
+  "deleteAccountMessage": "Ви впевнені, що хочете видалити рахунок \"{{itemName}}\"? Цю дію не можна буде скасувати. Рахунок \"{{itemName}}\" залишиться видимим у минулих транзакціях.",
+  "deleteOperationMessage": "Ви впевнені, що хочете видалити цю операцію? Цю дію не можна буде скасувати.",
+  "deleteCategoryMessage": "Ви впевнені, що хочете видалити категорію \"{{itemName}}\"? Цю дію не можна буде скасувати. Категорія \"{{itemName}}\" залишиться видимою у минулих транзакціях.",
+  "ecs_title": "Керування категоріями",
+
+  "vt_sel_icon": "Виберіть іконку",
+  "vt_icon": "Іконка",
+
+  "vt_sel_color": "Виберіть колір",
+  "vt_color": "Колір",
+
+  "vt_sel_type": "Вибрати тип",
+  "vt_cat_type": "Тип категорії",
+  "vt_acc_type": "Тип рахунку",
+  "vt_type": "Тип",
+  "vt_provide_name": "Введіть назву"
+}
   

@@ -5,8 +5,10 @@ import BottomSheetExperimental from './BottomSheetExperimental';
 import { produce } from 'immer';
 import { LucideCheck } from 'lucide-react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { useTranslation } from 'react-i18next';
 
 const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction, setHeight = 380 }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
 
   const styles = StyleSheet.create({
@@ -55,7 +57,7 @@ const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction, 
       marginBottom: 20,
       maxWidth: 370,
       lineHeight: 30,
-      fontSize: 16.5,
+      fontSize: 15,
     },
     progressScreen: {
       alignItems: 'center',
@@ -110,10 +112,10 @@ const ConfirmDeleteSheet = ({ title, desc, isOpen, toggleSheet, callbackAction, 
       </Text>
       <View style={styles.buttons}>
         <Pressable onPress={toggleSheet} style={styles.btn_pressable}>
-          <Text style={styles.btn}>Cancel</Text>
+          <Text style={styles.btn}>{t("act_cancel")}</Text>
         </Pressable>
         <Pressable onPress={onConfirm} style={[styles.btn_pressable, styles.btn_confirm]}>
-          <Text style={[styles.btn, styles.btn_confirm]}>Delete</Text>
+          <Text style={[styles.btn, styles.btn_confirm]}>{t("act_delete")}</Text>
         </Pressable>
       </View>
     </>

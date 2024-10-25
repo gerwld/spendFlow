@@ -20,8 +20,6 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
   const item = useSelector((s) => categoriesSelectors.selectCategoryByID(s, route.params.item.id)) || route.params.item;
   const { operations } = useSelector(operationsSelectors.selectOperationsAndIDs)
   const lastOperationsIDs = useSelector((s) => operationsSelectors.selectOperationsPortionMinMax(s, timestampMonthAgo, timestampNow))
-
-  console.log(item);
   
 
   const styles = StyleSheet.create({
@@ -115,7 +113,7 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
     <BaseView>
       <STHeader
 
-        title="Category Details"
+        title={t("cds_title")}
         onRightPress={() => navigation.navigate("edit_categories_screen")}
         rightComponent={renderHeaderButton}
         navigation={navigation} />
@@ -127,28 +125,28 @@ const CategoryDetailsScreen = ({ navigation, route }) => {
         <View style={styles.content} >
 
           <Pressable onPress={onCategoryEdit} style={styles.item}>
-            <Text style={styles.contentText}>Preview</Text>
-            <RenderCategoryOrAccount {...{ icon: item?.icon, styles, color: item?.color, title: item?.title || "No category" }} />
+            <Text style={styles.contentText}>{t("tt_preview")}</Text>
+            <RenderCategoryOrAccount {...{ icon: item?.icon, styles, color: item?.color, title: item?.title || t("tt_category__none") }} />
           </Pressable>
 
           <Pressable style={styles.item}>
-            <Text style={styles.contentText}>Type</Text>
-            <Text style={styles.valueText}>{t(item.type).toUpperCase() || "Expenses"}</Text>
+            <Text style={styles.contentText}>{t("tt_type")}</Text>
+            <Text style={styles.valueText}>{item.type ? t(item.type).toUpperCase() : t("hs__expenses").toUpperCase()}</Text>
           </Pressable>
 
           <Pressable onPress={showID} style={styles.item}>
-            <Text style={styles.contentText}>Identifier</Text>
-            <Text style={styles.valueText}>{item.id?.truncate(18) || "Operation"}</Text>
+            <Text style={styles.contentText}>{t("tt_id")}</Text>
+            <Text style={styles.valueText}>{item.id ? item.id?.truncate(18) : t("tt_operation")?.toTitleCase()}</Text>
           </Pressable>
 
-          <Text style={styles.title}>Last operations:</Text>
+          <Text style={styles.title}>{t("tt_last_op")}</Text>
 
           <ScrollView style={styles.scroll}>
           {operations && lastOperationsIDs ?
             lastOperationsIDs.map(item =>
               <OperationsItem key={item} item={operations[item]} />
             )
-            : <Text style={styles.text}>No last operations</Text>
+            : <Text style={styles.text}>{t("tt_last_op_none")}</Text>
           }
           </ScrollView>
         </View>

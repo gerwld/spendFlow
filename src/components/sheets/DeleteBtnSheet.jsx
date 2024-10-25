@@ -2,12 +2,12 @@ import { useCurrentTheme } from "hooks";
 import { useState } from "react";
 import { View, Pressable, StyleSheet, Text } from "react-native";
 import ConfirmDeleteSheet from "./ConfirmDeleteSheet";
-import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 
 
-const DeleteBtnSheet = ({action, itemTitle, actionTitle, sheetTitle, setHeight= 400, marginTop = 40}) => {
-  const navigation = useNavigation()
+const DeleteBtnSheet = ({action, itemTitle, actionTitle, sheetTitle, setHeight= 400, marginTop = 40, sheetDesc, tKey}) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
   const [isOpen, setOpenSheet] = useState(false);
   const toggleSheet = () => setOpenSheet(!isOpen);
@@ -43,8 +43,8 @@ const DeleteBtnSheet = ({action, itemTitle, actionTitle, sheetTitle, setHeight= 
         isOpen,
         title: sheetTitle,
         setHeight,
-        desc: `Are you sure you want to delete ${itemTitle ? "the " : ""}${actionTitle}${itemTitle ? " \"" + itemTitle + "\"" : ""}? This action cannot be undone. The ${actionTitle} will remain visible in past transactions.`,
-        desctiption: "",
+        desc: t(tKey, { itemName: itemTitle }),
+        description: "",
         callbackAction: onDelete }} />
     </View>
   )

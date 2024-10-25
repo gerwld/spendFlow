@@ -3,10 +3,12 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useCurrentTheme } from "hooks";
 import { getGreenRedOrGray } from "@constants";
 import Animated, { FadeIn } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 const DELAY = 50;
 
 const ReportItem = ({ index, isCurrentPage, icon, iconColor, title, value = -20, isAddNew, onPress, isCurrent, isSelect }) => {
+  const {t} = useTranslation();
   const inNoAnimationGap = index < 2;
   const [isInit, setInit] = useState(inNoAnimationGap);
 
@@ -80,11 +82,11 @@ const ReportItem = ({ index, isCurrentPage, icon, iconColor, title, value = -20,
       </View>
       <View style={styles.content}>
         <View style={styles.row}>
-          <Text style={styles.text_title}>{title || "no data"}</Text>
+          <Text style={styles.text_title}>{title.startsWith("ct_def_") ? t(title) : title || "no data"}</Text>
           <Text style={[styles.text_title, styles.total_value]}>{value || 0} PLN</Text>
         </View>
         <View style={styles.row}>
-          {!isAddNew && <Text style={styles.text_count}>{null || "5"} transactions</Text>}
+          {!isAddNew && <Text style={styles.text_count}>{null || "5"} {t("tt_operations_more5")}</Text>}
           {!isAddNew && <Text style={styles.text_count}>{null || "5"} %</Text>}
         </View>
       </View>

@@ -125,7 +125,7 @@ const OperationDetailsScreen = ({ navigation, route }) => {
   return (
     <BaseView>
       <STHeader
-        title="Operation Details"
+        title={t("ods_title")}
         rightComponent={renderHeaderButton}
         navigation={navigation} />
 
@@ -142,39 +142,39 @@ const OperationDetailsScreen = ({ navigation, route }) => {
 
           <View style={styles.content} >
             <View style={styles.item}>
-              <Text style={styles.contentText}>Title</Text>
-              <Text style={styles.valueText}>{item.title || "Operation"}</Text>
+              <Text style={styles.contentText}>{t("tt_title")}</Text>
+              <Text style={styles.valueText}>{item.title || t("tt_operation")?.toTitleCase()}</Text>
             </View>
 
             <View style={styles.item}>
-              <Text style={styles.contentText}>Desctiption</Text>
-              <Text style={styles.valueText}>{item.desc || "No desctiption"}</Text>
+              <Text style={styles.contentText}>{t("tt_description")}</Text>
+              <Text style={styles.valueText}>{item.desc || t("tt_nodescription")}</Text>
             </View>
 
             <View style={styles.item}>
-              <Text style={styles.contentText}>Value</Text>
+              <Text style={styles.contentText}>{t("tt_value")}</Text>
               <ValueMask {...{ value: (item.value || "0") + " " + item.currency, type: item.type, style: {fontSize: 18, fontWeight: "500"} }} />
             </View>
 
             <View style={styles.item}>
-              <Text style={styles.contentText}>Operation type</Text>
+              <Text style={styles.contentText}>{t("tt_operationtype")}</Text>
               <Text style={styles.valueText}>{t(item.type).toUpperCase()}</Text>
             </View>
 
             <View style={styles.item}>
-              <Text style={styles.contentText}>Date</Text>
+              <Text style={styles.contentText}>{t("tt_date")}</Text>
               <Text style={styles.valueText}>{item.timestamp}</Text>
             </View>
 
 
             <View style={styles.item}>
-              <Text style={styles.contentText}>Category</Text>
-              <RenderCategoryOrAccount {...{ icon: categoryItem?.icon, styles, color: categoryItem?.color, title: categoryItem?.title || "No category" }} />
+              <Text style={styles.contentText}>{t("tt_category")}</Text>
+              <RenderCategoryOrAccount {...{ icon: categoryItem?.icon, styles, color: categoryItem?.color, title: categoryItem?.title?.startsWith("ct_def_") ? t(categoryItem?.title) : categoryItem?.title || t("tt_category__none") }} />
             </View>
 
             <View style={styles.item}>
-              <Text style={styles.contentText}>Accout</Text>
-              <RenderCategoryOrAccount {...{ icon: accountItem?.icon, styles, color: accountItem?.color, title: accountItem?.title || "No account" }} />
+              <Text style={styles.contentText}>{t("tt_account")}</Text>
+              <RenderCategoryOrAccount {...{ icon: accountItem?.icon, styles, color: accountItem?.color, title: accountItem?.title?.startsWith("ct_def_") ? t(accountItem?.title) : accountItem?.title || t("tt_account__none") }} />
             </View>
           </View>
 
@@ -190,8 +190,9 @@ const OperationDetailsScreen = ({ navigation, route }) => {
           <DeleteBtnSheet
             marginTop={0}
             itemTitle={item.title || ""}
-            sheetTitle="Delete Operation"
-            actionTitle="operation"
+            tKey={"deleteOperationMessage"}
+            setHeight={350}
+            sheetTitle={t("st_del_operation")}
             action={() => {dispatch(operationsActions.deleteOperation(item.id)); navigation.goBack()}}
           />
 
@@ -208,15 +209,17 @@ const OperationDetailsScreen = ({ navigation, route }) => {
   )
 }
 
-export const RenderCategoryOrAccount = ({ icon, color, title, styles }) => (
+export const RenderCategoryOrAccount = ({ icon, color, title, styles }) => {
+  const {t} = useTranslation();
+  return (
   <View style={styles.categoryBlock}>
     <View style={styles.icon}>
       <IconGlob name={icon} color={color} size={20} />
       <View style={[styles.icon_bg, { backgroundColor: color || themeColors.thumbBackground }]} />
     </View>
 
-    <Text style={styles.valueText}>{title}</Text>
+    <Text style={styles.valueText}>{title.startsWith("ct_def_") ? t(title) : title || "no data"}</Text>
   </View>
-)
+)}
 
 export default OperationDetailsScreen

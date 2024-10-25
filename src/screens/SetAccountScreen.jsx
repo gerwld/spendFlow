@@ -178,8 +178,8 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
     <View>
       <STHeader
         navigation={navigation}
-        title={(isEdit ? "Edit" : "Add") + " Account"}
-        rightText="Save"
+        title={isEdit ? t("st_edit_account") : t("st_add_account")}
+        rightText={t("act_save")}
         rightPressDisabled={!isValid}
         rightPress={onSubmit}
       />
@@ -187,11 +187,11 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
       <ScrollView style={styles.content}>
 
         <View style={styles.segment}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>{t("tt_title")}</Text>
           <TextInput
             {...{
               ref: focusInputRef,
-              placeholder: "Provide name",
+              placeholder: t("vt_provide_name"),
               placeholderTextColor: themeColors.placeholderColor,
               maxLength: 35,
               style: styles.input,
@@ -210,7 +210,7 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
                   theme: themeColors.label
                 }} />
 
-              <Text style={styles.selectItemText}>Select Icon</Text>
+              <Text style={styles.selectItemText}>{t("vt_icon")}</Text>
 
               {
                 state.icon
@@ -234,7 +234,7 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
 
 
 
-              <Text style={styles.selectItemText}>Select Color</Text>
+              <Text style={styles.selectItemText}>{t("vt_color")}</Text>
 
               {
                 state.color
@@ -255,14 +255,14 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
                   theme: themeColors.label
                 }} />
 
-              <Text style={styles.selectItemText}>Account Type</Text>
+              <Text style={styles.selectItemText}>{t("vt_acc_type")}</Text>
               <Text style={styles.selectItemTextValue}>{t(state.type)}</Text>
             </LineItemView>
           </Pressable>
         </View>
 
 
-        <Text style={[styles.label, { marginTop: 10 }]}>Preview</Text>
+        <Text style={[styles.label, { marginTop: 10 }]}>{t("tt_preview")}</Text>
         <View style={[styles.segment, styles.preview]}>
           <AccountItem {
             ...{
@@ -279,8 +279,8 @@ const SetAccountScreen = ({ navigation, route, isEdit }) => {
           ? <DeleteBtnSheet
             itemTitle={state.title}
             setHeight={400}
-            actionTitle={"account"}
-            sheetTitle="Delete Account"
+            tKey={"deleteAccountMessage"}
+            sheetTitle={t("st_del_account")}
             action={() => {dispatch(accountsActions.deleteAccount(route.params.itemID)); navigation.navigate("accounts_tab")}} />
           : null}
 
