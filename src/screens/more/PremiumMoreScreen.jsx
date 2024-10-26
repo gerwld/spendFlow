@@ -39,20 +39,23 @@ const PremiumMoreScreen = ({ navigation }) => {
     },
     content: {
       height: "100%",
-      paddingBottom: 400
+      maxHeight: windowDimensions.height,
+      overflow:"scroll",
     },
     contentCS: {
       paddingBottom: 200
     },
     content_hero: {
-      flex: 0,
+      flexShrink: 0,
+      flexGrow: 0,
     },
     content_hero__bg: {
       paddingTop: 20,
       paddingHorizontal: 20,
-      paddingBottom: 10,
-      marginBottom: -6,
-      backgroundColor: "#ff8800"
+      paddingBottom: 15,
+      backgroundColor: "#ff8800",
+      justifyContent: "center",
+      minHeight: Math.min(windowDimensions.height / 3, 350),
     },
     content_hero__ios: {
       marginTop: windowDimensions.height * -1,
@@ -80,12 +83,13 @@ const PremiumMoreScreen = ({ navigation }) => {
       marginTop: 10
     },
     content_prem: {
-      paddingTop: 20
+      paddingTop: 5
     },
     content_prem_title: {
-      fontSize: 18,
-      lineHeight: 26,
-      maxWidth: 300,
+      fontSize: 21,
+      lineHeight: 28,
+      maxWidth: 340,
+      paddingBottom: 6,
       alignSelf: "center",
       fontWeight: "600",
       color: themeColors.textColorHighlight,
@@ -121,18 +125,21 @@ const PremiumMoreScreen = ({ navigation }) => {
     premBtn_save: {
       color: "#ff7700",
       fontSize: 12,
-      lineHeight: 12
+      lineHeight: 12,
+ 
     },
     premBtn_recommended: {
-      backgroundColor: themeColors.borderColorSec,
-      flex: 0,
+      backgroundColor: themeColors.borderColorFt,
       fontSize: 12,
+      fontWeight: "600",
       alignSelf: "center",
       paddingHorizontal: 10,
       paddingVertical: 5,
       borderRadius: 14,
       overflow: "hidden",
-      marginLeft: "auto"
+      marginLeft: "auto",
+      flexShrink: 0,
+      flexGrow: 0
     },
     premBtn_checkmark: {
       marginLeft: 5,
