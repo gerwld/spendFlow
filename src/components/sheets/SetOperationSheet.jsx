@@ -6,22 +6,23 @@ import BottomSheet from './BottomSheet';
 import { useCurrentTheme } from 'hooks';
 import SegmentedControl from "react-native-segmented-control-2";
 import ActionSheetExperimental from './ActionSheetExperimental';
-import { LineItemView, Calendar } from '@components';
+import { LineItemView, Calendar, IconGlob } from '@components';
 import { LucideCalendar, PenBoxIcon } from 'lucide-react-native';
 import { produce } from 'immer';
 import CategoryItem from '../items/CategoryItem';
 import { LucideApple, LucidePopcorn, LucidePlus, LucideBookHeart, LucideTrain, LucideCat, Landmark, ShieldCheck, ArrowBigDownDash, EthernetPort } from 'lucide-react-native';
 import SelectCategory from 'src/components/SelectCategory';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { categoriesSelectors } from '@redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { accountsSelectors, categoriesSelectors } from '@redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import uuid from "react-native-uuid"
 import { OPERATION_TYPES } from '@constants';
 import { operationsActions } from "@actions";;
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import SelectCategoryItem from '../items/SelectCategoryItem';
 
-const TIMESTAMP_TODAY = new Date().setHours(0,0,0,0);
+const TIMESTAMP_TODAY = new Date().setHours(0, 0, 0, 0);
 const { height: screenHeight } = Dimensions.get("screen")
 const isFirstPlusOrMinus = (value) => value[0] === "-" || value[0] === "+"
 
@@ -58,7 +59,7 @@ const accStyles = StyleSheet.create({
 
 
 const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [themeColors] = useCurrentTheme();
 
@@ -92,32 +93,32 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
 
 
 
-  const onOperationSubmit =() => {
+  const onOperationSubmit = () => {
     const cleanObj = Object.create(null);
     Object.assign(cleanObj, state);
 
-    if(isEdit) {
+    if (isEdit) {
       Object.assign(cleanObj, { id: item.id, type: OPERATION_TYPES[sheetState.tab], value: Math.abs(state.value * 1) });
       dispatch(operationsActions.editOperation(cleanObj, item.id));
     }
     else {
-        Object.assign(cleanObj, { id: uuid.v4(), type: OPERATION_TYPES[sheetState.tab], value: Math.abs(state.value * 1) });
-        dispatch(operationsActions.addOperation(cleanObj));
-        setSheetState(initialSheetState);
-        setState(initialDataState);
+      Object.assign(cleanObj, { id: uuid.v4(), type: OPERATION_TYPES[sheetState.tab], value: Math.abs(state.value * 1) });
+      dispatch(operationsActions.addOperation(cleanObj));
+      setSheetState(initialSheetState);
+      setState(initialDataState);
     }
 
- 
+
     toggleSheet();
   }
 
 
-  const dispatchSheetAction = (key, value) => 
+  const dispatchSheetAction = (key, value) =>
     setSheetState(produce(draft => {
       draft[key] = value;
     }));
 
-  const dispatchStateAction = (key, value) => 
+  const dispatchStateAction = (key, value) =>
     setState(produce(draft => {
       draft[key] = value;
     }));
@@ -126,42 +127,42 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
 
 
   // SHEET ACTIONS
-  
-  const toggleCurrency = () => 
+
+  const toggleCurrency = () =>
     dispatchSheetAction("isCurrencySheet", !sheetState.isCurrencySheet)
-  
-  const toggleCalendar = () => 
+
+  const toggleCalendar = () =>
     dispatchSheetAction("isCalendarSheet", !sheetState.isCalendarSheet)
-  
-  const toggleAccount = () => 
+
+  const toggleAccount = () =>
     dispatchSheetAction("isAccountSheet", !sheetState.isAccountSheet)
-  
-  const toggleCategory = () => 
+
+  const toggleCategory = () =>
     dispatchSheetAction("isCategorySheet", !sheetState.isCategorySheet)
-  
-  const toggleTitle = () => 
+
+  const toggleTitle = () =>
     dispatchSheetAction("isTitleSheet", !sheetState.isTitleSheet)
-  
-  const setIndex = (payload) => 
+
+  const setIndex = (payload) =>
     dispatchSheetAction("tab", payload)
 
 
 
   // STATE ACTIONS
 
-  const setCurrency = (payload) => 
+  const setCurrency = (payload) =>
     dispatchStateAction("currency", payload)
 
-  const setAccountID = (payload) => 
+  const setAccountID = (payload) =>
     dispatchStateAction("accountID", payload)
 
-  const setCategoryID = (payload) => 
+  const setCategoryID = (payload) =>
     dispatchStateAction("categoryID", payload)
 
-  const setDateTimestamp = (payload) => 
+  const setDateTimestamp = (payload) =>
     dispatchStateAction("timestamp", payload)
-  
-  const setTitle = (payload) => 
+
+  const setTitle = (payload) =>
     dispatchStateAction("title", payload)
 
   const getActionColor = () => sheetState.tab === 0 ? "red" : sheetState.tab === 1 ? "green" : "textColor";
@@ -295,7 +296,7 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
     itemViewIcon: {
       marginRight: 14
     },
-  
+
   });
 
   const renderContent = (
@@ -337,8 +338,8 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
                 theme: themeColors.label
               }} />
             <Text style={styles.selectItemText}>{t("tt_account")}</Text>
-            <RenderValueCategory itemID={state.accountID} style={styles.selectItemTextValue}/>
-        
+            <RenderValueAccount itemID={state.accountID} style={styles.selectItemTextValue} />
+
           </LineItemView>
         </Pressable>
       </View>
@@ -352,7 +353,7 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
                 theme: themeColors.label
               }} />
             <Text style={styles.selectItemText}>{t("tt_category")}</Text>
-            <RenderValueCategory itemID={state.categoryID} style={styles.selectItemTextValue}/>
+            <RenderValueCategory itemID={state.categoryID} style={styles.selectItemTextValue} />
           </LineItemView>
         </Pressable>
       </View>
@@ -367,8 +368,8 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
               }} />
 
             <Text style={styles.selectItemText}>{t("tt_date")}</Text>
-            <ReanderValueCalendar timestamp={state.timestamp} style={styles.selectItemTextValue}/>
-            
+            <ReanderValueCalendar timestamp={state.timestamp} style={styles.selectItemTextValue} />
+
           </LineItemView>
         </Pressable>
       </View>
@@ -415,7 +416,9 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
       <AccountSheet
         {...{
           isOpen: sheetState.isAccountSheet,
-          toggleSheet: toggleAccount
+          toggleSheet: toggleAccount,
+          onPress: setAccountID,
+          current: state.accountID
         }} />
 
       <CategorySheet
@@ -456,16 +459,16 @@ const SetOperationSheet = ({ isOpen, toggleSheet, item, isEdit }) => {
 }
 
 const RenderValueAccount = ({ itemID, style }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   if (itemID) {
-    const category = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
-    return <Text style={style}>{category.title}</Text>
+    const account = useSelector(state => accountsSelectors.selectAccountByID(state, itemID));
+    return <Text style={style}>{account?.title}</Text>
   }
   return <Text style={style}>{t("sd_not_selected")}</Text>;
 }
 
 const RenderValueCategory = ({ itemID, style }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   if (itemID) {
     const categoryItem = useSelector(state => categoriesSelectors.selectCategoryByID(state, itemID));
     return <Text style={style}>{categoryItem?.title?.startsWith("ct_def_") ? t(categoryItem?.title) : categoryItem?.title || t("tt_category__none")}</Text>
@@ -473,19 +476,19 @@ const RenderValueCategory = ({ itemID, style }) => {
   return <Text style={style}>{t("sd_not_selected")}</Text>;
 }
 
-const ReanderValueCalendar = ({timestamp, style}) => {
+const ReanderValueCalendar = ({ timestamp, style }) => {
   return <Text style={style}>{timestamp}</Text>
 }
 
 
 const TitleSheet = ({ isOpen, toggleSheet, onSubmit }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [themeColors] = useCurrentTheme();
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef(null);
 
   const onTitleSubmit = () => {
-    if(onSubmit) {
+    if (onSubmit) {
       onSubmit(value);
       toggleSheet()
     }
@@ -561,9 +564,10 @@ const TitleSheet = ({ isOpen, toggleSheet, onSubmit }) => {
 
 
 
-const AccountSheet = ({ isOpen, toggleSheet }) => {
-  const {t} = useTranslation();
+const AccountSheet = ({ isOpen, toggleSheet, onPress, current }) => {
+  const { t } = useTranslation();
   const [themeColors] = useCurrentTheme();
+  const { accounts, accountsArray } = useSelector(state => accountsSelectors.selectAccountsAndIDs(state), shallowEqual)
 
   return (
     <BottomSheetExperimental
@@ -579,9 +583,21 @@ const AccountSheet = ({ isOpen, toggleSheet }) => {
       }}>
 
       <View style={accStyles.pageExpensesContent}>
-        {accountsArray.map(item => (
-          <CategoryItem key={item.id} iconColor={item.iconColor} icon={item.icon} title={item.title} isRow />
-        ))}
+        {accountsArray.map(id => {
+          const item = accounts[id];
+          return (
+            <SelectCategoryItem {...{
+              onPress: () => onPress(item.id),
+              isCurrent: current === item.id,
+              title: item.title,
+              iconColor: item.color,
+              key: item.id,
+              icon: <IconGlob {...{ name: item.icon, color: item.color }} />,
+              size: 24,
+              isRow: true,
+            }} />
+          )
+        })}
       </View>
 
     </BottomSheetExperimental>
@@ -589,9 +605,9 @@ const AccountSheet = ({ isOpen, toggleSheet }) => {
 }
 
 const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [themeColors] = useCurrentTheme();
-  const {bottom} = useSafeAreaInsets()
+  const { bottom } = useSafeAreaInsets()
 
 
   return (
@@ -607,8 +623,8 @@ const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
         backgroundColor: themeColors.bgHighlight
       }}>
 
-      <ScrollView contentContainerStyle={{paddingBottom: bottom + 10}}>
-        <SelectCategory onPress={onPress} currentItem={current}/>
+      <ScrollView contentContainerStyle={{ paddingBottom: bottom + 10 }}>
+        <SelectCategory onPress={onPress} currentItem={current} />
       </ScrollView>
 
     </BottomSheetExperimental>
@@ -616,25 +632,25 @@ const CategorySheet = ({ isOpen, toggleSheet, onPress, current }) => {
 }
 
 const CalendarSheet = ({ isOpen, toggleSheet, current, onPress }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [themeColors] = useCurrentTheme();
   const [value, setValue] = React.useState([current]);
 
-  const onDayPress = (timestamp) => {     
+  const onDayPress = (timestamp) => {
     setValue([timestamp]);
     onPress && onPress(timestamp);
   }
 
   const renderCalendar = (
     <Calendar
-    key={value[0]}
-    borderColor={themeColors.calendarBorderColor}
-    color={themeColors.textColor}
-    colorContrast={themeColors.textColorHighlight}
-    data={value}
-    itemID={null}
-    activeColor={themeColors.tabsActiveColor}
-    onChange={onDayPress} />
+      key={value[0]}
+      borderColor={themeColors.calendarBorderColor}
+      color={themeColors.textColor}
+      colorContrast={themeColors.textColorHighlight}
+      data={value}
+      itemID={null}
+      activeColor={themeColors.tabsActiveColor}
+      onChange={onDayPress} />
   )
 
   return (
@@ -650,7 +666,7 @@ const CalendarSheet = ({ isOpen, toggleSheet, current, onPress }) => {
         isOpen, toggleSheet,
         backgroundColor: themeColors.bgHighlight
       }}>
-        {value && renderCalendar}
+      {value && renderCalendar}
     </BottomSheet>
   )
 }

@@ -22,7 +22,7 @@ const OperationDetailsScreen = ({ navigation, route }) => {
 
   const item = useSelector((s) => operationsSelectors.selectOperationByID(s, route.params.item.id))
   const categoryItem = useSelector((s) => categoriesSelectors.selectCategoryByID(s, item?.categoryID))
-  const accountItem = useSelector((s) => accountsSelectors.selectAccountByID(s, item?.accoutID))
+  const accountItem = useSelector((s) => accountsSelectors.selectAccountByID(s, item?.accountID))
 
 
   const [isSheetOpen, toggleSheetOpen] = React.useState(false);
