@@ -19,3 +19,4 @@ export { default as SvgLogoInline } from "./LogoInline";
 
 export { default as SVGCalendar } from "./Calendar";
 export { default as SVGChevronBottom } from "./ChevronBottom";
+export { default as SVGPremium } from "./SVGPremium";

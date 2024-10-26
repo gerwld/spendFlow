@@ -43,6 +43,7 @@ const THEMEV = {
 
     tabsColor: "#888c93",
     tabsActiveColor: "#6d9ce1",
+    tabsActiveColorSec: "#85a8dd",
     background: "#f8fbff",// f7fafe
     bgHighlight: "#ffffff",
     bgHeader: "#ffffff",
@@ -96,6 +97,7 @@ const THEMEV = {
 
     tabsColor: "#585858",
     tabsActiveColor: "#2897cf",
+    tabsActiveColorSec: "#091629",
     background: "#000000",
     bgHighlight: "#121214",
     bgSettings: "#000000",

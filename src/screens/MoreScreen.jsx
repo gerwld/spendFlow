@@ -31,12 +31,22 @@ const MoreScreen = ({ navigation }) => {
       maxWidth: width,
       height: blockWidth * 0.8,
       borderRadius: 10,
-      overflow: "hidden",
+      // overflow: "hidden",
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 1,
       borderColor: themeColors.borderColorSec,
       backgroundColor: themeColors.bgHighlightSec,
+      
+      shadowColor: "#245083",
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2
+
     },
     icon: {
       height: blockWidth / 3.5,
@@ -48,18 +58,31 @@ const MoreScreen = ({ navigation }) => {
     },
     title: {
       color: themeColors.textColorHighlight,
-      marginTop: 14,
+      marginTop: 11,
       fontSize: 15
     },
     last_item: {
       marginLeft: gap,
       marginRight: "auto"
+    },
+    label: {
+      color: "#fff",
+      backgroundColor: themeColors.tabsActiveColorSec,
+
+      fontSize: 11,
+      lineHeight: 11,
+      paddingHorizontal: 6,
+      paddingVertical: 1.5,
+      borderRadius: 6,
+      overflow: "hidden",
+      marginTop: 4,
+      marginBottom: -22
     }
   });
 
 
   const RenderItem = (props) => {
-    const { title, icon, iconColor, color, route, style } = props;
+    const { title, icon, iconColor, color, route, style, label } = props;
     const scale = useSharedValue(1)
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ scale: scale.value }],
@@ -81,6 +104,9 @@ const MoreScreen = ({ navigation }) => {
             <IconGlob name={icon || ""} size={blockWidth / 5.5} color={iconColor || "#ffffff"} />
           </View>
           <Text style={styles.title}>{title || "No data"}</Text>
+          {label 
+            ? <Text style={styles.label}>{label}</Text> 
+            : null}
         </Animated.View>
       </Pressable>
     )
@@ -96,17 +122,19 @@ const MoreScreen = ({ navigation }) => {
       <ScrollView>
 
         <View style={styles.grid}>
-          <RenderItem route="addcategory" {...{
+          <RenderItem route="premium_screen" {...{
             title: t("ms__premium"),
+            label: "soon",
+            iconColor: "#ffffff",
             color: "#3278db",
             icon: "Star"
           }} />
-          <RenderItem route="addcategory" {...{
+          <RenderItem route="premium_screen" {...{
             title: t("ms__payments"),
             color: "#27c281",
             icon: "RefreshCcwDot"
           }} />
-          <RenderItem route="addcategory" {...{
+          <RenderItem route="stats_screen" {...{
             title: t("ms__statistics"),
             color: "#8c32db",
             icon: "ChartColumn"
@@ -118,10 +146,10 @@ const MoreScreen = ({ navigation }) => {
           }} />
           <RenderItem route="settings/theme" {...{
             title: t("ms__darkmode"),
-            color: "#484a49",
+            color: "#355376",
             icon: "MoonStar"
           }} />
-          <RenderItem route="addcategory" {...{
+          <RenderItem route="about_screen" {...{
             title: t("ms__aboutus"),
             color: "#32a5db",
             icon: "ShieldCheck"
@@ -132,7 +160,7 @@ const MoreScreen = ({ navigation }) => {
             icon: "Globe"
           }} />
           <RenderItem route="faq_screen" {...{
-            style: styles.last_item,
+            // style: styles.last_item,
             title: t("ms__help"),
             color: "#dbb132",
             icon: "MessageCircleQuestion"

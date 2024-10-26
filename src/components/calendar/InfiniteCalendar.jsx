@@ -5,6 +5,7 @@ import { LucideChevronLeft } from 'lucide-react-native';
 import { LucideChevronRight } from 'lucide-react-native';
 import { SVGCalendar, SVGChevronBottom } from '@icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { t } from 'i18next';
 
 const { width, height } = Dimensions.get('window');
 
@@ -58,7 +59,10 @@ const InfiniteCalendar = ({ children, renderHeader, renderTopHeader, isGradient,
   };
 
   const formatDate = (date) => {
-    return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(date);
+    let monthIndex = date.getMonth();
+    let year = date.getFullYear();
+
+    return `${t("month_" + monthIndex)} ${year}`;
   };
 
   // --------- APPEND CHILD PART ---------//

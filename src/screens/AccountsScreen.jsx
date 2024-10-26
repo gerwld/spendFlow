@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 15,
+    marginTop: Platform.OS === "android" ? 0 : 10,
     marginBottom: 10,
     marginHorizontal: 22,
   },
@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   subitems: {
-    gap: 12,
+    gap: 10,
     marginBottom: 5,
-    marginHorizontal: 20
+    marginHorizontal: 18
   },
   tabBarStyle: {
     ...HEADER_SHADOW,
@@ -75,7 +75,7 @@ const AccountsSubscreen = ({ balance = -200, balanceSavings = 0 }) => {
     <AccountItem
     {...{    
       onPress: onAddNewPress,  
-      icon: <IconGlob size={28} {...{name: "Plus", color: "#ced2de"}} />,
+      icon: <IconGlob size={22} {...{name: "Plus", stroke: 2.5, color: "#ffffff"}} />,
       isAddNew: true,
       title: t("act_addaccount")
     }}/>

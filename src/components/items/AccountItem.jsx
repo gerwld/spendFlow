@@ -15,16 +15,26 @@ const AccountItem = ({id, item, icon, iconColor, title, value, isAddNew, onPress
       paddingLeft: isAddNew ? 10 : 8,
       paddingRight: isAddNew ? 15 : 8,
       paddingVertical: isAddNew ? 8 : 6,
-      borderWidth: 1,
+      borderWidth: isAddNew ? 0 : 1,
       borderColor: themeColors.borderColorSec,
-      backgroundColor: themeColors.bgHighlightSec,
+      backgroundColor: isAddNew ? themeColors.tabsActiveColorSec : themeColors.bgHighlightSec,
       borderRadius: isAddNew ? 50 : 12,
       maxHeight: 100,
+
+
+      shadowColor: "#245083",
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.08,
+      shadowRadius: 2,
+      elevation: 1.3
     },
     icon: {
       width: isAddNew ? 25 : 45,
       height: isAddNew ? 25 : 45,
-      marginRight: 8,
+      marginRight: isAddNew ? 5 : 10,
       justifyContent: "center",
       alignItems: "center",
       borderRadius: 10,
@@ -39,7 +49,9 @@ const AccountItem = ({id, item, icon, iconColor, title, value, isAddNew, onPress
     },
     text_title: {
       fontSize: 14,
-      color: themeColors.textColorHighlight,
+      lineHeight: isAddNew ? 17 : 14,
+      fontWeight: isAddNew ? "700" : "400",
+      color: isAddNew ? "#ffffff": themeColors.textColorHighlight,
     },
     text_value: {
       fontSize: 18,

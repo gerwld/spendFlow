@@ -37,7 +37,10 @@ import EditAccountsScreen from './EditAccountsScreen';
 import OperationDetailsScreen from './details/OperationDetailsScreen';
 import CategoryDetailsScreen from './details/CategoryDetailsScreen';
 import AccountDetailsScreen from './details/AccountDetailsScreen';
-import FAQScreen from './FAQScreen';
+import FAQScreen from './more/FAQScreen';
+import AboutMoreScreen from './more/AboutMoreScreen';
+import StatsMoreScreen from './more/StatsMoreScreen';
+import PremiumMoreScreen from './more/PremiumMoreScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -206,6 +209,9 @@ export const Navigation = () => {
     const moreScreens = (
         <>
             <Stack.Screen name="faq_screen" component={FAQScreen} options={{ title: "Frequently Asked Questions" }} />
+            <Stack.Screen name="about_screen" component={AboutMoreScreen} options={{ title: "About SpendFlow" }} />
+            <Stack.Screen name="stats_screen" component={StatsMoreScreen} options={{ title: "Statistics" }} />
+            <Stack.Screen name="premium_screen" component={PremiumMoreScreen} options={{ title: "Explore Premium" }} />
         </>
     )
 
