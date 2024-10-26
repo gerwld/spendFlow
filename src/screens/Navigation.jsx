@@ -170,7 +170,7 @@ export const Navigation = () => {
         let color = "black";
 
         if (route.name === "settings") color = themeColors.background;
-        else color = themeColors.background
+        else color = themeColors.bgHighlightSec
 
         return color;
     }

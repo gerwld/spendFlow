@@ -75,8 +75,8 @@ const MoreScreen = ({ navigation }) => {
       paddingVertical: 1.5,
       borderRadius: 6,
       overflow: "hidden",
-      marginTop: 4,
-      marginBottom: -22
+      marginTop: 2,
+      marginBottom: -18
     }
   });
 

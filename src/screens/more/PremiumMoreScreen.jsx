@@ -43,7 +43,7 @@ const PremiumMoreScreen = ({ navigation }) => {
       overflow:"scroll",
     },
     contentCS: {
-      paddingBottom: 200
+      paddingBottom: 170
     },
     content_hero: {
       flexShrink: 0,
@@ -103,8 +103,9 @@ const PremiumMoreScreen = ({ navigation }) => {
       alignContent: "center",
       paddingVertical: 8,
       paddingHorizontal: 10,
-      maxWidth: "80%",
-      minWidth: 300
+      width: "92%",
+      maxWidth: 320,
+      minHeight: 68
     },
     premBtn__selected: {
       borderColor: themeColors.tabsActiveColor
@@ -145,7 +146,7 @@ const PremiumMoreScreen = ({ navigation }) => {
       marginLeft: 5,
       marginRight: 15,
       width: 20,
-      height: 20,
+      height: 19.9,
       alignSelf: "center",
       alignItems: 'center',
       justifyContent: 'center',
@@ -191,7 +192,7 @@ const PremiumMoreScreen = ({ navigation }) => {
       color: themeColors.chevronText,
       fontSize: 11,
       lineHeight: 16,
-      maxWidth: 346,
+      maxWidth: 300,
       textAlign: "center",
       alignSelf: "center",
       marginVertical: 10
@@ -221,6 +222,9 @@ const PremiumMoreScreen = ({ navigation }) => {
     },
     premBtn__selected__active: {
       backgroundColor: themeColors.tabsActiveColor + "9b"
+    },
+    premBtn_content: {
+      justifyContent: 'center',
     }
   });
 
@@ -228,7 +232,7 @@ const PremiumMoreScreen = ({ navigation }) => {
 
   const onGetPremiumPressHeader = () => {
     scrollViewRef.current?.scrollTo({
-      y: 172, 
+      y: 240, 
       animated: true,
     });
   }
@@ -285,7 +289,7 @@ const PremiumMoreScreen = ({ navigation }) => {
           <View style={[isSelected && styles.premBtn_chcontent]} />
         </View>
 
-        <View>
+        <View style={styles.premBtn_content}>
           <Text style={styles.premBtn_title}>{title}</Text>
           <Text style={styles.premBtn_price}>{value}</Text>
           {save ? <Text style={styles.premBtn_save}>Save 66%</Text> : null}

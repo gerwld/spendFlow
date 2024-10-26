@@ -7,7 +7,7 @@ const SvgAsset1 = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     data-name="Layer 2"
     height={width / 5}
-    style={{marginTop: width * -0.055 - 5}}
+    style={{marginTop: width * -0.058 - 3}}
     width={width}
     viewBox="0 0 1000 100"
     {...props}
