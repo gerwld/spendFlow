@@ -3,11 +3,12 @@ import { Text, StyleSheet, View } from 'react-native';
 import { BaseView, STHeader } from '@components';
 import { useCurrentTheme } from 'hooks';
 import AccordionView from 'src/components/styling/AccordionView';
+import { useTranslation } from 'react-i18next';
 
 
 const FAQScreen = ({ navigation }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
-  const [currentShow, setShow] = useState(null); // Track the expanded item
 
   const styles = StyleSheet.create({
     t: {
@@ -38,7 +39,7 @@ const FAQScreen = ({ navigation }) => {
 
   return (
     <BaseView>
-      <STHeader title="FAQ" navigation={navigation} />
+      <STHeader title={t("sc_faq")} navigation={navigation} />
       <View style={styles.wrapper}>
         <AccordionView items={SECTIONS} />
       </View>

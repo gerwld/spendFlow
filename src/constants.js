@@ -99,6 +99,7 @@ const THEMEV = {
     tabsActiveColor: "#2897cf",
     tabsActiveColorSec: "#091629",
     background: "#000000",
+    bgHeader: "#000000",
     bgHighlight: "#121214",
     bgSettings: "#000000",
     bgHighlightSec: "#09090a",

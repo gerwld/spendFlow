@@ -63,7 +63,7 @@ const StatisticsBlock = () => {
   });
 
   const {categories, categoriesArray} = useSelector(state => categoriesSelectors.selectCategoriesAndIDs(state), shallowEqual)
-  console.log(categories);
+
 
   const renderItems = (item, index) => (
     <Pressable key={item.id} style={[styles.child, {backgroundColor: item.color, zIndex: 1000 - index}, index === 0 && {marginLeft: 0}]}></Pressable>
