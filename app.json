@@ -80,7 +80,27 @@
       "expo-localization",
       "expo-router",
       "expo-asset",
-      "expo-build-properties"
+      ["expo-build-properties", {
+        "ios": {
+            "extraPods": [
+              {
+                "name": "simdjson",
+                "configurations": ["Debug", "Release"],
+                "path": "../node_modules/@nozbe/simdjson",
+                "modular_headers": true
+              }
+            ]
+          },
+          "android": {
+            "kotlinVersion": "1.6.10",
+            "packagingOptions": {
+              "pickFirst": [
+                "**/libc++_shared.so"
+              ]
+            }
+          }
+        
+      }]
     ],
     "extra": {
       "eas": {
