@@ -79,7 +79,8 @@
     "plugins": [
       "expo-localization",
       "expo-router",
-      "expo-asset"
+      "expo-asset",
+      "expo-build-properties"
     ],
     "extra": {
       "eas": {
