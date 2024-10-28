@@ -10,6 +10,7 @@ import i18n from "./i18n";
 
 import * as SplashScreen from "expo-splash-screen";
 import { useInitializeApp } from "hooks";
+import { DatabaseProvider } from "src/database/DatabaseProvider";
 
 
 // keeps the splash screen visible while app fetch resources
@@ -34,7 +35,9 @@ export default withTranslation(function RootComponent() {
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <AppWithProvider>
-          <Navigation />
+          <DatabaseProvider>
+            <Navigation />
+          </DatabaseProvider>
         </AppWithProvider>
       </GestureHandlerRootView>
     </Provider>

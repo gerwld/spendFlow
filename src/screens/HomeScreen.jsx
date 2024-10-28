@@ -9,8 +9,9 @@ import OperationsItem from "src/components/items/OperationsItem";
 import SetOperationSheet from "src/components/sheets/SetOperationSheet";
 import { operationsSelectors } from "@redux";
 import { shallowEqual, useSelector } from "react-redux";
-import { getWeekdays } from "@constants";
 import { useTranslation } from "react-i18next";
+import { useDatabase } from "src/database/DatabaseProvider";
+import { operationService } from "src/database";
 
 const {width, height} = Dimensions.get('window');
 
@@ -91,7 +92,25 @@ const HomeScreen = ({ navigation }) => {
     headerText: [styles.headerText, { color: themeColors.textColor }],
     subTextIncome: { color: themeColors.mainHeaderIncomeColor },
   }), [themeColors]);
-  
+
+
+    const database = useDatabase();
+  const [operations, setOperations] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchOperations = async () => {
+      const operationsList = await operationService.getOperations();
+      setOperations(operationsList);
+      console.log(operationsList);
+    };
+
+    
+    
+
+    fetchOperations();
+  }, [database]);
+
+
   return (
     <>
       

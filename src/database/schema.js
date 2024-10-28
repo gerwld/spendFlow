@@ -14,6 +14,24 @@ export default appSchema({
         {name: "type", type: "string"},
         {name: "timestamp", type: "number"},
       ]
+    }),
+    tableSchema({
+      name: "accounts",
+      columns: [
+        {name: "title", type: "string"},
+        {name: "icon", type: "string"},
+        {name: "color", type: "string"},
+        {name: "type", type: "string"},
+      ]
+    }),
+    tableSchema({
+      name: "categories",
+      columns: [
+        {name: "title", type: "string"},
+        {name: "icon", type: "string"},
+        {name: "color", type: "string"},
+        {name: "type", type: "string"},
+      ]
     })
   ]
 })
